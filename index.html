@@ -116,6 +116,46 @@
     .hero-title { font: 600 22px/1.1 'Spectral', serif; }
     .hero-arrow { font: 400 22px/1 'Spectral', serif; }
 
+    /* Etkinlik bandı: lacivert zemin, turkuaz ana butondan ve açık kutucuklardan
+       ayrışır; iki temada da aynı kalır. Lacivert/beyaz 16:1, üst etiket 9:1. */
+    .event {
+      display: grid;
+      gap: 12px;
+      padding: 14px 12px 12px;
+      background: #0F2243;
+      color: #FFFFFF;
+    }
+    .event-head { display: grid; gap: 4px; padding: 0 2px; }
+    .event-kicker {
+      color: #7CD6D0;
+      font: 600 10px/1.2 'Archivo', sans-serif;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .event-name { margin: 0; font: 600 21px/1.15 'Spectral', serif; text-wrap: balance; }
+    .event-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .event-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 12px;
+      background: #FFFFFF;
+      color: #0F2243;
+      font: 600 15px/1.2 'Archivo', sans-serif;
+    }
+    .event-btn svg { width: 22px; height: 22px; flex: none; color: #116E68; }
+    .event-btn span { white-space: nowrap; }
+    .event-btn[data-row]:active { background: #E3F1F0 !important; }
+    /* Dar telefonda "Soru-Cevap" tek satıra sığsın. */
+    @media (max-width: 360px) {
+      .event-btn { gap: 8px; padding: 0 10px; font-size: 14px; }
+    }
+
     .grid-links {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -179,14 +219,31 @@
       </div>
     </div>
 
-    <a data-row href="/2609" id="link-openissue" class="hero">
+    <a data-row href="/2610" id="link-openissue" class="hero">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px;flex:none" aria-hidden="true"><path d="M4 4.5h6.5a2 2 0 0 1 2 2V20a2 2 0 0 0-2-2H4z"></path><path d="M20 4.5h-6.5a2 2 0 0 0-2 2V20a2 2 0 0 1 2-2H20z"></path></svg>
       <span class="hero-text">
-        <span class="hero-eyebrow"><span data-i18n="bulletin">Bülten</span> · <span data-i18n="issue">Eylül 2026</span></span>
+        <span class="hero-eyebrow"><span data-i18n="bulletin">Bülten</span> · <span data-i18n="issue">Ekim 2026</span></span>
         <span data-i18n="openissue" class="hero-title">Son sayıyı aç</span>
       </span>
       <span class="hero-arrow" aria-hidden="true">→</span>
     </a>
+
+    <section class="event" aria-labelledby="event-name">
+      <div class="event-head">
+        <span class="event-kicker" data-i18n="eventkicker">ODTÜ Teknokent · 27 Ekim</span>
+        <h2 id="event-name" class="event-name" data-i18n="eventname">Share&amp;Connect: Ar-Ge Destekleri</h2>
+      </div>
+      <div class="event-actions">
+        <a data-row href="https://form.investikarus.com/" id="link-form" class="event-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4H6.5A1.5 1.5 0 0 0 5 5.5v14A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-14A1.5 1.5 0 0 0 17.5 4H16"></path><rect x="8" y="2.8" width="8" height="2.6" rx=".8"></rect><path d="M8.5 10.5h7M8.5 14h7M8.5 17.5h4"></path></svg>
+          <span data-i18n="form">Form</span>
+        </a>
+        <a data-row href="https://soru.investikarus.com/" id="link-qa" class="event-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 4h13A1.5 1.5 0 0 1 20 5.5v10a1.5 1.5 0 0 1-1.5 1.5H11l-5 4v-4h-.5A1.5 1.5 0 0 1 4 15.5v-10A1.5 1.5 0 0 1 5.5 4z"></path><path d="M9.8 8.7a2.2 2.2 0 1 1 3.1 2c-.6.3-.9.8-.9 1.4v.3"></path><path d="M12 14.4v.1"></path></svg>
+          <span data-i18n="qa">Soru-Cevap</span>
+        </a>
+      </div>
+    </section>
 
     <div class="grid-links">
       <a data-row href="https://www.investikarus.com/index.html" id="link-website" target="_blank" rel="noopener" class="grid-item">
@@ -201,7 +258,7 @@
         <span class="grid-item-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.2 3.5h3l1.5 4-2 1.4a12 12 0 0 0 5.4 5.4l1.4-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.2 5.7a2 2 0 0 1 2-2.2z"></path></svg><span class="arrow" aria-hidden="true">→</span></span>
         <span data-i18n="phone4">Telefon</span>
       </a>
-      <a data-row href="#" id="link-archive" class="grid-item">
+      <a data-row href="/arsiv" id="link-archive" class="grid-item">
         <span class="grid-item-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h9.5a2 2 0 0 1 2 2v11H6a2 2 0 0 1-2-2z"></path><path d="M15.5 8.5H19a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2h-2.5"></path><path d="M7 9h6M7 12h6M7 15h4"></path></svg><span class="arrow" aria-hidden="true">→</span></span>
         <span data-i18n="archive4">Bülten arşivi</span>
       </a>
@@ -235,20 +292,6 @@
       <img data-darkonly src="assets/ikarus-yazi-slogan-beyaz.svg" alt="İkarus" style="width:118px;height:auto;display:block;opacity:.75">
     </div>
   </div>
-
-  <div id="comingSoonModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,34,67,0.4); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
-    <div style="background: var(--bg); color: var(--ink); padding: 24px 32px; border-radius: 14px; border: 1px solid var(--bd); box-shadow: 0 8px 24px rgba(15,34,67,0.12); text-align: center; max-width: 80%; transform: translateY(10px); animation: modalRise 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;">
-      <div data-i18n="comingsoon" style="font: 600 17px/1.4 'Archivo', sans-serif; color: var(--head);">Çok yakında...</div>
-      <button type="button" id="closeModalBtn" style="margin-top: 20px; background: var(--surf); color: var(--head); border: 1px solid var(--bd); padding: 10px 24px; border-radius: 8px; font: 600 14px/1 'Archivo', sans-serif; cursor: pointer;">
-        <span data-i18n="close">Kapat</span>
-      </button>
-    </div>
-  </div>
-  <style>
-    @keyframes modalRise {
-      to { transform: translateY(0); }
-    }
-  </style>
 
   <script>
     // Theme logic
@@ -290,30 +333,34 @@
       'tr': {
         'bulletin': 'Bülten',
         'openissue': 'Son sayıyı aç',
-        'issue': 'Eylül 2026',
+        'issue': 'Ekim 2026',
+        'eventkicker': 'ODTÜ Teknokent · 27 Ekim',
+        'eventname': 'Share&Connect: Ar-Ge Destekleri',
+        'form': 'Form',
+        'qa': 'Soru-Cevap',
         'web4': 'Web sitesi',
         'mail4': 'E-posta',
         'phone4': 'Telefon',
         'archive4': 'Bülten arşivi',
         'offices4': 'Ofisler',
         'london4': 'Londra',
-        'toggleLabel': 'EN',
-        'comingsoon': 'Çok yakında...',
-        'close': 'Kapat'
+        'toggleLabel': 'EN'
       },
       'en': {
         'bulletin': 'Newsletter',
         'openissue': 'Open latest issue',
-        'issue': 'September 2026',
+        'issue': 'October 2026',
+        'eventkicker': 'ODTÜ Teknokent · 27 October',
+        'eventname': 'Share&Connect: R&D Support',
+        'form': 'Form',
+        'qa': 'Q&A',
         'web4': 'Website',
         'mail4': 'Email',
         'phone4': 'Phone',
         'archive4': 'Newsletter archive',
         'offices4': 'Offices',
         'london4': 'London',
-        'toggleLabel': 'TR',
-        'comingsoon': 'Coming soon...',
-        'close': 'Close'
+        'toggleLabel': 'TR'
       }
     };
 
@@ -340,27 +387,6 @@
       currentLang = currentLang === 'tr' ? 'en' : 'tr';
       localStorage.setItem('ikarus-lang', currentLang);
       applyLanguage(currentLang);
-    });
-
-    // Coming soon modal logic
-    const modal = document.getElementById('comingSoonModal');
-    const closeBtn = document.getElementById('closeModalBtn');
-
-    function openModal(e) {
-      e.preventDefault();
-      modal.style.display = 'flex';
-    }
-
-    function closeModal() {
-      modal.style.display = 'none';
-    }
-
-    // Son sayı gerçek bir sayfaya bağlı; yalnızca arşiv henüz hazır değil.
-    document.getElementById('link-archive').addEventListener('click', openModal);
-
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
     });
   </script>
 </body>

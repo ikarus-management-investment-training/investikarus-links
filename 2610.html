@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>İkarus Bülten — Ekim 2026</title>
+<meta name="description" content="İkarus aylık bülteni, Ekim 2026: Öncelikli Finansman Belgesi, TÜBİTAK 1832 Yeşil Dönüşüm çağrısı, İstihdamı Koruma Programı, KOSGEB Yapay Zekâ Kredisi, savunma ve tarım programları.">
+<meta name="theme-color" content="#0F2243">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&amp;family=Archivo:wght@300;400;500;600;700&amp;family=Quicksand:wght@500;600;700&amp;family=Marcellus&amp;display=swap" rel="stylesheet">
+<style>
+/* ===================================================================
+   1. Belgenin kendi stilleri — kaynak .dc.html dosyasindan aynen alindi
+   =================================================================== */
+.doc{
+    --ik-accent:#189B93; --ik-navy:#0F2243; --ik-ink:#1B2733; --ik-muted:#5C6B79;
+    --ik-rule:#DCE3E9; --ik-tint:#EFF7F7; --ik-body:11pt; --ik-align:justify;
+    font-family:'Archivo',system-ui,sans-serif; font-size:var(--ik-body); line-height:1.56; color:var(--ik-ink);
+  }
+  .doc .page{padding:0; display:flex; flex-direction:column}
+  h1,h2,h3,h4{font-family:'Spectral',Georgia,serif; margin:0; color:var(--ik-navy); font-weight:600}
+  p{margin:0 0 8pt; text-align:var(--ik-align); hyphens:auto}
+  strong{font-weight:600; color:var(--ik-navy)}
+  ul{margin:0 0 7pt; padding:0; list-style:none}
+  li{margin:0 0 4pt; padding-left:15pt; position:relative; text-align:var(--ik-align); hyphens:auto}
+  li::before{content:""; position:absolute; left:3pt; top:0.6em; width:4pt; height:4pt; background:var(--ik-accent)}
+  table{width:100%; border-collapse:collapse; margin:0 0 5pt; font-size:9.5pt; line-height:1.45}
+  thead th{background:var(--ik-navy); color:#fff; font-weight:600; text-align:left; padding:6pt 8pt; font-size:9pt; letter-spacing:0.02em}
+  td{padding:6pt 8pt; border-bottom:1px solid #E5EBF0; vertical-align:top}
+  tbody tr:nth-child(even) td{background:#F6FAFA}
+  a{color:#116E68; text-decoration:none}
+  a:hover{color:var(--ik-accent)}
+  figure{margin:0 0 12pt}
+  figcaption{font-size:8.5pt; color:var(--ik-muted); margin-top:6pt; text-align:center}
+
+/* ===================================================================
+   2. Okuyucu kabugu
+   =================================================================== */
+:root{
+  --px: 0.8in; --pxneg: -0.8in;      /* sayfanin yatay kenar boslugu */
+  --desk:#E7ECEF; --bar:#0F2243; --on-bar:#FFFFFF; --accent:#189B93;
+  --page-w: 210mm; --page-h: 297mm;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --desk:#15181A; }
+}
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent }
+html{ scroll-behavior:smooth; scroll-padding-top:64px }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto } }
+body{
+  margin:0; background:var(--desk); color:#1B2733;
+  font-family:'Archivo',system-ui,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+
+/* --- ust cubuk ------------------------------------------------------ */
+.bar{
+  position:sticky; top:0; z-index:20;
+  display:flex; align-items:center; gap:10px;
+  padding:0 8px 0 4px; padding-top:env(safe-area-inset-top);
+  height:calc(52px + env(safe-area-inset-top));
+  background:var(--bar); color:var(--on-bar);
+}
+.bar a,.bar button{
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  min-height:40px; padding:0 11px; border:0; border-radius:8px;
+  background:transparent; color:inherit; cursor:pointer;
+  font:600 12px/1 'Archivo',sans-serif; letter-spacing:.04em;
+  text-decoration:none; flex:none;
+}
+.bar a:hover,.bar button:hover{ background:rgba(255,255,255,.10) }
+.bar a:active,.bar button:active{ background:rgba(255,255,255,.18) }
+.bar svg{ width:17px; height:17px; flex:none }
+.bar-title{
+  flex:1; min-width:0; display:flex; align-items:baseline; gap:7px;
+  font:400 12px/1 'Archivo',sans-serif; letter-spacing:.16em;
+  text-transform:uppercase; color:rgba(255,255,255,.62);
+  overflow:hidden; white-space:nowrap;
+}
+.bar-title b{ font-weight:600; color:#fff; letter-spacing:.1em }
+@media (max-width:560px){
+  /* Dugme yazilari simgeye birakir; baslik kalir ve cubugu dengeler
+     (tasarsa kendi icinde kirpilir: overflow:hidden + nowrap). */
+  .bar-lbl{ display:none }
+  .bar a,.bar button{ padding:0 9px }
+}
+
+/* --- okuma ilerlemesi ----------------------------------------------- */
+.progress{
+  position:sticky; top:calc(52px + env(safe-area-inset-top)); z-index:20;
+  height:2px; background:rgba(15,34,67,.10);
+}
+.progress i{
+  display:block; height:100%; width:0; background:var(--accent);
+  transform-origin:0 50%;
+}
+
+/* --- icindekiler paneli --------------------------------------------- */
+.toc{
+  position:fixed; inset:0; z-index:30; display:none;
+  background:rgba(15,34,67,.44); backdrop-filter:blur(3px);
+}
+.toc[open]{ display:block }
+.toc-panel{
+  position:absolute; top:0; right:0; width:min(280px,82vw); height:100%;
+  padding:calc(14px + env(safe-area-inset-top)) 14px 20px;
+  background:#fff; overflow-y:auto;
+  box-shadow:-8px 0 32px rgba(15,34,67,.18);
+}
+.toc-panel h2{
+  font:600 10px/1 'Archivo',sans-serif; letter-spacing:.2em;
+  text-transform:uppercase; color:#5C6B79; margin:0 0 10px; padding:0 8px;
+}
+.toc-panel a{
+  display:block; padding:11px 8px; border-radius:7px;
+  border-bottom:1px solid #EDF1F5;
+  font:500 14px/1.3 'Archivo',sans-serif; color:#1B2733; text-decoration:none;
+}
+.toc-panel a:hover{ background:#F6FAFA }
+.toc-panel a[aria-current="true"]{ color:var(--accent); font-weight:600 }
+
+/* --- sayfa kartlari (masaustu: A4 birebir) --------------------------- */
+.doc{ padding:22px 14px 60px }
+.sheet{
+  position:relative; width:100%; max-width:var(--page-w); margin:0 auto 20px;
+  height:calc(var(--page-h) * var(--k, 1));
+  overflow:hidden; background:#fff;
+  box-shadow:0 1px 2px rgba(15,34,67,.10), 0 10px 28px rgba(15,34,67,.10);
+}
+.sheet > .page{
+  width:var(--page-w); height:var(--page-h);
+  transform:scale(var(--k, 1)); transform-origin:0 0;
+}
+.toc-row{ text-decoration:none }
+.toc-row:hover{ background:#F6FAFA }
+
+/* ===================================================================
+   3. Akis modu — dar ekranda icerik sayfalari tek sutuna akar.
+      Satir ici stiller CSS degiskenleri uzerinden gecersiz kilinir.
+   =================================================================== */
+@media (max-width: 819px){
+  .doc{ padding:0 0 40px; background:#fff }
+  html{ scroll-padding-top:56px }
+
+  /* kapak ve arka kapak: tasarim butun olarak gorulmeli, olceklenir */
+  .sheet[data-fixed]{ margin:0 0 18px; max-width:none; box-shadow:none }
+
+  /* icerik sayfalari: kutudan cikar, akar */
+  .sheet:not([data-fixed]){
+    height:auto; max-width:none; margin:0; overflow:visible;
+    background:transparent; box-shadow:none;
+    zoom:1.12;                       /* pt olculerini oransal buyutur */
+  }
+  .sheet:not([data-fixed]) > .page{
+    width:auto; height:auto; transform:none;
+  }
+  .sheet:not([data-fixed]) .page{
+    --px:20px; --pxneg:-20px;        /* 0.8in (77px) -> 20px */
+    --h2:20pt; --h2b:23pt; --h2wrap:normal;
+    --ik-align:left;                 /* dar sutunda iki yana yaslama bozuk durur */
+    --gcol:repeat(auto-fit,minmax(150px,1fr));   /* 3-5 sutun -> sigdigi kadar */
+    --g2tbl:1fr;                     /* yan yana iki tablo -> alt alta */
+  }
+  /* Izgara cocuklarinin otomatik en kucuk genisligi (min-width:auto) 1fr izini
+     asabiliyor: 320px'de basliklar ve iki sutunlu kartlar tasiyordu. Tum
+     izgara cocuklarinda sifirlanir -- metin artik sarar, tasmaz.
+     Secici satir ici stile bakiyor; bu stiller build tarafindan uretildigi
+     icin "grid-template-columns" alt dizisi guvenilir bir isaret. */
+  .sheet:not([data-fixed]) [style*="grid-template-columns"] > *{ min-width:0 }
+  /* Matris (grid-row'lu) birlestirilemez: kendi sutun sayisiyla yatay kayar. */
+  .sheet:not([data-fixed]) [style*="--gmat-wide"]{
+    --gmat:var(--gmat-wide);
+    overflow-x:auto; overscroll-behavior-x:contain; padding-bottom:5px;
+  }
+  /* Sayfa basi/sonu her sayfada tekrar eder; akista gurultu, kaldirilir.
+     display satir ici tanimli oldugu icin --pgd degiskeni uzerinden. */
+  .sheet:not([data-fixed]) .pg-head,
+  .sheet:not([data-fixed]) .pg-foot{ --pgd:none }
+  .sheet:not([data-fixed]) .pg-body{ padding-top:18pt }
+  /* Baslikta kucuk etiket, kaynakta basliga BITISIK yazilmis
+     ("Yardimi<span>Degisiklikler</span>") -- arada bosluk olmadigi icin
+     tarayici ikisini tek, bolunemez kume sayar ve dar ekranda tasar.
+     Akista etiket kendi satirina alinir. */
+  .sheet:not([data-fixed]) h2 > span{ display:block; margin-top:3pt }
+  .sheet:not([data-fixed]) table{ font-size:9pt }
+  .sheet:not([data-fixed]) td,
+  .sheet:not([data-fixed]) thead th{ padding:5pt 6pt }
+  .sheet:not([data-fixed]) .tbl-wrap{
+    overflow-x:auto; overscroll-behavior-x:contain; margin-bottom:5pt;
+  }
+  /* Yatay kayan iki alan (genis tablolar ve destek matrisi) icin ince,
+     gorunur kaydirma cubugu -- kirpilmis icerik tek basina yeterli ipucu degil. */
+  .sheet:not([data-fixed]) .tbl-wrap,
+  .sheet:not([data-fixed]) [style*="--gmat-wide"]{
+    scrollbar-width:thin; scrollbar-color:rgba(15,34,67,.30) transparent;
+  }
+}
+
+/* --- yazdirma: A4, kabuk gizli -------------------------------------- */
+@page{ size:A4; margin:0 }
+@media print{
+  .bar,.progress,.toc{ display:none !important }
+  body{ background:#fff }
+  .doc{ padding:0 }
+  .sheet{ margin:0; max-width:none; height:var(--page-h); box-shadow:none;
+          break-after:page; page-break-after:always }
+  .sheet > .page{ transform:none }
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a href="/" aria-label="Geri">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+    <span class="bar-lbl">Geri</span>
+  </a>
+  <div class="bar-title">Bülten <b>Ekim 2026</b></div>
+  <button type="button" id="tocBtn" aria-haspopup="dialog" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    <span class="bar-lbl">İçindekiler</span>
+  </button>
+  <!-- PDF dugmesi bilerek yok: 12,9 MB'lik dosya public depoya konmadi
+       (git gecmisine kalici yazilirdi). PDF baska bir yere -- ornegin GitHub
+       Releases -- konuldugunda buraya bir <a> geri eklenir; "download"
+       ozniteligi KOYMA ki dosya ekranda acilsin, indirme zorlanmasin. -->
+</header>
+<div class="progress"><i id="progressBar"></i></div>
+
+<div class="toc" id="tocPanel" role="dialog" aria-modal="true" aria-label="İçindekiler">
+  <nav class="toc-panel">
+    <h2>Sayfalar</h2>
+      <a href="#kapak" data-nav="kapak"><span>Kapak</span></a>
+      <a href="#icindekiler" data-nav="icindekiler"><span>İçindekiler</span></a>
+      <a href="#s01" data-nav="s01"><span>01</span></a>
+      <a href="#s02" data-nav="s02"><span>02</span></a>
+      <a href="#s03" data-nav="s03"><span>03</span></a>
+      <a href="#s04" data-nav="s04"><span>04</span></a>
+      <a href="#s05" data-nav="s05"><span>05</span></a>
+      <a href="#s06" data-nav="s06"><span>06</span></a>
+      <a href="#s07" data-nav="s07"><span>07</span></a>
+      <a href="#s08" data-nav="s08"><span>08</span></a>
+      <a href="#s09" data-nav="s09"><span>09</span></a>
+      <a href="#s10" data-nav="s10"><span>10</span></a>
+      <a href="#arka-kapak" data-nav="arka-kapak"><span>Arka kapak</span></a>
+  </nav>
+</div>
+
+<main class="doc">
+  <div class="sheet" data-fixed>
+<section class="page" id="kapak" data-pg="1" data-fixed data-screen-label="Kapak" style="position:relative; overflow:hidden; background:#0F2243">
+    <img src="bulten/2026-10/assets/ekim-k1-kapak.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%">
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,34,67,0.62) 0%, rgba(15,34,67,0.12) 26%, rgba(15,34,67,0.06) 46%, rgba(15,34,67,0.72) 74%, rgba(15,34,67,0.92) 100%)"></div>
+    <div style="position:absolute; inset:0; background:#189B93; opacity:0.1"></div>
+
+    <div style="position:absolute; left:52px; right:52px; top:44px; display:flex; align-items:center; justify-content:space-between">
+      <img src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height:26px; width:auto; display:block; filter:brightness(0) invert(1)">
+      <div style="font:700 10px/1 'Archivo',sans-serif; letter-spacing:0.3em; text-transform:uppercase; color:#FFFFFF">Ekim 2026</div>
+    </div>
+
+    <div style="position:absolute; left:52px; right:52px; top:92px">
+      <div style="font: 800 128pt/0.84 'Spectral',serif; color: #FFFFFF; letter-spacing: -0.022em; font-size: 162px; display: flex; justify-content: center">BÜLTEN</div>
+      <div style="height:2px; background:rgba(255,255,255,0.55); margin-top:18px"></div>
+      <div style="font: 600 10.5px/1 'Archivo',sans-serif; letter-spacing: 0.26em; text-transform: uppercase; color: #FFFFFF; margin-top: 12px; font-size: 14.5px; display: flex; justify-content: center; margin-right: -0.26em">Teşvik · Destek · Mevzuat — yatırımcılar ve KOBİ'ler için</div>
+    </div>
+
+    <div style="position:absolute; left:52px; right:52px; bottom:238px">
+      <div style="display:inline-block; background:#189B93; color:#FFFFFF; font:800 10px/1 'Archivo',sans-serif; letter-spacing:0.22em; text-transform:uppercase; padding:7px 11px; margin-bottom:16px">Öncelikli Finansman Belgesi</div>
+      <div style="font:800 46pt/1.02 'Spectral',serif; color:#FFFFFF; letter-spacing:-0.012em; max-width:600px">İmalat yatırımına 100 milyon TL eşikli yeni kulvar</div>
+    </div>
+
+    <div style="position:absolute; left:52px; right:52px; bottom:64px; display:grid; gap:0">
+      <div style="height:1px; background:rgba(255,255,255,0.34)"></div>
+      <div style="display:grid; grid-template-columns:10px 1fr; gap:0 14px; align-items:center; padding:13px 0; border-bottom:1px solid rgba(255,255,255,0.34)">
+        <div style="width:10px; height:10px; background:#189B93"></div>
+        <div style="font:500 15pt/1.2 'Archivo',sans-serif; color:#FFFFFF">TÜBİTAK 1832 Yeşil Dönüşüm çağrısı açıldı</div>
+      </div>
+      <div style="display:grid; grid-template-columns:10px 1fr; gap:0 14px; align-items:center; padding:13px 0; border-bottom:1px solid rgba(255,255,255,0.34)">
+        <div style="width:10px; height:10px; background:#189B93"></div>
+        <div style="font:500 15pt/1.2 'Archivo',sans-serif; color:#FFFFFF">İstihdamı Koruma Programında 2. dönem başladı</div>
+      </div>
+      <div style="display:grid; grid-template-columns:10px 1fr; gap:0 14px; align-items:center; padding:13px 0">
+        <div style="width:10px; height:10px; background:#189B93"></div>
+        <div style="font:500 15pt/1.2 'Archivo',sans-serif; color:#FFFFFF">Savunmada 2 milyar TL eşikli HIT çağrısı</div>
+      </div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="icindekiler" data-pg="2" data-screen-label="İçindekiler">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.42in var(--px) 0">
+      <h2 style="font-size:var(--h2b,34pt); font-weight:700; line-height:1.1">İçindekiler</h2>
+      <div style="height:2px; background:#189B93; margin:12pt 0 14pt"></div>
+      <p style="max-width:4.6in; margin-bottom:26pt">Bu sayıda imalat yatırımları için yeni Öncelikli Finansman Belgesi, TÜBİTAK'ın yeşil dönüşüm çağrısı, istihdam ve yapay zekâ odaklı KOSGEB destekleri ile savunma ve tarım teknolojilerine yönelik yeni programlar yer alıyor.</p>
+      <div style="display:grid; row-gap:0">
+        <a href="#s01" class="toc-row" style="display:grid; grid-template-columns:0.62in 1fr auto; gap:0 10pt; align-items:baseline; padding:13pt 0; border-top:1px solid #DCE3E9">
+          <div style="font:600 22pt/1 'Spectral',serif; color:#189B93">01</div>
+          <div>
+            <div style="font:600 15pt/1.25 'Spectral',serif; color:#0F2243">Öncelikli Finansman Belgesi</div>
+            <div style="font:400 9.5pt/1.4 'Archivo',sans-serif; color:#5C6B79; margin-top:3pt">TSP Belgesi ile karşılaştırma, değerlendirme süreci, faiz desteği tercihi</div>
+          </div>
+          <div style="font:600 13pt/1 'Spectral',serif; color:#116E68">1</div></a>
+        <a href="#s03" class="toc-row" style="display:grid; grid-template-columns:0.62in 1fr auto; gap:0 10pt; align-items:baseline; padding:13pt 0; border-top:1px solid #DCE3E9">
+          <div style="font:600 22pt/1 'Spectral',serif; color:#189B93">02</div>
+          <div>
+            <div style="font:600 15pt/1.25 'Spectral',serif; color:#0F2243">TÜBİTAK 1832 Yeşil Dönüşüm</div>
+            <div style="font:400 9.5pt/1.4 'Archivo',sans-serif; color:#5C6B79; margin-top:3pt">2026 yılı 2. dönem çağrısı: kapsam, destek oranları, hibeye dönüşüm</div>
+          </div>
+          <div style="font:600 13pt/1 'Spectral',serif; color:#116E68">3</div></a>
+        <a href="#s05" class="toc-row" style="display:grid; grid-template-columns:0.62in 1fr auto; gap:0 10pt; align-items:baseline; padding:13pt 0; border-top:1px solid #DCE3E9">
+          <div style="font:600 22pt/1 'Spectral',serif; color:#189B93">03</div>
+          <div>
+            <div style="font:600 15pt/1.25 'Spectral',serif; color:#0F2243">İstihdamı Koruma Destek Programı</div>
+            <div style="font:400 9.5pt/1.4 'Archivo',sans-serif; color:#5C6B79; margin-top:3pt">İmalat sanayii için 2. dönem finansman desteği ve istihdam şartı</div>
+          </div>
+          <div style="font:600 13pt/1 'Spectral',serif; color:#116E68">5</div></a>
+        <a href="#s07" class="toc-row" style="display:grid; grid-template-columns:0.62in 1fr auto; gap:0 10pt; align-items:baseline; padding:13pt 0; border-top:1px solid #DCE3E9">
+          <div style="font:600 22pt/1 'Spectral',serif; color:#189B93">04</div>
+          <div>
+            <div style="font:600 15pt/1.25 'Spectral',serif; color:#0F2243">KOSGEB Yapay Zekâ Kredisi</div>
+            <div style="font:400 9.5pt/1.4 'Archivo',sans-serif; color:#5C6B79; margin-top:3pt">Faizsiz kredi ile işlem gücü ve veri merkezi hizmetlerine erişim</div>
+          </div>
+          <div style="font:600 13pt/1 'Spectral',serif; color:#116E68">7</div></a>
+        <a href="#s08" class="toc-row" style="display:grid; grid-template-columns:0.62in 1fr auto; gap:0 10pt; align-items:baseline; padding:13pt 0; border-top:1px solid #DCE3E9">
+          <div style="font:600 22pt/1 'Spectral',serif; color:#189B93">05</div>
+          <div>
+            <div style="font:600 15pt/1.25 'Spectral',serif; color:#0F2243">HIT — Yenilikçi Savunma Teknolojileri</div>
+            <div style="font:400 9.5pt/1.4 'Archivo',sans-serif; color:#5C6B79; margin-top:3pt">Çift kullanımlı derin teknolojilere yönelik yatırım çağrısı</div>
+          </div>
+          <div style="font:600 13pt/1 'Spectral',serif; color:#116E68">8</div></a>
+        <a href="#s09" class="toc-row" style="display:grid; grid-template-columns:0.62in 1fr auto; gap:0 10pt; align-items:baseline; padding:13pt 0; border-top:1px solid #DCE3E9; border-bottom:1px solid #DCE3E9">
+          <div style="font:600 22pt/1 'Spectral',serif; color:#189B93">06</div>
+          <div>
+            <div style="font:600 15pt/1.25 'Spectral',serif; color:#0F2243">MARKA Yenilikçi Tarım Kredisi</div>
+            <div style="font:400 9.5pt/1.4 'Archivo',sans-serif; color:#5C6B79; margin-top:3pt">Doğu Marmara KOBİ'lerine faizsiz kredi desteği</div>
+          </div>
+          <div style="font:600 13pt/1 'Spectral',serif; color:#116E68">9</div></a>
+      </div>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s01" data-pg="3" data-screen-label="01">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <figure style="position:relative; margin:0 var(--pxneg) 16pt; height:168px; overflow:hidden">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ekim-01-imalat.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 58%; display:block">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,34,67,0.45) 0%, rgba(15,34,67,0.10) 45%, rgba(15,34,67,0.58) 100%); pointer-events:none"></div>
+        <div style="position:absolute; inset:0; background:#189B93; opacity:0.1; pointer-events:none"></div>
+        <figcaption style="position:absolute; left:var(--px); bottom:0; margin:0; background:#189B93; color:#FFFFFF; font:600 7pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; padding:5pt 8pt; text-align:left">İmalat sanayi yatırımları</figcaption>
+      </figure>
+      <div style="display:grid; grid-template-columns:0.62in 1fr; gap:0 10pt; align-items:baseline; margin:0 0 8pt">
+        <div style="font:600 34pt/1 'Spectral',serif; color:#189B93">01</div>
+        <h2 style="font-size:var(--h2,28pt); font-weight: 700; line-height: 1.14">Öncelikli Finansman Belgesi</h2>
+      </div>
+      <div style="height:2px; background:#189B93; margin-bottom:16pt"></div>
+      <p>26/11/2023 tarihli ve 32381 sayılı Resmî Gazete'de yayımlanan Yatırım Projelerinin Stratejik Öncelik ve Teknik Değerlendirmesine Dair Tebliğ'de değişiklik yapan Tebliğ yürürlüğe girmiştir. Düzenlemeyle, mevcut TSP Belgesi uygulamasının yanına, imalat sanayine yönelik yatırımlar için daha erişilebilir bir enstrüman olan <strong>Öncelikli Finansman Belgesi (ÖFB)</strong> ihdas edilmiştir.</p>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">1. Yeni Enstrüman</h4>
+      <p>Bakanlıkça belirlenen öncelik kriterlerine göre, finansman programlarına başvuran projeler için kredi tahsisatının uygun olduğunu gösteren belgedir. İmalat sanayine yönelik teşvik belgesi sahibi yatırımcıların başvurusuna açıktır ve TSP Belgesine kıyasla daha düşük eşikli, çoğu hâlde puanlama gerektirmeyen bir kulvar sunar.</p>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 7pt">2. İki Kulvarın Karşılaştırması</h4>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th style="width:1.35in">Kriter</th><th>TSP Belgesi</th><th>Öncelikli Finansman Belgesi</th></tr></thead>
+        <tbody>
+          <tr><td style="font-weight:600; color:#0F2243">Kapsam / uygunluk</td><td>Türkiye Yüzyılı Kalkınma Hamlesi (9903 s.) veya Proje Bazlı Devlet Yardımı (2016/9495) kapsamı; ya da Ek-1 Stratejik Öncelikli Ürün, Ek-2 Teknoloji Alanları veya Ek-3 Kritik Hammadde Listesi kapsamındaki projeler</td><td>İmalat sanayine yönelik teşvik belgesi sahibi yatırımcılar</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243">Asgari yatırım (Ar-Ge dâhil)</td><td>En az 1 milyar TL</td><td><strong>En az 100 milyon TL</strong></td></tr>
+          <tr><td style="font-weight:600; color:#0F2243">Ek mali şart</td><td>Son mali yıl bilançosunda en az 50 milyon TL özkaynak veya ödenmiş sermaye</td><td>Aranmıyor</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243">Değerlendirme</td><td>Teknik Komite tarafından puanlama</td><td>Ek-5 kapsamındaki belge sahiplerine doğrudan; diğerlerinde Ek-6 kriterlerine göre 50 ve üzeri puan</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">1</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s02" data-pg="4" data-screen-label="02">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:0 0 5pt">3. Değerlendirme Süreci</h4>
+      <p>TSP Belgesi başvuruları Teknik Komite tarafından puanlanmakta ve sonuç yatırımcıya bildirilmektedir. ÖFB başvurularında ise puanlama süreci uygulanmaz; Ek-5'te sayılan teşvik programları kapsamındaki belge sahiplerine ek değerlendirme yapılmaksızın belge düzenlenir, diğer başvurularda Ek-6 kriterlerine göre 50 ve üzeri puan alanlara belge verilir. Program limitlerinin dolması, durdurulması veya sona ermesi hâlinde başvurular puana göre yüksekten düşüğe sıralanarak değerlendirilebilir.</p>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">4. Kritik Husus: Faiz / Kâr Payı Desteği</h4>
+      <div style="border:1px solid #CFE3E3; border-left:3px solid #189B93; background:#EFF7F7; padding:11pt 13pt 12pt; margin:4pt 0 4pt">
+        <div style="display:inline-block; background:#116E68; color:#FFFFFF; font:600 7pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; padding:4pt 7pt; margin-bottom:8pt">Dikkat</div>
+        <p style="margin:0; font-size:10pt">Finansman Programından yararlanan yatırımcılara, bu kullanımdan doğan faiz veya kâr payı ödemeleri için ilgili teşvik belgesi kapsamında <strong>ayrıca faiz/kâr payı desteği sağlanmamaktadır.</strong> Öncelikli finansmana erişim ile mevcut faiz desteğinden feragat arasında projeye özgü bir tercih söz konusudur. Özellikle faiz desteği tavanı yüksek, büyük ölçekli yatırımlarda karar, iki seçeneğin sayısal olarak karşılaştırılmasını gerektirir.</p>
+      </div>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:13pt 0 5pt">5. Diğer Önemli Hükümler</h4>
+      <ul>
+        <li>Teşvik mevzuatı desteklerinden yararlanma imkânı bulunmayan yatırımcılar, 4/1-(b) bendi kapsamında teşvik belgesi olmaksızın başvuru yapabilir.</li>
+        <li>Davet mektubu verilen veya destek kararı alınan projeler için, teşvik belgesi düzenlenmemiş olsa dahi ön başvuru yapılabilir; kesin başvuru değerlendirmesi belge düzenlendikten sonra yürütülür.</li>
+        <li>Teknik Komite uygun görürse, stratejik stoklara yapılacak yatırım tutarı TSP proje büyüklüğünün belirlenmesinde hesaba dâhil edilebilir.</li>
+        <li>Aynı anda birden çok Finansman Programı için değerlendirme yürütülse de yalnızca birine başvuru yapılabilir.</li>
+      </ul>
+      <div style="border-left:3px solid #189B93; background:#EFF7F7; padding:12pt 14pt; margin-top:12pt">
+        <p style="margin:0; font-size:10pt">TSP Belgesi büyük ölçekli, stratejik ve teknoloji odaklı yatırımlar için puanlamaya tabi kulvarı korurken ÖFB, imalat sanayine yönelik yatırımlara 100 milyon TL eşikli ve çoğu hâlde puanlama gerektirmeyen daha erişilebilir bir yol açmaktadır. Yatırımlarınızın hangi kulvara uygun olduğunun ve faiz desteği–öncelikli finansman dengesinin proje bazında modellenmesinde destek olmaktan memnuniyet duyarız.</p>
+      </div>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">2</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s03" data-pg="5" data-screen-label="03">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <figure style="position:relative; margin:0 var(--pxneg) 16pt; height:168px; overflow:hidden">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ekim-02-yesil-donusum.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 46%; display:block">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,34,67,0.45) 0%, rgba(15,34,67,0.10) 45%, rgba(15,34,67,0.58) 100%); pointer-events:none"></div>
+        <div style="position:absolute; inset:0; background:#189B93; opacity:0.1; pointer-events:none"></div>
+        <figcaption style="position:absolute; left:var(--px); bottom:0; margin:0; background:#189B93; color:#FFFFFF; font:600 7pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; padding:5pt 8pt; text-align:left">Sanayide yeşil dönüşüm</figcaption>
+      </figure>
+      <div style="display:grid; grid-template-columns:0.62in 1fr; gap:0 10pt; align-items:baseline; margin:0 0 8pt">
+        <div style="font:600 34pt/1 'Spectral',serif; color:#189B93">02</div>
+        <h2 style="font-size:var(--h2,28pt); font-weight: 700; line-height: 1.14">TÜBİTAK 1832 Yeşil Dönüşüm</h2>
+      </div>
+      <div style="height:2px; background:#189B93; margin-bottom:16pt"></div>
+      <p>TÜBİTAK Teknoloji ve Yenilik Destek Programları Başkanlığı (TEYDEB), 1832 kodlu “Sanayide Yeşil Dönüşüm Programı”nın 2026 yılı 2. Dönem çağrısını açmıştır. Dünya Bankası destekli Türkiye Yeşil Sanayi Projesi kapsamında yürütülen çağrı, sanayinin düşük karbonlu, kaynak verimli ve sürdürülebilir bir üretim yapısına geçişini hızlandırmayı amaçlamaktadır.</p>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">Programın Kapsamı</h4>
+      <p>Desteklenecek projelerin Teknoloji Hazırlık Seviyesi (THS) 3 ile 9 aralığında olması ve proje sonunda en az <strong>THS 7</strong> seviyesine ulaşması beklenmektedir. Kapsamda; yeni prototip geliştirme, mevcut bir Ar-Ge prototipi üzerinde ileri geliştirme veya iyileştirme ve prototipin doğrulanmasına yönelik testler gibi ticarileşmeye yönelik teknoloji doğrulama çalışmaları yer alır. Geliştirilen teknoloji veya prototipin ölçek büyütme (scale-up) faaliyetlerinin yapılması zorunludur.</p>
+      <p>Projelerin aşağıdaki beş ana konu başlığından en az biriyle ilişkili olması gerekmektedir:</p>
+      <div style="display:grid; grid-template-columns:var(--gcol,repeat(3,1fr)); gap:5pt; margin:2pt 0 10pt">
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">İklim Değişikliği, Çevre ve Biyoçeşitlilik</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">Temiz ve Döngüsel Ekonomi</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">Temiz, Erişilebilir ve Güvenli Enerji Arzı</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">Yeşil ve Sürdürülebilir Tarım</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">Sürdürülebilir Akıllı Ulaşım</div>
+      </div>
+      <p style="margin-bottom:0">Program, salt tesis veya altyapı kurma amaçlı projeleri değil; teknolojik belirsizlik içeren, Ar-Ge niteliği taşıyan projeleri destekler. Çevresel kazanımların ölçülebilir olması beklenir: örneğin birim üretim başına elektrik veya su tüketiminde ya da geri dönüştürülemeyen atık miktarında <strong>en az %10 azalma</strong> gibi hedefler belirlenmelidir.</p>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">3</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s04" data-pg="6" data-screen-label="04">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:0 0 5pt">Kimler Başvurabilir?</h4>
+      <p>Türkiye'de yerleşik sermaye şirketleri (KOBİ'ler ve büyük ölçekli kuruluşlar) başvurabilir. Başlıca kriterler:</p>
+      <ul>
+        <li>Kuruluşun tescil tarihinin en az 2 yıl olması (TÜBİTAK 1512 ve/veya 1812 desteğiyle kurulmuş start-up ve spin-off şirketler muaftır).</li>
+        <li>Yürütücü kuruluşun en az %75 ortaklıkla özel sektöre ait olması.</li>
+        <li>Proje konusuyla ilgili en az lisans seviyesinde bir personelin istihdam edilmesi.</li>
+        <li>Savunma sanayine yönelik faaliyet gösteren kuruluşlar veya çıktıları savunma sanayine yönelik projeler, Dünya Bankası kuralları gereği kapsam dışındadır.</li>
+        <li>Tek firma veya en fazla 3 ortaklı başvuru yapılabilir.</li>
+      </ul>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">Destek Tutarı ve Oranları</h4>
+      <p>Firmalara <strong>faizsiz geri ödemeli destek</strong> sağlanır. Proje başarıyla tamamlandığında teknik başarı kriterleri ve Yeşil Dönüşüm Göstergeleri'nin (YDG) gerçekleşme seviyesine göre desteğin bir kısmı hibeye dönüşebilir.</p>
+      <div style="display:grid; grid-template-columns:var(--g2tbl,1.15fr 1fr); gap:14pt; margin:6pt 0 4pt">
+        <div>
+          <div style="font:600 10pt/1.2 'Archivo',sans-serif; color:#116E68; margin:0 0 7pt">Tablo 2. Destek oranları</div>
+          <div class="tbl-wrap"><table style="margin:0">
+            <thead><tr><th>Kuruluş türü</th><th>Destek</th><th>Öz kaynak</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:600; color:#0F2243">Büyük ölçekli</td><td>%70</td><td>%30</td></tr>
+              <tr><td style="font-weight:600; color:#0F2243">KOBİ</td><td>%80</td><td>%20</td></tr>
+              <tr><td style="font-weight:600; color:#0F2243">Deprem bölgesindeki KOBİ</td><td>%90</td><td>%10</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div>
+          <div style="font:600 10pt/1.2 'Archivo',sans-serif; color:#116E68; margin:0 0 7pt">Tablo 3. Proje bütçesi üst limitleri</div>
+          <div class="tbl-wrap"><table style="margin:0">
+            <thead><tr><th>Firma ölçeği</th><th>Üst limit</th></tr></thead>
+            <tbody>
+              <tr><td style="font-weight:600; color:#0F2243">Mikro / Küçük</td><td>15.000.000 TL</td></tr>
+              <tr><td style="font-weight:600; color:#0F2243">Orta</td><td>24.000.000 TL</td></tr>
+              <tr><td style="font-weight:600; color:#0F2243">Büyük</td><td>51.500.000 TL</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:12pt 0 5pt">Geri Ödeme ve Hibeye Dönüşüm</h4>
+      <p>Geri ödeme, proje bittikten 1 yıl sonra başlar ve en fazla 4 yıl içinde, 6 aylık taksitlerle tamamlanır.</p>
+      <div style="display:grid; grid-template-columns:var(--gcol,repeat(3,1fr)); gap:9pt; margin:8pt 0 10pt">
+        <div style="border:1px solid #CFE3E3; border-top:3px solid #189B93; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Destek süresi</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">En fazla 24 ay</div>
+        </div>
+        <div style="border:1px solid #CFD8E4; border-top:3px solid #0F2243; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Hibeye dönüşüm · Büyük ölçekli</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">%50 – %70</div>
+          <div style="font:400 8pt/1.35 'Archivo',sans-serif; color:#5C6B79; margin-top:4pt">Başarı kriterlerine göre</div>
+        </div>
+        <div style="border:1px solid #CFE3E3; border-top:3px solid #189B93; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Hibeye dönüşüm · KOBİ</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">%60 – %80</div>
+          <div style="font:400 8pt/1.35 'Archivo',sans-serif; color:#5C6B79; margin-top:4pt">Başarı kriterlerine göre</div>
+        </div>
+      </div>
+      <p style="margin-bottom:0">Talep edilen geri ödemeli desteğin tamamı için başvuru aşamasında Banka Referans Mektubu, sözleşme aşamasında ise Teminat Mektubu sunulması gerekmektedir.</p>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">4</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s05" data-pg="7" data-screen-label="05">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:0 0 5pt">Başvuru Süreci ve Son Tarih</h4>
+      <p>Başvurular TÜBİTAK PRODİS sistemi üzerinden (eteydeb.tubitak.gov.tr) yürütülmektedir. 2026-2 çağrısı 3 Ağustos 2026'da açılmıştır.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:9pt; margin:4pt 0 0">
+        <div style="border-top:3px solid #0F2243; background:#F7F9FC; padding:10pt 12pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:6pt">Kuruluş bazlı ön kayıt</div>
+          <div style="font:600 14pt/1.1 'Spectral',serif; color:#0F2243">24 Eylül 2026</div>
+        </div>
+        <div style="border-top:3px solid #189B93; background:#F6FAFA; padding:10pt 12pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:6pt">Kesin başvuru</div>
+          <div style="font:600 14pt/1.1 'Spectral',serif; color:#0F2243">12 Ekim 2026 · 23:59</div>
+        </div>
+      </div>
+      <figure style="position:relative; margin:26pt var(--pxneg) 0; height:168px; overflow:hidden">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ekim-03-istihdam.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 56%; display:block">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,34,67,0.45) 0%, rgba(15,34,67,0.10) 45%, rgba(15,34,67,0.58) 100%); pointer-events:none"></div>
+        <div style="position:absolute; inset:0; background:#189B93; opacity:0.1; pointer-events:none"></div>
+        <figcaption style="position:absolute; left:var(--px); bottom:0; margin:0; background:#189B93; color:#FFFFFF; font:600 7pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; padding:5pt 8pt; text-align:left">İmalatta istihdamın korunması</figcaption>
+      </figure>
+      <div style="display:grid; grid-template-columns:0.62in 1fr; gap:0 10pt; align-items:baseline; margin:30pt 0 8pt">
+        <div style="font:600 34pt/1 'Spectral',serif; color:#189B93">03</div>
+        <h2 style="font-size:var(--h2,28pt); font-weight: 700; line-height: 1.14">İstihdamı Koruma Destek Programı</h2>
+      </div>
+      <div style="height:2px; background:#189B93; margin-bottom:16pt"></div>
+      <p>İmalat sanayiinde üretim kapasitesinin ve istihdamın korunması amacıyla yürütülen program, 2026 yılı 2. döneminde genişletilen kapsamı ve iyileştirilen finansman koşullarıyla yeniden başvuruya açılmıştır. Program, NACE Rev. 2 Kısım C (İmalat) kapsamında faaliyet gösteren KOBİ'lerin ve büyük işletmelerin kullandıkları kredilerin finansman maliyetinin bir bölümünü karşılamaktadır.</p>
+      <div style="border:1px solid #CFE3E3; border-left:3px solid #189B93; background:#EFF7F7; padding:11pt 13pt 12pt; margin:8pt 0 0">
+        <div style="display:inline-block; background:#116E68; color:#FFFFFF; font:600 7pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; padding:4pt 7pt; margin-bottom:8pt">İstihdam şartı</div>
+        <p style="margin:0; font-size:10pt">İşletmenin 2026 Ocak–Haziran (kontrol dönemi) ortalama aylık prim gün sayısını 2026 Temmuz–Aralık (koruma dönemi) boyunca koruması gerekir. Bu şart sağlanmadığında, kredi kullanılmış olsa dahi <strong>finansman desteği ödenmez.</strong></p>
+      </div>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">5</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s06" data-pg="8" data-screen-label="06">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <div style="font:600 10pt/1.2 'Archivo',sans-serif; color:#116E68; margin:0 0 7pt">Tablo 4. Programın temel parametreleri</div>
+      <div class="tbl-wrap"><table>
+        <tbody>
+          <tr><td style="width:1.65in; font-weight:600; color:#0F2243; background:#F4F8F8">Hedef sektör</td><td>Merkez veya şubesinin ana ya da yan faaliyet NACE kodu Kısım C – İmalat kapsamında olan işletmeler</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Kredi üst limiti</td><td>KOBİ'ler: <strong>50 milyon TL</strong> · Büyük işletmeler: <strong>150 milyon TL</strong></td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Kredi tutarının hesabı</td><td>2026 Ocak–Haziran döneminde destek kapsamındaki işyerleri için beyan edilen prime esas kazanç toplamının aylık ortalaması</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Vade / ödemesiz dönem</td><td>36 aya kadar vade, azami 6 ay anapara ödemesiz</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Finansman desteği</td><td>12 destek puanı</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Azami faiz / kâr payı</td><td>Sabit: %37 · Kâr paylı kredilerde TLREF + 1</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Komisyon</td><td>Tahsis ve kullandırım dâhil toplam komisyon kredinin %1'ini geçemez</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Kefalet (KOBİ)</td><td>KGF, Katılım Finans Kefalet (KFK) ve İhracatı Geliştirme A.Ş. (İGE) aracılığıyla</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Başvuru dönemi</td><td><strong>1 Eylül – 31 Ekim 2026</strong></td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Kredi kullanımı son tarih</td><td>31 Aralık 2026</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Ödeme talebi son tarih</td><td>31 Mart 2027</td></tr>
+        </tbody>
+      </table></div>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:16pt 0 5pt">Kredi Tutarının Bir Kat Artırımı</h4>
+      <p>Aşağıdaki kriterlerden birini sağlayan işletmeler için hesaplanan kredi tutarı bir kat artırımlı uygulanır:</p>
+      <ul>
+        <li><strong>Finansal yetkinlik:</strong> 2025 hesap dönemi verilerine göre faaliyet kârının sıfırdan büyük olması ve Toplam Borç (KVYK + UVYK) / Faaliyet Kârı oranının 3 veya altında olması.</li>
+        <li><strong>Ar-Ge yetkinliği:</strong> Ar-Ge veya Tasarım Merkezine sahip olmak, teknoparkta şubesi bulunmak, son 5 yılda başarıyla tamamlanmış TÜBİTAK projesi veya son 5 yılda tescil edilmiş en az bir patenti olmak.</li>
+      </ul>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">Başvuru Süreci</h4>
+      <p style="margin-bottom:0">Başvuru KOSGEB çevrim içi sistemi üzerinden yapılır. Uygun bulunan işletmeler, protokol kapsamındaki 15 kamu, özel ve katılım bankasından birine kredi başvurusunda bulunur. KOSGEB uygunluğu kredinin kullandırılacağı anlamına gelmez; kredi tahsisi bankanın kendi değerlendirmesine bağlıdır. Kredi kullanımı ve istihdam şartının sağlanmasının ardından destek ödemesi KOSGEB sistemi üzerinden talep edilir.</p>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">6</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s07" data-pg="9" data-screen-label="07">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <figure style="position:relative; margin:0 var(--pxneg) 16pt; height:168px; overflow:hidden">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ekim-04-yapay-zeka.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 50%; display:block">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,34,67,0.45) 0%, rgba(15,34,67,0.10) 45%, rgba(15,34,67,0.58) 100%); pointer-events:none"></div>
+        <div style="position:absolute; inset:0; background:#189B93; opacity:0.1; pointer-events:none"></div>
+        <figcaption style="position:absolute; left:var(--px); bottom:0; margin:0; background:#189B93; color:#FFFFFF; font:600 7pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; padding:5pt 8pt; text-align:left">Yapay zekâ işlem gücü altyapısı</figcaption>
+      </figure>
+      <div style="display:grid; grid-template-columns:0.62in 1fr; gap:0 10pt; align-items:baseline; margin:0 0 8pt">
+        <div style="font:600 34pt/1 'Spectral',serif; color:#189B93">04</div>
+        <h2 style="font-size:var(--h2,28pt); font-weight: 700; line-height: 1.14">KOSGEB Yapay Zekâ Kredisi</h2>
+      </div>
+      <div style="height:2px; background:#189B93; margin-bottom:16pt"></div>
+      <p>KOSGEB, teknoloji ve yenilik odaklı girişimlerin yapay zekâ alanındaki gelişimini hızlandırmak amacıyla GO Dijital Cüzdan üzerinden sağlanan Yapay Zekâ Kredi Programı'nı açıklamıştır. Program, Teknogirişim Rozeti sahibi işletmelerin yüksek performanslı işlem kaynağı, güvenli veri saklama, yapay zekâ araçları ve veri merkezi hizmetlerine erişimini kolaylaştırmayı hedefliyor.</p>
+      <div style="display:grid; grid-template-columns:var(--gcol,repeat(3,1fr)); gap:9pt; margin:10pt 0 6pt">
+        <div style="border:1px solid #CFE3E3; border-top:3px solid #189B93; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Kredi tutarı</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">500 bin –&nbsp;5&nbsp;milyon&nbsp;TL</div>
+        </div>
+        <div style="border:1px solid #CFD8E4; border-top:3px solid #0F2243; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Geri ödeme</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">12 ay ödemesiz + 12 eşit taksit</div>
+        </div>
+        <div style="border:1px solid #CFE3E3; border-top:3px solid #189B93; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Faiz ve komisyon</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">Uygulanmaz</div>
+        </div>
+      </div>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">Başvuru Şartları</h4>
+      <ul>
+        <li>Geçerli Teknogirişim Rozetine sahip olmak,</li>
+        <li>KOSGEB Veri Tabanında kayıtlı, aktif ve güncel işletme beyanına sahip olmak,</li>
+        <li>Teknoloji ve yenilik odaklı bir projeye sahip olmak.</li>
+      </ul>
+      <p>İşletmeler, KOSGEB ile protokol imzalayan veri merkezlerinden alacakları hizmetler için programdan yararlanabilir.</p>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:8pt 0 7pt">Desteklenecek Giderler</h4>
+      <div style="display:grid; grid-template-columns:var(--gcol,repeat(2,1fr)); gap:5pt; margin:0 0 6pt">
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">Yüksek performanslı işlem kaynakları: AI altyapısı (GPU, CPU, RAM)</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">Güvenli veri depolama hizmetleri</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">Yapay zekâ veri merkezi hizmetleri ve bulut tabanlı AI araçları</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:7pt 9pt; font-size:9.5pt; line-height:1.35">Yapay zekâ araçları ve platform hizmetleri</div>
+      </div>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">Başvuru Zamanı</h4>
+      <p style="margin-bottom:0">Başvurular <strong>9 Temmuz – 31 Aralık 2026</strong> tarihleri arasında alınmaktadır. Uygun bulunan işletmeler kredilerini GO Dijital Cüzdan uygulaması aracılığıyla kullanabilecektir.</p>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">7</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s08" data-pg="10" data-screen-label="08">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <figure style="position:relative; margin:0 var(--pxneg) 16pt; height:168px; overflow:hidden">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ekim-05-savunma.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 54%; display:block">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,34,67,0.45) 0%, rgba(15,34,67,0.10) 45%, rgba(15,34,67,0.58) 100%); pointer-events:none"></div>
+        <div style="position:absolute; inset:0; background:#189B93; opacity:0.1; pointer-events:none"></div>
+        <figcaption style="position:absolute; left:var(--px); bottom:0; margin:0; background:#189B93; color:#FFFFFF; font:600 7pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; padding:5pt 8pt; text-align:left">Çift kullanımlı derin teknolojiler</figcaption>
+      </figure>
+      <div style="display:grid; grid-template-columns:0.62in 1fr; gap:0 10pt; align-items:baseline; margin:0 0 8pt">
+        <div style="font:600 34pt/1 'Spectral',serif; color:#189B93">05</div>
+        <h2 style="font-size:var(--h2,28pt); font-weight: 700; line-height: 1.14">HIT — Yenilikçi Savunma Teknolojileri</h2>
+      </div>
+      <div style="height:2px; background:#189B93; margin-bottom:16pt"></div>
+      <p>Türkiye'nin savunma, güvenlik ve dayanıklılık teknolojileri alanında küresel ölçekte rekabetçi ve yenilikçi bir merkez hâline gelme vizyonunu güçlendirmek amacıyla HIT – Yenilikçi Savunma Teknolojileri Çağrısı ilan edilmiştir.</p>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">Önceliklendirilen Başlıklar</h4>
+      <ul style="margin-bottom:0">
+        <li>Savunma, güvenlik ve dayanıklılık alanlarında yüksek katma değerli, kritik çift kullanımlı derin teknolojilerin geliştirilmesi, doğrulanması, ticarileştirilmesi ve üretime geçirilmesini destekleyecek altyapıların güçlendirilmesi,</li>
+        <li>Yapay zekâ, siber güvenlik, uzay, otonom sistemler ve benzeri çift kullanımlı teknolojilerde Ar-Ge, test, doğrulama ve üretim süreçlerini destekleyen ölçeklenebilir bir ekosistemin güçlendirilmesi,</li>
+        <li>Ulusal güvenlik ihtiyaçları ile sanayi, Ar-Ge ve inovasyon ekosistemi arasındaki iş birliğini ve teknoloji transferini destekleyecek entegrasyon mekanizmalarının geliştirilmesi,</li>
+        <li>Küresel rekabetçiliği güçlendirecek, üretim kapasitesini artıracak ve ihracat odaklı büyümeyi destekleyecek teknoloji şirketlerine yönelik destek mekanizmaları,</li>
+        <li>Savunma ve güvenlik teknolojileri şirketlerinin ölçeklenmesini hızlandıracak yatırım, üretim ve ticarileştirme altyapılarının güçlendirilmesi,</li>
+        <li>Türkiye'nin savunma ve güvenlik teknolojilerinde uluslararası bir yatırım, üretim ve ticarileştirme merkezi <em>(Scaling Hub)</em> olarak konumunu güçlendirecek iş birliği mekanizmaları.</li>
+      </ul>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:14pt 0 7pt">Yatırımların Niteliği</h4>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:7pt; margin:2pt 0 4pt">
+        <div style="border:1px solid #E1EBEB; background:#F8FCFC; padding:9pt 11pt; font-size:9.5pt; line-height:1.4">Savunma, güvenlik ve dayanıklılık odaklı <strong>çift kullanımlı</strong> teknolojiler</div>
+        <div style="border:1px solid #E1EBEB; background:#F8FCFC; padding:9pt 11pt; font-size:9.5pt; line-height:1.4"><strong>THS 7 ve üzeri</strong> teknolojiler</div>
+        <div style="border:1px solid #E1EBEB; background:#F8FCFC; padding:9pt 11pt; font-size:9.5pt; line-height:1.4">Ar-Ge, prototipleme ve üretimi kapsayan <strong>entegre</strong> yatırımlar</div>
+        <div style="border:1px solid #E1EBEB; background:#F8FCFC; padding:9pt 11pt; font-size:9.5pt; line-height:1.4">En az <strong>2 milyar TL</strong> yatırım büyüklüğü</div>
+      </div>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">8</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s09" data-pg="11" data-screen-label="09">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:0 0 0">Sağlanacak Destekler</h4>
+      <div style="display:grid; grid-template-columns:var(--gcol,repeat(3,1fr)); gap:9pt; margin:7pt 0 8pt">
+        <div style="border:1px solid #CFE3E3; border-top:3px solid #189B93; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Vergi teşviki</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">%60'a varan</div>
+        </div>
+        <div style="border:1px solid #CFD8E4; border-top:3px solid #0F2243; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Hibe desteği</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">%20'ye varan</div>
+        </div>
+        <div style="border:1px solid #CFE3E3; border-top:3px solid #189B93; padding:12pt 13pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:7pt">Avantajlı finansman</div>
+          <div style="font:600 15pt/1.15 'Spectral',serif; color:#0F2243">Yatırımın %70'ine kadar</div>
+        </div>
+      </div>
+      <ul>
+        <li>Yatırım yeri tahsisi ve istihdam destekleri,</li>
+        <li>Projenin ilgisine göre kamu alım garantisi,</li>
+        <li>Kamuya ait test, doğrulama ve validasyon altyapılarına erişim.</li>
+      </ul>
+      <p style="margin-bottom:0">Çağrı ile mevcut yetkinliklerin güçlendirilmesi, yenilikçi teknolojilerin ticarileştirilmesinin hızlandırılması ve Türkiye'nin bu alanlarda küresel ölçekte öncü bir teknoloji merkezi olarak konumlanması hedeflenmektedir.</p>
+      <figure style="position:relative; margin:24pt var(--pxneg) 0; height:168px; overflow:hidden">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ekim-06-tarim.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 58%; display:block">
+        <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,34,67,0.45) 0%, rgba(15,34,67,0.10) 45%, rgba(15,34,67,0.58) 100%); pointer-events:none"></div>
+        <div style="position:absolute; inset:0; background:#189B93; opacity:0.1; pointer-events:none"></div>
+        <figcaption style="position:absolute; left:var(--px); bottom:0; margin:0; background:#189B93; color:#FFFFFF; font:600 7pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; padding:5pt 8pt; text-align:left">Yenilikçi tarım teknolojileri</figcaption>
+      </figure>
+      <div style="display:grid; grid-template-columns:0.62in 1fr; gap:0 10pt; align-items:baseline; margin:16pt 0 8pt">
+        <div style="font:600 34pt/1 'Spectral',serif; color:#189B93">06</div>
+        <h2 style="font-size:var(--h2,28pt); font-weight: 700; line-height: 1.14">MARKA Yenilikçi Tarım Kredisi</h2>
+      </div>
+      <div style="height:2px; background:#189B93; margin-bottom:16pt"></div>
+      <p style="margin-bottom:0">Doğu Marmara Kalkınma Ajansı (MARKA), “2026 Yılı Yenilikçi Tarım Faizsiz Kredi Desteği Programı”nı ilan etmiştir. Program ile Kocaeli, Sakarya, Düzce, Bolu ve Yalova illerinde faaliyet gösteren KOBİ statüsündeki firmaların; yenilikçi tarım ürün ve hizmetlerinin geliştirilmesi, üretilmesi, ticarileştirilmesi ve ihracat kapasitesinin artırılmasına yönelik yatırımlarının desteklenmesi amaçlanmaktadır.</p>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:12pt 0 5pt">Başvuru Koşulları</h4>
+      <ul>
+        <li>Yalnızca KOBİ statüsündeki işletmeler başvurabilir.</li>
+        <li>Firmanın başvuru tarihi itibarıyla kurulmuş ve tescil edilmiş olması gerekir.</li>
+        <li>Firmanın merkezinin veya faaliyet/üretim yerinin TR42 Bölgesi'nde kayıtlı olması gerekir.</li>
+      </ul>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">9</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet">
+<section class="page" id="s10" data-pg="12" data-screen-label="10">
+    <div class="pg-head" style="padding:0.4in var(--px) 0.16in; display:var(--pgd,grid); row-gap:6pt">
+      <div style="display:flex; align-items:center; gap:9pt; white-space:nowrap; font:600 8pt/1 'Archivo',sans-serif; letter-spacing:0.18em; text-transform:uppercase; color:#0F2243">
+        <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height: 9pt; width: auto; display: block; margin-left: -0.7px"><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; left: -5px; height: 10px">Bülten</span><span style="font-size: 11px; line-height: 1; position: relative; top: 0.7px; margin-left: auto; height: 10px">Ekim 2026</span>
+      </div>
+      <div style="height:2px; background:linear-gradient(to right,#189B93 0,#189B93 54pt,#DCE3E9 54pt,#DCE3E9 100%)"></div>
+    </div>
+    <div class="pg-body" style="flex:1; min-height:0; padding:0.28in var(--px) 0">
+      <div style="font:600 10pt/1.2 'Archivo',sans-serif; color:#116E68; margin:0 0 7pt">Tablo 5. Programın temel unsurları</div>
+      <div class="tbl-wrap"><table>
+        <tbody>
+          <tr><td style="width:1.65in; font-weight:600; color:#0F2243; background:#F4F8F8">Destek türü</td><td>Faizsiz kredi</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Program bütçesi</td><td>140.000.000 TL</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Proje başına destek</td><td><strong>1.000.000 TL – 8.000.000 TL</strong></td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Uygulama süresi</td><td>En fazla 12 ay</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Kredi vadesi</td><td>24 ay</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Geri ödemesiz dönem</td><td>En az 6 ay</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Uygun başvuru sahipleri</td><td>Kocaeli, Sakarya, Düzce, Bolu ve Yalova'daki (TR42) KOBİ statüsündeki işletmeler</td></tr>
+          <tr><td style="font-weight:600; color:#0F2243; background:#F4F8F8">Başvuru kanalı</td><td>Kalkınma Ajansları Yönetim Sistemi (KAYS)</td></tr>
+        </tbody>
+      </table></div>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:10pt 0 7pt">Öncelikli Yatırım Alanları</h4>
+      <div style="display:grid; grid-template-columns:var(--gcol,repeat(2,1fr)); gap:5pt; margin:0 0 6pt">
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:5pt 9pt; font-size:9.5pt; line-height:1.35">Yenilikçi tarım makineleri ve akıllı tarım ekipmanları</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:5pt 9pt; font-size:9.5pt; line-height:1.35">Tarım teknolojileri ve dijital tarım çözümleri</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:5pt 9pt; font-size:9.5pt; line-height:1.35">Katma değerli tarımsal girdiler</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:5pt 9pt; font-size:9.5pt; line-height:1.35">Tohum, fide, fidan ve bitki geliştirme teknolojileri</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:5pt 9pt; font-size:9.5pt; line-height:1.35">Tarımda döngüsel ekonomi, kaynak verimliliği ve yeşil dönüşüm</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:5pt 9pt; font-size:9.5pt; line-height:1.35">Akıllı sera, kontrollü tarım ve iklim uyumlu üretim</div>
+        <div style="border-left:2px solid #189B93; background:#F6FAFA; padding:5pt 9pt; font-size:9.5pt; line-height:1.35">İşleme, depolama, soğuk zincir, izlenebilirlik ve yenilikçi ambalajlama</div>
+      </div>
+      <h4 style="font-family:'Archivo',sans-serif; font-size:11pt; font-weight:600; color:#189B93; margin:11pt 0 5pt">Hedef Sektörler</h4>
+      <p>Makine, otomasyon, yazılım, elektronik, sensör teknolojileri, yapay zekâ, akıllı tarım sistemleri, soğuk zincir, ambalaj, biyoteknoloji, kimya, gıda teknolojileri ve tarımsal teknoloji çözümleri geliştiren firmaların programı incelemesi önem arz etmektedir.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:9pt; margin:6pt 0 0">
+        <div style="border-top:3px solid #189B93; background:#F6FAFA; padding:10pt 12pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:6pt">Son başvuru</div>
+          <div style="font:600 14pt/1.1 'Spectral',serif; color:#0F2243">15 Aralık 2026 · 23.59</div>
+        </div>
+        <div style="border-top:3px solid #0F2243; background:#F7F9FC; padding:10pt 12pt">
+          <div style="font:600 7.5pt/1.25 'Archivo',sans-serif; letter-spacing:0.14em; text-transform:uppercase; color:#5C6B79; margin-bottom:6pt">Taahhütname / e-imza</div>
+          <div style="font:600 14pt/1.1 'Spectral',serif; color:#0F2243">22 Aralık 2026 · 17.00</div>
+        </div>
+      </div>
+      <div style="border-left:3px solid #189B93; background:#EFF7F7; padding:11pt 14pt; margin-top:12pt">
+        <p style="margin:0 0 8pt; font-size:10pt">Destek ve teşviklerin kapsamı, oran ve şartları ile takvimi ilgili çağrı ve mevzuat yayımlandığında kesinleşir. Bu sayıdaki programlar için firmalar adına üç adımı öneriyoruz:</p>
+        <div style="display:grid; gap:5pt; font-size:10pt; line-height:1.45">
+          <div style="display:flex; gap:9pt"><span style="font-weight:600; color:#116E68">1.</span><span>Yatırım, Ar-Ge, istihdam ve dijitalleşme planlarınızın bu programlara uygunluğunu değerlendirmek;</span></div>
+          <div style="display:flex; gap:9pt"><span style="font-weight:600; color:#116E68">2.</span><span>Son başvuru tarihlerini kaçırmamak için erken hazırlık yapmak;</span></div>
+          <div style="display:flex; gap:9pt"><span style="font-weight:600; color:#116E68">3.</span><span>Başvuru ve teşvik dosyalarını eksiksiz kurgulayarak başvuru işlemlerini yapmak.</span></div>
+        </div>
+        <p style="margin:8pt 0 0; font-size:10pt">Bu üç adımda size destek olmaktan memnuniyet duyarız.</p>
+      </div>
+    </div>
+    <div class="pg-foot" style="padding:0.1in var(--px) 0.24in; display:var(--pgd,grid); justify-items:center; row-gap:4pt">
+      <div style="justify-self:stretch; height:1px; background:#DCE3E9"></div>
+      <div><span style="font:400 8pt/1.3 'Archivo',sans-serif; letter-spacing:0.06em; color:#116E68">10</span></div>
+    </div>
+  </section>
+  </div>
+  <div class="sheet" data-fixed>
+<section class="page" id="arka-kapak" data-pg="13" data-fixed data-screen-label="Arka kapak" style="position:relative; overflow:hidden; background:#0F2243">
+    <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ekim-k2-arka-kapak.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 40%">
+    <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(15,34,67,0.86) 0%, rgba(15,34,67,0.62) 30%, rgba(15,34,67,0.78) 58%, rgba(15,34,67,0.95) 100%)"></div>
+    <div style="position:absolute; inset:0; background:#189B93; opacity:0.1"></div>
+
+    <div style="position:absolute; z-index:3; left:52px; right:52px; top:44px; display:flex; align-items:center; justify-content:space-between">
+      <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi.svg" alt="ikarus" style="height:26px; width:auto; display:block; filter:brightness(0) invert(1)">
+      <div style="font:700 10px/1 'Archivo',sans-serif; letter-spacing:0.3em; text-transform:uppercase; color:rgba(255,255,255,0.9)">Ekim 2026</div>
+    </div>
+
+    <div style="position:absolute; z-index:3; left:52px; right:52px; bottom:64px; display:grid; gap:0">
+      <img loading="lazy" decoding="async" src="bulten/2026-10/assets/ikarus-yazi-slogan.svg" alt="ikarus — Management · Investment · Training" style="height:56px; width:auto; display:block; margin-left:-4px; filter:brightness(0) invert(1)">
+      <div style="width:96px; height:3px; background:#189B93; margin:24px 0 20px"></div>
+      <div style="font:400 18pt/1.42 'Spectral',serif; color:#FFFFFF; max-width:470px">Bültendeki başlıklarla ilgili başvuru ve teşvik dosyası hazırlığında yanınızdayız.</div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-top: 32px; position: relative">
+        <div style="flex: 1; position: relative">
+          <div style="font:700 10px/1 'Archivo',sans-serif; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.72); margin-bottom:12px">İletişim</div>
+          <div style="display:grid; gap:7px; font:500 13px/1.4 'Archivo',sans-serif; color:#FFFFFF">
+            <a href="mailto:info@investikarus.com" style="color:#FFFFFF" style-hover="color:rgba(255,255,255,0.72)">info@investikarus.com</a>
+            <a href="https://www.investikarus.com" style="color:#FFFFFF" style-hover="color:rgba(255,255,255,0.72)">www.investikarus.com</a>
+          </div>
+          <div style="display:grid; gap:6px; margin-top:12px; font:400 12px/1.45 'Archivo',sans-serif; color:#FFFFFF">
+            <div><span style="color:rgba(255,255,255,0.72)">Merkez:</span> Alacaatlı Mah. 3306/1 Sokak No: 9 Çankaya /ANKARA</div>
+            <div><span style="color:rgba(255,255,255,0.72)">İstanbul:</span> Emirgan Mah. Sakıp Sabancı Cd. No:36/10 Sarıyer/İSTANBUL</div>
+            <div><span style="color:rgba(255,255,255,0.72)">Londra:</span> 48 Carnarvon Road, E1B 2NU, LONDON/UK</div>
+          </div>
+        </div>
+        <div style="flex:none; display:flex; flex-direction:column; align-items:flex-end">
+          <div style="font:700 10px/1 'Archivo',sans-serif; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.72); margin-bottom:12px; text-align:right">Bizi takip edin</div>
+          <div style="display:flex; gap:9px; justify-content:flex-end">
+            <img loading="lazy" decoding="async" src="bulten/2026-10/assets/social-linkedin.webp" alt="LinkedIn" style="width:26px; height:26px; display:block">
+            <img loading="lazy" decoding="async" src="bulten/2026-10/assets/social-x.webp" alt="X" style="width:26px; height:26px; display:block">
+            <img loading="lazy" decoding="async" src="bulten/2026-10/assets/social-instagram.webp" alt="Instagram" style="width:26px; height:26px; display:block">
+          </div>
+        </div>
+      <img loading="lazy" decoding="async" src="bulten/2026-10/assets/qr-2026-10.webp" alt="https_www_investikarus_com" width="3000" height="3000" style="max-width: 100%; height: 112px; display: block; object-fit: cover; width: 112px; aspect-ratio: 3000 / 3000; position: absolute; left: 579px; top: -38px; opacity: 1"></div>
+      <div style="height:1px; background:rgba(255,255,255,0.32); margin:20px 0 16px"></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr auto; gap:12px 32px; font:500 13px/1.35 'Archivo',sans-serif; color:#FFFFFF">
+        <div>
+          <div style="font:700 10px/1.3 'Archivo',sans-serif; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.72); margin-bottom:6px">İkarus Ankara Teşvik<br>Departmanı</div>
+          +90 505 024 55 21
+        </div>
+        <div>&nbsp;</div>
+        <div style="text-align:right">
+          <div style="font:700 10px/1.3 'Archivo',sans-serif; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.72); margin-bottom:6px">Bülten</div>
+          Ekim 2026
+        </div>
+      </div>
+      <div style="font:400 10.5px/1.5 'Archivo',sans-serif; color:rgba(255,255,255,0.78); max-width:470px; margin-top:16px">Bu bülten bilgilendirme amaçlıdır. Destek ve teşviklerin kapsamı, oran ve şartları ile takvimi, ilgili çağrı ve mevzuat yayımlandığında kesinleşir.</div>
+    </div>
+  </section>
+  </div>
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  // --- A4 kutusunu kapsayicisina sigdir -----------------------------------
+  // CSS px, tanimi geregi 1/96 inc. 210mm bu yuzden tarayicidan bagimsiz sabit.
+  var PAGE_W = 210 * 96 / 25.4;   // 793.70px
+  var sheets = Array.prototype.slice.call(document.querySelectorAll('.sheet'));
+
+  function fit(){
+    for (var i = 0; i < sheets.length; i++){
+      var s = sheets[i];
+      // Akis modundaki icerik sayfalari olceklenmez; --k onlar icin kullanilmaz.
+      var k = Math.min(1, s.clientWidth / PAGE_W);
+      s.style.setProperty('--k', k.toFixed(5));
+    }
+  }
+  fit();
+  if (window.ResizeObserver){
+    var ro = new ResizeObserver(fit);
+    ro.observe(document.querySelector('.doc'));
+  } else {
+    window.addEventListener('resize', fit);
+  }
+
+  // --- okuma ilerlemesi ---------------------------------------------------
+  var bar = document.getElementById('progressBar');
+  var ticking = false;
+  function progress(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
+    bar.style.width = (p * 100).toFixed(2) + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ ticking = true; requestAnimationFrame(progress); }
+  }, {passive:true});
+  progress();
+
+  // --- icindekiler paneli -------------------------------------------------
+  var panel = document.getElementById('tocPanel');
+  var btn   = document.getElementById('tocBtn');
+  function setOpen(on){
+    panel.toggleAttribute('open', on);
+    btn.setAttribute('aria-expanded', String(on));
+    document.body.style.overflow = on ? 'hidden' : '';
+  }
+  btn.addEventListener('click', function(){ setOpen(!panel.hasAttribute('open')); });
+  panel.addEventListener('click', function(e){
+    if (e.target === panel || e.target.closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && panel.hasAttribute('open')) setOpen(false);
+  });
+
+  // --- panelde okunan sayfayi isaretle ------------------------------------
+  var navLinks = {};
+  Array.prototype.forEach.call(panel.querySelectorAll('[data-nav]'), function(a){
+    navLinks[a.getAttribute('data-nav')] = a;
+  });
+  if (window.IntersectionObserver){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var a = navLinks[en.target.id];
+        if (a) a.setAttribute('aria-current', en.isIntersecting ? 'true' : 'false');
+      });
+    }, {rootMargin:'-45% 0px -45% 0px'});
+    Array.prototype.forEach.call(document.querySelectorAll('.page[id]'), function(p){
+      io.observe(p);
+    });
+  }
+})();
+</script>
+</body>
+</html>
