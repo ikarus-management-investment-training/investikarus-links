@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Share &amp; Connect: Ar-Ge Destekleri · Sunumlar · İkarus</title>
+  <meta name="description" content="ODTÜ TEKNOKENT Share &amp; Connect: Ar-Ge Destekleri, 27 Ekim 2026, CoZone. Sunumlar ve salondan gelen soruların cevapları (PDF).">
+  <meta name="theme-color" content="#0F2243">
+  <!-- Paylaşım önizlemesi (WhatsApp, LinkedIn): görsel adresi mutlak olmalı -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://qr.investikarus.com/share-connect-arge-destekleri/">
+  <meta property="og:title" content="Share &amp; Connect: Ar-Ge Destekleri · Sunumlar">
+  <meta property="og:description" content="27 Ekim 2026 · ODTÜ TEKNOKENT CoZone · Sunumlar ve soru-cevap (PDF)">
+  <meta property="og:image" content="https://qr.investikarus.com/share-connect-arge-destekleri/paylasim.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Archivo', system-ui, sans-serif;
+    }
+    a { text-decoration: none; }
+    button { font-family: inherit; }
+
+    /* Renk belirteçleri index.html ile aynı; biri değişirse öteki de değişmeli. */
+    [data-theme="light"], [data-theme="auto"] {
+      --bg: #FFFFFF; --surf: #F6FAFA; --surf2: #EFF7F7; --ink: #1B2733; --head: #0F2243; --muted: #5C6B79;
+      --rule: #DCE3E9; --hair: #EDF1F5; --accent: #189B93; --accent-d: #116E68; --on-accent: #FFFFFF;
+      --bd: rgba(15,34,67,.10);
+    }
+    [data-theme="dark"] {
+      --bg: #1A1C1D; --surf: #232628; --surf2: #282C2C; --ink: #DFE3E5; --head: #F3F5F6; --muted: #9BA2A7;
+      --rule: rgba(255,255,255,.13); --hair: rgba(255,255,255,.08); --accent: #1FAEA5; --accent-d: #7CD6D0; --on-accent: #03202A;
+      --bd: rgba(255,255,255,.11);
+    }
+    @media (prefers-color-scheme: dark) {
+      [data-theme="auto"] {
+        --bg: #1A1C1D; --surf: #232628; --surf2: #282C2C; --ink: #DFE3E5; --head: #F3F5F6; --muted: #9BA2A7;
+        --rule: rgba(255,255,255,.13); --hair: rgba(255,255,255,.08); --accent: #1FAEA5; --accent-d: #7CD6D0; --on-accent: #03202A;
+        --bd: rgba(255,255,255,.11);
+      }
+    }
+
+    [data-theme="dark"] [data-lightonly] { display: none !important; }
+    [data-theme="light"] [data-darkonly] { display: none !important; }
+    @media (prefers-color-scheme: dark) {
+      [data-theme="auto"] [data-lightonly] { display: none !important; }
+    }
+    @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+      [data-theme="auto"] [data-darkonly] { display: none !important; }
+    }
+
+    [data-row]:active { background: var(--surf2) !important; }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 36px 22px 32px;
+      background: var(--bg);
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .top-bar img { height: 14px; width: auto; display: block; }
+    .controls { display: flex; align-items: center; gap: 14px; }
+
+    .btn-icon {
+      border: 0;
+      background: transparent;
+      color: var(--head);
+      display: grid;
+      place-items: center;
+      width: 32px;
+      min-height: 32px;
+      padding: 0;
+      cursor: pointer;
+    }
+    .btn-text {
+      border: 0;
+      border-bottom: 2px solid var(--accent);
+      background: transparent;
+      color: var(--head);
+      font: 600 10px/1 'Archivo', sans-serif;
+      letter-spacing: .1em;
+      padding: 2px 0;
+      min-height: 32px;
+      cursor: pointer;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+      min-height: 32px;
+      color: var(--accent-d);
+      font: 600 13px/1 'Archivo', sans-serif;
+    }
+    .page-head { display: grid; gap: 6px; }
+    .kicker {
+      color: var(--accent-d);
+      font: 600 10px/1.2 'Archivo', sans-serif;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .page-head h1 {
+      margin: 0;
+      color: var(--head);
+      font: 600 28px/1.1 'Spectral', serif;
+      text-wrap: balance;
+    }
+    .page-head p {
+      margin: 0;
+      color: var(--muted);
+      font: 400 14px/1.45 'Archivo', sans-serif;
+    }
+
+    .section-title {
+      margin: 10px 0 -4px;
+      color: var(--muted);
+      font: 600 10px/1.2 'Archivo', sans-serif;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    /* İndirme satırı: arşivdeki sayı kartının (.issue) kapaksız hâli */
+    .docs { display: grid; gap: 10px; }
+    .doc {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 14px;
+      min-height: 76px;
+      padding: 12px 14px;
+      background: var(--surf);
+      border-top: 2px solid var(--accent);
+      color: var(--head);
+    }
+    .doc-text { display: grid; gap: 5px; min-width: 0; }
+    .doc-eyebrow {
+      color: var(--muted);
+      font: 600 10px/1.2 'Archivo', sans-serif;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .doc-title { font: 600 17px/1.2 'Spectral', serif; }
+    .doc-topics { color: var(--muted); font: 400 12px/1.4 'Archivo', sans-serif; }
+    .doc svg { width: 22px; height: 22px; color: var(--accent); }
+
+    .thanks {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font: 400 13px/1.5 'Archivo', sans-serif;
+    }
+    .contact {
+      margin: 0;
+      color: var(--muted);
+      font: 400 13px/1.5 'Archivo', sans-serif;
+    }
+    .contact a { color: var(--accent-d); font-weight: 600; }
+
+    .footer-area {
+      margin-top: auto;
+      padding-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <div class="top-bar">
+      <a href="/" aria-label="İkarus">
+        <img data-lightonly src="../assets/ikarus-yazi.svg" alt="İkarus">
+        <img data-darkonly src="../assets/ikarus-yazi-beyaz.svg" alt="İkarus">
+      </a>
+      <div class="controls">
+        <button type="button" id="themeToggleBtn" class="btn-icon" aria-label="Tema">
+          <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px">
+            <path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8z"></path>
+          </svg>
+        </button>
+        <button type="button" id="langToggleBtn" class="btn-text">EN</button>
+      </div>
+    </div>
+
+    <a href="/" class="back"><span aria-hidden="true">←</span> <span data-i18n="back">Ana sayfa</span></a>
+
+    <div class="page-head">
+      <span class="kicker" data-i18n="kicker">ODTÜ TEKNOKENT · 27 Ekim 2026 · CoZone</span>
+      <h1>Share &amp; Connect: <span data-i18n="title">Ar-Ge Destekleri</span></h1>
+      <p data-i18n="lede">Seansta gösterilen sunumlar ve salondan gelen soruların cevapları. Dosyalar PDF; dokunarak indirebilirsiniz.</p>
+    </div>
+
+    <!-- Dosyalar bu klasörde; adları teşekkür e-postasındaki bağlantılarla aynı (tesekkur-epostasi/uret.py). -->
+    <div class="section-title" data-i18n="slides">Sunumlar</div>
+    <div class="docs">
+      <a data-row class="doc" href="Share-Connect-27-10-2026-Acilis.pdf" download>
+        <span class="doc-text">
+          <span class="doc-eyebrow">PDF · 11 sayfa · 924 KB</span>
+          <span class="doc-title" data-i18n="t1">Açılış: İKARUS ve ODTÜ TEKNOKENT</span>
+          <span class="doc-topics" data-i18n="k1">Açılış konuşmasının sunumu</span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7.5 10.5 12 15l4.5-4.5"></path><path d="M5 19.5h14"></path></svg>
+      </a>
+      <a data-row class="doc" href="Share-Connect-27-10-2026-KOSGEB.pdf" download>
+        <span class="doc-text">
+          <span class="doc-eyebrow">PDF · 22 sayfa · 814 KB</span>
+          <span class="doc-title" data-i18n="t2">KOSGEB Destek Programları</span>
+          <span class="doc-topics" data-i18n="k2">Girişimci Destek, Yapay Zekâ Kredisi, Kapasite Geliştirme ve diğerleri</span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7.5 10.5 12 15l4.5-4.5"></path><path d="M5 19.5h14"></path></svg>
+      </a>
+      <a data-row class="doc" href="Share-Connect-27-10-2026-TUBITAK.pdf" download>
+        <span class="doc-text">
+          <span class="doc-eyebrow">PDF · 37 sayfa · 789 KB</span>
+          <span class="doc-title" data-i18n="t3">TÜBİTAK Destek Programları</span>
+          <span class="doc-topics" data-i18n="k3">1501, 1507, 1832 ve Innowwide</span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7.5 10.5 12 15l4.5-4.5"></path><path d="M5 19.5h14"></path></svg>
+      </a>
+    </div>
+
+    <div class="section-title" data-i18n="qa">Soru-cevap</div>
+    <div class="docs">
+      <a data-row class="doc" href="Share-Connect-27-10-2026-Soru-Cevap.pdf" download>
+        <span class="doc-text">
+          <span class="doc-eyebrow">PDF · 3 sayfa · 402 KB</span>
+          <span class="doc-title" data-i18n="t4">Salondan gelen sorular ve cevapları</span>
+          <span class="doc-topics" data-i18n="k4">Altı soru ve cevapları, yaklaşan son tarihler</span>
+        </span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7.5 10.5 12 15l4.5-4.5"></path><path d="M5 19.5h14"></path></svg>
+      </a>
+    </div>
+
+    <p class="thanks" data-i18n="thanks">Bu buluşmaya ev sahipliği yapan ODTÜ TEKNOKENT'e ve CoZone ekibine teşekkür ederiz.</p>
+    <p class="contact"><span data-i18n="contact">Sorularınız için</span> <a href="mailto:info@investikarus.com?subject=Share%20%26%20Connect%3A%20Ar-Ge%20Destekleri">info@investikarus.com</a> · <a href="tel:+903125118300">+90 312 511 83 00</a></p>
+
+    <div class="footer-area">
+      <img data-lightonly src="../assets/ikarus-yazi-slogan.svg" alt="İkarus" style="width:118px;height:auto;display:block;opacity:.75">
+      <img data-darkonly src="../assets/ikarus-yazi-slogan-beyaz.svg" alt="İkarus" style="width:118px;height:auto;display:block;opacity:.75">
+    </div>
+  </div>
+
+  <script>
+    // Tema ve dil tercihi index.html ile aynı localStorage anahtarlarında tutulur.
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const htmlEl = document.documentElement;
+
+    const iconMoon = '<path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8z"></path>';
+    const iconSun = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+
+    function updateThemeIcon(theme) {
+      const isDark = theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      themeIcon.innerHTML = isDark ? iconSun : iconMoon;
+    }
+
+    let currentTheme = localStorage.getItem('ikarus-theme') || 'auto';
+    htmlEl.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+
+    themeBtn.addEventListener('click', () => {
+      const isDark = currentTheme === 'dark' || (currentTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      currentTheme = isDark ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', currentTheme);
+      localStorage.setItem('ikarus-theme', currentTheme);
+      updateThemeIcon(currentTheme);
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (currentTheme === 'auto') {
+        updateThemeIcon('auto');
+      }
+    });
+
+    const langBtn = document.getElementById('langToggleBtn');
+    let currentLang = localStorage.getItem('ikarus-lang') || 'tr';
+
+    const translations = {
+      'tr': {
+        'back': 'Ana sayfa',
+        'kicker': 'ODTÜ TEKNOKENT · 27 Ekim 2026 · CoZone',
+        'title': 'Ar-Ge Destekleri',
+        'lede': 'Seansta gösterilen sunumlar ve salondan gelen soruların cevapları. Dosyalar PDF; dokunarak indirebilirsiniz.',
+        'slides': 'Sunumlar',
+        't1': 'Açılış: İKARUS ve ODTÜ TEKNOKENT',
+        'k1': 'Açılış konuşmasının sunumu',
+        't2': 'KOSGEB Destek Programları',
+        'k2': 'Girişimci Destek, Yapay Zekâ Kredisi, Kapasite Geliştirme ve diğerleri',
+        't3': 'TÜBİTAK Destek Programları',
+        'k3': '1501, 1507, 1832 ve Innowwide',
+        'qa': 'Soru-cevap',
+        't4': 'Salondan gelen sorular ve cevapları',
+        'k4': 'Altı soru ve cevapları, yaklaşan son tarihler',
+        'thanks': "Bu buluşmaya ev sahipliği yapan ODTÜ TEKNOKENT'e ve CoZone ekibine teşekkür ederiz.",
+        'contact': 'Sorularınız için',
+        'toggleLabel': 'EN'
+      },
+      'en': {
+        'back': 'Home',
+        'kicker': 'ODTÜ TEKNOKENT · 27 October 2026 · CoZone',
+        'title': 'R&D Support',
+        'lede': 'The slides shown in the session and answers to the questions from the floor. Files are PDFs in Turkish; tap to download.',
+        'slides': 'Slides',
+        't1': 'Opening: İKARUS and ODTÜ TEKNOKENT',
+        'k1': 'Slides from the opening talk',
+        't2': 'KOSGEB support programmes',
+        'k2': 'Entrepreneur Support, AI Loan, Capacity Building and more',
+        't3': 'TÜBİTAK support programmes',
+        'k3': '1501, 1507, 1832 and Innowwide',
+        'qa': 'Q&A',
+        't4': 'Questions from the floor, answered',
+        'k4': 'Six questions with answers, upcoming deadlines',
+        'thanks': 'Thanks to ODTÜ TEKNOKENT and the CoZone team for hosting.',
+        'contact': 'Questions:',
+        'toggleLabel': 'TR'
+      }
+    };
+
+    function applyLanguage(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      langBtn.textContent = translations[lang].toggleLabel;
+      htmlEl.setAttribute('lang', lang);
+    }
+
+    applyLanguage(currentLang);
+
+    langBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'tr' ? 'en' : 'tr';
+      localStorage.setItem('ikarus-lang', currentLang);
+      applyLanguage(currentLang);
+    });
+  </script>
+</body>
+</html>
