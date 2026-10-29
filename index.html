@@ -133,11 +133,7 @@
       text-transform: uppercase;
     }
     .event-name { margin: 0; font: 600 21px/1.15 'Spectral', serif; text-wrap: balance; }
-    .event-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
+    .event-actions { display: grid; gap: 8px; }
     .event-btn {
       display: flex;
       align-items: center;
@@ -151,10 +147,6 @@
     .event-btn svg { width: 22px; height: 22px; flex: none; color: #116E68; }
     .event-btn span { white-space: nowrap; }
     .event-btn[data-row]:active { background: #E3F1F0 !important; }
-    /* Dar telefonda "Soru-Cevap" tek satıra sığsın. */
-    @media (max-width: 360px) {
-      .event-btn { gap: 8px; padding: 0 10px; font-size: 14px; }
-    }
 
     .grid-links {
       display: grid;
@@ -201,6 +193,69 @@
       margin-top: auto;
       padding-top: 8px;
     }
+
+    /* Telefonda sarmalayıcılar düzene karışmaz; masaüstünde iki sütun olurlar. */
+    .primary, .secondary { display: contents; }
+
+    ::selection { background: var(--accent); color: var(--on-accent); }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    @media (hover: hover) {
+      .hero, .event-btn, .grid-item, .office { transition: background-color .15s ease-out; }
+      .hero:hover { background: var(--accent-d); }
+      .event-btn:hover { background: #E3F1F0; }
+      .grid-item:hover, .office:hover { background: var(--surf2); }
+      .btn-icon:hover, .btn-text:hover { color: var(--accent); }
+    }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .hero-arrow, .grid-item .arrow { transition: transform .25s cubic-bezier(.16, 1, .3, 1); }
+      .hero:hover .hero-arrow, .grid-item:hover .arrow { transform: translateX(3px); }
+      .grid-item[target="_blank"]:hover .arrow { transform: translate(2px, -2px); }
+    }
+
+    /* Tablet: tek sütun genişler; bağlantılar üçlü sıraya, etkinlik bandı yatay düzene geçer. */
+    @media (min-width: 720px) {
+      .app-container { max-width: 760px; gap: 16px; padding: 48px 40px 40px; }
+      .top-bar { margin-bottom: 12px; }
+      .top-bar img { height: 16px; }
+      .btn-text, .hero-eyebrow, .event-kicker { font-size: 11px; }
+      .hero { min-height: 112px; gap: 20px; padding: 0 28px; }
+      .hero-text { gap: 6px; }
+      .hero-title { font-size: 28px; }
+      .hero-arrow { font-size: 26px; }
+      .event { grid-template-columns: minmax(0, 1fr) minmax(200px, auto); align-items: center; gap: 24px; padding: 22px 22px 22px 24px; }
+      .event-head { gap: 6px; padding: 0; }
+      .event-name { font-size: 26px; }
+      .event-btn { min-height: 56px; padding: 0 18px; font-size: 16px; }
+      .grid-links { grid-template-columns: repeat(3, 1fr); }
+      .grid-item { min-height: 112px; padding: 16px 18px; }
+      .grid-item > span:last-child { font-size: 16px; }
+      .office { min-height: 56px; font-size: 14px; }
+    }
+
+    /* Masaüstü ve yatay tablet: bülten ve etkinlik solda, bağlantılar sağda; hepsi ilk ekranda.
+       Ölçüler /share-connect-arge-destekleri ile aynı. */
+    @media (min-width: 960px) {
+      .app-container {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-areas: "top top" "primary secondary" ". ." "foot foot";
+        gap: 0 16px;
+        max-width: 1080px;
+        padding: 44px 48px 40px;
+      }
+      .top-bar { grid-area: top; margin-bottom: 32px; }
+      .primary, .secondary { display: flex; flex-direction: column; gap: 16px; }
+      .primary { grid-area: primary; }
+      .secondary { grid-area: secondary; }
+      .hero { flex: 1; min-height: 120px; } /* sağ sütunla aynı hizada biter */
+      .hero-title { font-size: 30px; }
+      .event { grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 22px 20px 20px; }
+      .event-head { padding: 0 2px; }
+      .event-name { font-size: 24px; }
+      .grid-item { min-height: 128px; }
+      .footer-area { grid-area: foot; padding-top: 48px; }
+    }
   </style>
 </head>
 <body>
@@ -219,6 +274,7 @@
       </div>
     </div>
 
+    <div class="primary">
     <a data-row href="/2610" id="link-openissue" class="hero">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:32px;height:32px;flex:none" aria-hidden="true"><path d="M4 4.5h6.5a2 2 0 0 1 2 2V20a2 2 0 0 0-2-2H4z"></path><path d="M20 4.5h-6.5a2 2 0 0 0-2 2V20a2 2 0 0 1 2-2H20z"></path></svg>
       <span class="hero-text">
@@ -238,14 +294,11 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4H6.5A1.5 1.5 0 0 0 5 5.5v14A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-14A1.5 1.5 0 0 0 17.5 4H16"></path><rect x="8" y="2.8" width="8" height="2.6" rx=".8"></rect><path d="M8.5 10.5h7M8.5 14h7M8.5 17.5h4"></path></svg>
           <span data-i18n="form">Form</span>
         </a>
-        <!-- Etkinlik bitti: soru uygulaması yerine sunumlar ve soru-cevap PDF'i -->
-        <a data-row href="/share-connect-arge-destekleri/" id="link-slides" class="event-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"></path><path d="M7.5 10.5 12 15l4.5-4.5"></path><path d="M5 19.5h14"></path></svg>
-          <span data-i18n="slides">Sunumlar</span>
-        </a>
       </div>
     </section>
+    </div>
 
+    <div class="secondary">
     <div class="grid-links">
       <a data-row href="https://www.investikarus.com/index.html" id="link-website" target="_blank" rel="noopener" class="grid-item">
         <span class="grid-item-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.6 2.4 4 5.6 4 9s-1.4 6.6-4 9c-2.6-2.4-4-5.6-4-9s1.4-6.6 4-9z"></path></svg><span class="arrow" aria-hidden="true">↗</span></span>
@@ -286,6 +339,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6.4-6.1 6.4-10.4A6.4 6.4 0 0 0 5.6 10.6C5.6 14.9 12 21 12 21z"></path><circle cx="12" cy="10.4" r="2.4"></circle></svg>
         <span data-i18n="london4">Londra</span>
       </a>
+    </div>
     </div>
 
     <div class="footer-area">
@@ -338,7 +392,6 @@
         'eventkicker': 'ODTÜ Teknokent · 27 Ekim',
         'eventname': 'Share&Connect: Ar-Ge Destekleri',
         'form': 'Form',
-        'slides': 'Sunumlar',
         'web4': 'Web sitesi',
         'mail4': 'E-posta',
         'phone4': 'Telefon',
@@ -354,7 +407,6 @@
         'eventkicker': 'ODTÜ Teknokent · 27 October',
         'eventname': 'Share&Connect: R&D Support',
         'form': 'Form',
-        'slides': 'Slides',
         'web4': 'Website',
         'mail4': 'Email',
         'phone4': 'Phone',
