@@ -175,11 +175,55 @@
       color: var(--muted);
       font: 400 13px/1.5 'Archivo', sans-serif;
     }
-    .contact a { color: var(--accent-d); font-weight: 600; }
+    .contact a { color: var(--accent-d); font-weight: 600; white-space: nowrap; }
 
     .footer-area {
       margin-top: auto;
       padding-top: 8px;
+    }
+
+    .intro, .files, .outro { display: contents; }
+
+    /* Fare ve klavye. Dokunmatikte üzerine gelme durumu yok; odak halkası yalnız klavyeyle görünür. */
+    ::selection { background: var(--accent); color: var(--on-accent); }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    @media (hover: hover) {
+      .doc { transition: background-color .15s ease-out; }
+      .doc:hover { background: var(--surf2); }
+      .back:hover [data-i18n], .contact a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    }
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .doc svg { transition: transform .25s cubic-bezier(.16, 1, .3, 1); }
+      .doc:hover svg { transform: translateY(2px); }
+    }
+
+    /* Masaüstü ve yatay tablet: başlık ve iletişim solda, dosyalar sağda; hepsi ilk ekranda. */
+    @media (min-width: 960px) {
+      .app-container {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        grid-template-rows: auto auto 1fr auto;
+        grid-template-areas: "top top" "intro files" "outro files" "foot foot";
+        column-gap: 72px;
+        max-width: 1080px;
+        padding: 44px 48px 40px;
+      }
+      .top-bar { grid-area: top; margin-bottom: 44px; }
+      .intro, .files, .outro { display: flex; flex-direction: column; gap: 14px; }
+      .intro { grid-area: intro; gap: 20px; }
+      .files { grid-area: files; }
+      .outro { grid-area: outro; align-self: start; padding-top: 32px; }
+      .footer-area { grid-area: foot; padding-top: 48px; }
+      .kicker, .section-title, .doc-eyebrow, .btn-text { font-size: 11px; }
+      .page-head { gap: 12px; }
+      .page-head h1 { font-size: clamp(34px, 3.4vw, 44px); }
+      .page-head p { font-size: 15.5px; line-height: 1.5; }
+      .section-title { margin: 0 0 -4px; }
+      .docs + .section-title { margin-top: 22px; }
+      .doc { min-height: 84px; padding: 16px 20px; }
+      .doc-title { font-size: 19px; }
+      .doc-topics { font-size: 13px; }
+      .thanks, .contact { font-size: 14px; }
     }
   </style>
 </head>
@@ -201,15 +245,19 @@
       </div>
     </div>
 
-    <a href="/" class="back"><span aria-hidden="true">←</span> <span data-i18n="back">Ana sayfa</span></a>
+    <!-- Sarmalayıcılar (.intro, .files, .outro) yalnız geniş ekranda kutu olur; dar ekranda yok sayılır. -->
+    <div class="intro">
+      <a href="/" class="back"><span aria-hidden="true">←</span> <span data-i18n="back">Ana sayfa</span></a>
 
-    <div class="page-head">
-      <span class="kicker" data-i18n="kicker">ODTÜ TEKNOKENT · 27 Ekim 2026 · CoZone</span>
-      <h1>Share &amp; Connect: <span data-i18n="title">Ar-Ge Destekleri</span></h1>
-      <p data-i18n="lede">Seansta gösterilen sunumlar ve salondan gelen soruların cevapları. Dosyalar PDF; dokunarak indirebilirsiniz.</p>
+      <div class="page-head">
+        <span class="kicker" data-i18n="kicker">ODTÜ TEKNOKENT · 27 Ekim 2026 · CoZone</span>
+        <h1>Share &amp; Connect: <span data-i18n="title">Ar-Ge Destekleri</span></h1>
+        <p data-i18n="lede">Seansta gösterilen sunumlar ve salondan gelen soruların cevapları. Dosyalar PDF; dokunarak indirebilirsiniz.</p>
+      </div>
     </div>
 
     <!-- Dosyalar bu klasörde; adları teşekkür e-postasındaki bağlantılarla aynı (tesekkur-epostasi/uret.py). -->
+    <div class="files">
     <div class="section-title" data-i18n="slides">Sunumlar</div>
     <div class="docs">
       <a data-row class="doc" href="Share-Connect-27-10-2026-Acilis.pdf" download>
@@ -250,8 +298,12 @@
       </a>
     </div>
 
-    <p class="thanks" data-i18n="thanks">Bu buluşmaya ev sahipliği yapan ODTÜ TEKNOKENT'e ve CoZone ekibine teşekkür ederiz.</p>
-    <p class="contact"><span data-i18n="contact">Sorularınız için</span> <a href="mailto:info@investikarus.com?subject=Share%20%26%20Connect%3A%20Ar-Ge%20Destekleri">info@investikarus.com</a> · <a href="tel:+903125118300">+90 312 511 83 00</a></p>
+    </div>
+
+    <div class="outro">
+      <p class="thanks" data-i18n="thanks">Bu buluşmaya ev sahipliği yapan ODTÜ TEKNOKENT'e ve CoZone ekibine teşekkür ederiz.</p>
+      <p class="contact"><span data-i18n="contact">Sorularınız için</span> <a href="mailto:info@investikarus.com?subject=Share%20%26%20Connect%3A%20Ar-Ge%20Destekleri">info@investikarus.com</a> · <a href="tel:+903125118300">+90 312 511 83 00</a></p>
+    </div>
 
     <div class="footer-area">
       <img data-lightonly src="../assets/ikarus-yazi-slogan.svg" alt="İkarus" style="width:118px;height:auto;display:block;opacity:.75">
@@ -300,6 +352,7 @@
         'kicker': 'ODTÜ TEKNOKENT · 27 Ekim 2026 · CoZone',
         'title': 'Ar-Ge Destekleri',
         'lede': 'Seansta gösterilen sunumlar ve salondan gelen soruların cevapları. Dosyalar PDF; dokunarak indirebilirsiniz.',
+        'ledeMouse': 'Seansta gösterilen sunumlar ve salondan gelen soruların cevapları. Dosyalar PDF; tıklayarak indirebilirsiniz.',
         'slides': 'Sunumlar',
         't1': 'Açılış: İKARUS ve ODTÜ TEKNOKENT',
         'k1': 'Açılış konuşmasının sunumu',
@@ -319,6 +372,7 @@
         'kicker': 'ODTÜ TEKNOKENT · 27 October 2026 · CoZone',
         'title': 'R&D Support',
         'lede': 'The slides shown in the session and answers to the questions from the floor. Files are PDFs in Turkish; tap to download.',
+        'ledeMouse': 'The slides shown in the session and answers to the questions from the floor. Files are PDFs in Turkish; click to download.',
         'slides': 'Slides',
         't1': 'Opening: İKARUS and ODTÜ TEKNOKENT',
         'k1': 'Slides from the opening talk',
@@ -335,9 +389,13 @@
       }
     };
 
+    // Fareli cihazda "dokunarak" yerine "tıklayarak".
+    const mouse = window.matchMedia('(pointer: fine)').matches;
+
     function applyLanguage(lang) {
       document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
+        let key = el.getAttribute('data-i18n');
+        if (key === 'lede' && mouse) key = 'ledeMouse';
         if (translations[lang][key]) {
           el.textContent = translations[lang][key];
         }
