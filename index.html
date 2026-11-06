@@ -117,7 +117,8 @@
     .hero-arrow { font: 400 22px/1 'Spectral', serif; }
 
     /* Etkinlik bandı: lacivert zemin, turkuaz ana butondan ve açık kutucuklardan
-       ayrışır; iki temada da aynı kalır. Lacivert/beyaz 16:1, üst etiket 9:1. */
+       ayrışır; iki temada da aynı kalır. Lacivert/beyaz 16:1, üst etiket 9:1.
+       Yalnız yaklaşan etkinlikte kullanılır; geçmiş etkinlikler /etkinlikler sayfasında. */
     .event {
       display: grid;
       gap: 12px;
@@ -170,6 +171,20 @@
     .grid-item-top svg { width: 26px; height: 26px; flex: none; }
     .grid-item-top .arrow { color: var(--accent); }
     .grid-item > span:last-child { font: 600 15px/1.2 'Archivo', sans-serif; }
+    /* Üst ızgaranın sonunda tam genişlik ince satır (Geçmiş etkinlikler). Çift sınıf,
+       medya sorgularındaki .grid-item ölçülerini sıradan bağımsız ezer. */
+    .grid-item.grid-item--wide {
+      grid-column: 1 / -1;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      align-content: center;
+      gap: 12px;
+      min-height: 56px;
+      padding: 0 14px;
+    }
+    .grid-item--wide svg { width: 22px; height: 22px; flex: none; }
+    .grid-item--wide > span { font: 600 15px/1.2 'Archivo', sans-serif; }
+    .grid-item--wide > .arrow { color: var(--accent); font-weight: 400; }
     /* Üç sosyal hesap kendi satırında: yedi kutucuk iki sütunda tek kalırdı. */
     .social-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .social-links .grid-item { min-height: 84px; padding: 12px; }
@@ -235,6 +250,8 @@
       .event-name { font-size: 26px; }
       .event-btn { min-height: 56px; padding: 0 18px; font-size: 16px; }
       .grid-links { grid-template-columns: repeat(3, 1fr); }
+      /* Üst ızgara (dört kutucuk + etkinlik satırı) 2×2 kalır: üç sütunda "Bülten arşivi" tek kalıyordu. */
+      .grid-links:not(.social-links) { grid-template-columns: repeat(2, 1fr); }
       .grid-item { min-height: 112px; padding: 16px 18px; }
       .grid-item > span:last-child { font-size: 16px; }
       .office { min-height: 56px; font-size: 14px; }
@@ -292,18 +309,8 @@
       <span class="hero-arrow" aria-hidden="true">→</span>
     </a>
 
-    <section class="event" aria-labelledby="event-name">
-      <div class="event-head">
-        <span class="event-kicker" data-i18n="eventkicker">ODTÜ Teknokent · 27 Ekim</span>
-        <h2 id="event-name" class="event-name" data-i18n="eventname">Share&amp;Connect: Ar-Ge Destekleri</h2>
-      </div>
-      <div class="event-actions">
-        <a data-row href="https://form.investikarus.com/" id="link-form" class="event-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4H6.5A1.5 1.5 0 0 0 5 5.5v14A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5v-14A1.5 1.5 0 0 0 17.5 4H16"></path><rect x="8" y="2.8" width="8" height="2.6" rx=".8"></rect><path d="M8.5 10.5h7M8.5 14h7M8.5 17.5h4"></path></svg>
-          <span data-i18n="form">Form</span>
-        </a>
-      </div>
-    </section>
+    <!-- Yaklaşan etkinlik bandı (section.event; stil yukarıda) buraya, "Son sayıyı aç"ın altına gelir.
+         Etkinlik geçince bant /etkinlikler sayfasına taşınır (Share&Connect: 06.11.2026). -->
     </div>
 
     <div class="secondary">
@@ -323,6 +330,11 @@
       <a data-row href="/arsiv" id="link-archive" class="grid-item">
         <span class="grid-item-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h9.5a2 2 0 0 1 2 2v11H6a2 2 0 0 1-2-2z"></path><path d="M15.5 8.5H19a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2h-2.5"></path><path d="M7 9h6M7 12h6M7 15h4"></path></svg><span class="arrow" aria-hidden="true">→</span></span>
         <span data-i18n="archive4">Bülten arşivi</span>
+      </a>
+      <a data-row href="/etkinlikler" id="link-events" class="grid-item grid-item--wide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"></rect><path d="M3.5 9.5h17M8 3v4M16 3v4"></path></svg>
+        <span data-i18n="events4">Geçmiş etkinlikler</span>
+        <span class="arrow" aria-hidden="true">→</span>
       </a>
     </div>
 
@@ -404,13 +416,11 @@
         'bulletin': 'Bülten',
         'openissue': 'Son sayıyı aç',
         'issue': 'Kasım 2026',
-        'eventkicker': 'ODTÜ Teknokent · 27 Ekim',
-        'eventname': 'Share&Connect: Ar-Ge Destekleri',
-        'form': 'Form',
         'web4': 'Web sitesi',
         'mail4': 'E-posta',
         'phone4': 'Telefon',
         'archive4': 'Bülten arşivi',
+        'events4': 'Geçmiş etkinlikler',
         'offices4': 'Ofisler',
         'london4': 'Londra',
         'toggleLabel': 'EN'
@@ -419,13 +429,11 @@
         'bulletin': 'Newsletter',
         'openissue': 'Open latest issue',
         'issue': 'November 2026',
-        'eventkicker': 'ODTÜ Teknokent · 27 October',
-        'eventname': 'Share&Connect: R&D Support',
-        'form': 'Form',
         'web4': 'Website',
         'mail4': 'Email',
         'phone4': 'Phone',
         'archive4': 'Newsletter archive',
+        'events4': 'Past events',
         'offices4': 'Offices',
         'london4': 'London',
         'toggleLabel': 'TR'
