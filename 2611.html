@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>İkarus Bülten — Kasım 2026</title>
+<meta name="description" content="İkarus aylık bülteni, Kasım 2026: yazılım, oyun ve uygulamaların yurt dışı tanıtımına %70'e varan destek, teşvik belgeli arsalarda geçici emlak vergisi muafiyeti, endüstri bölgelerinde elektrik piyasası yükümlülükleri ve YTB'nin ilave teşvik ve istisnaları.">
+<meta name="theme-color" content="#0F2243">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&amp;family=Archivo:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+/* ===================================================================
+   1. Tasarım sistemi — bulten/design-system/styles.css (aynen; @import hariç)
+   =================================================================== */
+/* İkarus Bülten — token sayfası + bileşen katmanı. Tek doğruluk kaynağı; bkz. readme.md */
+
+:root {
+  /* Renk rolleri */
+  --color-bg: #FFFFFF;
+  --color-surface: #F6FAFA;          /* açık zemin: tablo şeridi, metrik kutusu, etiket */
+  --color-text: #1B2733;             /* gövde metni */
+  --color-accent: #189B93;           /* turkuaz */
+  --color-accent-deep: #116E68;      /* koyu turkuaz: bağlantı, grup satırı, sayfa no, NOT etiketi */
+  --color-accent-2: #0F2243;         /* lacivert (Claude Design'ın ikinci vurgu rolü) */
+  --color-navy: var(--color-accent-2);
+  --color-muted: #5C6B79;            /* şekil açıklaması, küçük etiket */
+  --color-muted-2: #8A97A3;          /* başlık eki */
+  --color-rule: #DCE3E9;             /* üst/alt bilgi çizgisi, İçindekiler satır çizgisi */
+  --color-divider: #E5EBF0;          /* tablo satır çizgisi */
+  --color-tint: #EFF7F7;             /* NOT kutusu, vurgu blokları */
+  --color-cover-ground: #FBFCFC;     /* kama kapak zemini */
+  --color-cover-lede: #33465C;       /* kama kapak giriş cümlesi */
+
+  /* Şema dolgu sırası — ilk üçü marka renklerinin takma adı */
+  --color-chart-1: var(--color-navy);
+  --color-chart-2: var(--color-accent-deep);
+  --color-chart-3: var(--color-accent);
+  --color-chart-4: #33506F;          /* füme lacivert */
+  --color-chart-5: #4F7F7B;          /* soluk turkuaz */
+
+  /* Yazı — yüklenen yüzler kaynakla aynı: Spectral 400–700, Archivo 400–700, Quicksand 500–700 */
+  --font-heading: 'Spectral', Georgia, serif;
+  --font-body: 'Archivo', system-ui, sans-serif;
+  --font-cover-quote: 'Quicksand', 'Archivo', sans-serif;   /* yalnız kama kapaktaki tırnak işaretleri */
+  --font-heading-weight: 600;
+
+  /* Ölçek — DS 02'deki yedi kaynak rolü */
+  --text-section-num: 34pt;     /* Bölüm numarası · Spectral 600 */
+  --text-section-title: 28pt;   /* Bölüm başlığı · Spectral 700 */
+  --text-title-suffix: 11pt;    /* Başlık eki · Archivo (kaynak 300 ister; yüklü en hafif yüz 400 — bkz. §16 karar 9) */
+  --text-subhead: 11pt;         /* Alt başlık · Archivo 600 */
+  --text-body: 11pt;            /* Gövde · Archivo 400 · 1.56 */
+  --text-table: 9.5pt;          /* Tablo · Archivo 400 · 1.45 */
+  --text-caption: 8.5pt;        /* Şekil açıklaması · Archivo 400 */
+  --leading-body: 1.56;
+  --leading-table: 1.45;
+
+  /* Sayfa */
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --page-margin-x: 0.8in;
+  --page-top: 0.4in;
+  --page-bottom: 0.24in;
+  --section-num-col: 0.62in;
+  --header-accent-run: 54pt;    /* üst bilgi çizgisinin turkuaz kısmı */
+
+  /* Boşluk ve köşe */
+  --space-1: 4pt;  --space-2: 8pt;  --space-3: 12pt;
+  --space-4: 16pt; --space-6: 24pt; --space-8: 32pt;
+  --radius-sm: 0; --radius-md: 0; --radius-lg: 0;
+
+  /* Geriye uyumluluk: Ağustos ve Eylül 2026 bültenleri bu adları kullanır */
+  --ik-accent: var(--color-accent);
+  --ik-navy: var(--color-navy);
+  --ik-ink: var(--color-text);
+  --ik-muted: var(--color-muted);
+  --ik-rule: var(--color-rule);
+  --ik-tint: var(--color-tint);
+  --ik-body: var(--text-body);
+  --ik-align: justify;
+}
+
+/* ==========================================================================
+   Global
+   ========================================================================== */
+
+/* Kutu modeli: sistemle yazılmış içerikte border-box (spec §6). Kapsam öğe
+   stillerindeki gibi .ik-document ile verilir — genel bir `*` sıfırlaması eski
+   bültenlere de uygulanır ve satır içi `width`/`height` değerlerini (content-box
+   varsayımıyla yazılmış tablo kolonları, renk kartı yükseklikleri) kaydırır;
+   ölçüt 17 render ölçümünde %1.59 fark üretiyordu. Şablon <doc-page> öğesi bu
+   nedenle `class="ik-document"` taşır. */
+.ik-document, .ik-document::before, .ik-document::after,
+.ik-document *, .ik-document *::before, .ik-document *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: 400 var(--text-body)/var(--leading-body) var(--font-body);
+}
+
+/* Yazı tabanı doc-page'e de yazılır: doc-page.js'in gölge DOM'undaki
+   :host kuralı öğeye kendi sistem yazı yüzünü (-apple-system…) verir ve
+   body'den miras almayı keser. Belge katmanı onu ezmezse .dc.html sayfaları
+   Archivo yerine sistem yüzüne düşer — ölçüt 17 render ölçümüyle bulundu
+   (kaynak .dc.html aynı bildirimi kendi <style> bloğunda yapıyordu). */
+doc-page {
+  color: var(--color-text);
+  font: 400 var(--text-body)/var(--leading-body) var(--font-body);
+}
+
+/* ==========================================================================
+   Temel öğe stilleri — yalnız belge kapsamında (spec §6)
+   Demo açıklamaları (.note, .demo-head) kapsam dışında kalır.
+
+   Kapsam spec §6 uyarınca :where() ile verilir (§16 karar 13). Kaynak HTML'de bu
+   değerleri satır içi stiller ezer; sınıf tabanlı sistemde aynı sonucu almanın
+   yolu taban katmanı sıfır özgüllükte tutmaktır. :is() ile ".ik-document h4"
+   (0,1,1) ".ik-subhead" (0,1,0) sınıfını ezer ve alt başlık serif/lacivert,
+   görsel bant taşmasız, bant etiketi gri çıkar. Tek değişiklik özgüllüktür;
+   seçicilerin kapsamı ve tüm değerler spec'teki gibidir.
+   ========================================================================== */
+
+:where(.ik-document, doc-page) h1, :where(.ik-document, doc-page) h2,
+:where(.ik-document, doc-page) h3, :where(.ik-document, doc-page) h4 {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight); color: var(--color-navy); margin: 0;
+}
+:where(.ik-document, doc-page) p { margin: 0 0 8pt; text-align: var(--ik-align); hyphens: auto; }
+:where(.ik-document, doc-page) strong { font-weight: 600; color: var(--color-navy); }
+:where(.ik-document, doc-page) ul { list-style: none; margin: 0 0 7pt; padding: 0; }
+:where(.ik-document, doc-page) li { position: relative; padding-left: 15pt; margin: 0 0 4pt; text-align: var(--ik-align); hyphens: auto; }
+:where(.ik-document, doc-page) li::before { content: ""; position: absolute; left: 3pt; top: 0.6em; width: 4pt; height: 4pt; background: var(--color-accent); }
+:where(.ik-document, doc-page) table { width: 100%; border-collapse: collapse; margin: 0 0 5pt; font-size: var(--text-table); line-height: var(--leading-table); }
+:where(.ik-document, doc-page) thead th { background: var(--color-navy); color: #fff; font-weight: 600; text-align: left; padding: 6pt 8pt; font-size: 9pt; letter-spacing: 0.02em; }
+:where(.ik-document, doc-page) td { padding: 6pt 8pt; border-bottom: 1px solid var(--color-divider); vertical-align: top; }
+:where(.ik-document, doc-page) tbody tr:nth-child(even):not(.ik-table-group) td { background: var(--color-surface); }
+:where(.ik-document, doc-page) a { color: var(--color-accent-deep); text-decoration: none; }
+:where(.ik-document, doc-page) a:hover { color: var(--color-accent); }
+:where(.ik-document, doc-page) figure { margin: 0 0 12pt; }
+:where(.ik-document, doc-page) figcaption { font-size: var(--text-caption); color: var(--color-muted); margin-top: 6pt; text-align: center; }
+
+/* Kapaklarda beyaz metin; bağlantı ve kalın metin kendi tonunu miras alır. */
+.ik-cover a, .ik-backcover a, .ik-cover strong, .ik-backcover strong { color: inherit; }
+
+/* ==========================================================================
+   7.1 Sayfa iskeleti
+   ========================================================================== */
+
+.ik-page {
+  width: var(--page-w); height: var(--page-h);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  background: var(--color-bg);
+}
+
+/* Şablonda sayfa kutusunu doc-page.js verir; yalnız akış kurulur. */
+doc-page > section.page { padding: 0; display: flex; flex-direction: column; }
+
+.ik-header { padding: var(--page-top) var(--page-margin-x) 0.16in; display: grid; row-gap: 6pt; }
+.ik-header-row {
+  display: flex; align-items: center; gap: 9pt; white-space: nowrap;
+  font: 600 8pt/1 var(--font-body); letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-navy);
+}
+.ik-header-logo { height: 9pt; width: auto; display: block; margin-left: -0.7px; }
+.ik-header-title, .ik-header-date { font-size: 11px; line-height: 1; position: relative; top: 0.7px; height: 10px; }
+.ik-header-title { left: -5px; }
+.ik-header-date { margin-left: auto; }
+.ik-header-rule {
+  height: 2px;
+  background: linear-gradient(to right,
+    var(--color-accent) 0, var(--color-accent) var(--header-accent-run),
+    var(--color-rule) var(--header-accent-run), var(--color-rule) 100%);
+}
+
+.ik-body { flex: 1; min-height: 0; padding: 0.28in var(--page-margin-x) 0; }
+.ik-body--toc { padding-top: 0.42in; }
+
+.ik-footer { padding: 0.1in var(--page-margin-x) var(--page-bottom); display: grid; justify-items: center; row-gap: 4pt; }
+.ik-footer-rule { justify-self: stretch; height: 1px; background: var(--color-rule); }
+/* line-height kaynaktan: numara kaynakta gövde kapsamındaki ayrı bir blok içinde
+   durur ve o bloğun satır kutusunu gövde strut'u (11pt × 1.56 = 22.88px) belirler.
+   Sistem numarayı doğrudan ızgara ögesi yaptığı için strut yok; 8pt × 1.3 = 13.86px
+   kutu, alt bilgi çizgisini 9.02px aşağı itiyordu (ölçüt 18: eylul-01/ds-02 %0.15).
+   Yarım-leading dağılımı da eşleşsin diye min-height değil line-height yazılır.
+   font kısayolu line-height'i sıfırladığı için bildirim ondan SONRA gelmeli.
+   Spec §7.1 · §16 karar 19. */
+.ik-footer-num {
+  font: 400 8pt/1.3 var(--font-body);
+  line-height: calc(var(--text-body) * var(--leading-body));
+  letter-spacing: 0.06em; color: var(--color-accent-deep);
+}
+
+.ik-section {
+  display: grid; grid-template-columns: var(--section-num-col) 1fr;
+  gap: 0 10pt; align-items: baseline; margin-bottom: 8pt;
+}
+.ik-section-num { font: 600 var(--text-section-num)/1 var(--font-heading); color: var(--color-accent); }
+.ik-section-title { font-size: var(--text-section-title); font-weight: 700; line-height: 1.14; white-space: nowrap; }
+/* Kaynak Archivo 300 ister; yüklü en hafif yüz 400 (§16 karar 9) — görünüm PDF'lerle aynı. */
+.ik-title-suffix {
+  font: 400 var(--text-title-suffix)/1 var(--font-body); color: var(--color-muted-2);
+  letter-spacing: -0.05em; text-transform: uppercase; margin-left: 3pt;
+}
+.ik-section-rule { height: 2px; background: var(--color-accent); margin-bottom: 16pt; }
+.ik-kicker {
+  font: 600 7.5pt/1.2 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--color-muted); margin-bottom: 7pt;
+}
+/* Satır yüksekliği kaynaktan: §7.1'in kaynağı Eylül "01" sayfasıdır ve oradaki
+   h4 satır yüksekliği vermez, gövde değerini (1.56) miras alır. Spec tablosuna
+   DS 02 ölçek örneğindeki 1.2 yazılmıştı; 1.2 ile alt başlık kutusu 5.3px
+   kısalıyor ve sayfa üç alt başlıktan sonra ~16px kayıyordu (ölçüt 18 ölçümü:
+   eylul-01 %8.7 → %0.15). Ölçü tablosundaki 11pt ve marjlar değişmedi. */
+.ik-subhead { font: 600 var(--text-subhead)/var(--leading-body) var(--font-body); color: var(--color-accent); margin: 11pt 0 5pt; }
+
+/* ==========================================================================
+   7.2 İçindekiler
+   ========================================================================== */
+
+.ik-toc-heading { font-size: 34pt; font-weight: 700; line-height: 1.1; }
+.ik-section-rule--toc { margin: 12pt 0 14pt; }
+.ik-toc-intro { max-width: 4.6in; margin-bottom: 26pt; }
+
+.ik-toc { display: grid; row-gap: 0; }
+.ik-toc-row {
+  display: grid; grid-template-columns: var(--section-num-col) 1fr auto;
+  gap: 0 10pt; align-items: baseline; padding: 13pt 0; border-top: 1px solid var(--color-rule);
+}
+.ik-toc-row:last-child { border-bottom: 1px solid var(--color-rule); }
+.ik-toc-num { font: 600 22pt/1 var(--font-heading); color: var(--color-accent); }
+.ik-toc-title { font: 600 15pt/1.25 var(--font-heading); color: var(--color-navy); }
+.ik-toc-title .ik-title-suffix { font-size: 8.5pt; }
+.ik-toc-desc { font: 400 9.5pt/1.4 var(--font-body); color: var(--color-muted); margin-top: 3pt; }
+.ik-toc-page { font: 600 13pt/1 var(--font-heading); color: var(--color-accent-deep); }
+
+/* ==========================================================================
+   7.3 İçerik bileşenleri
+   ========================================================================== */
+
+.ik-metric { border-top: 3px solid var(--color-accent); background: var(--color-surface); padding: 9pt 10pt; }
+.ik-metric-label {
+  font: 600 7.5pt/1.25 var(--font-body); letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--color-muted); margin-bottom: 5pt;
+}
+.ik-metric-value { font: 600 14pt/1.1 var(--font-heading); color: var(--color-navy); }
+.ik-metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(1.6in, 1fr)); gap: 8pt; }
+
+tr.ik-table-group > td {
+  background: var(--color-accent-deep); color: #fff;
+  font: 600 8.5pt/1.2 var(--font-body); letter-spacing: 0.06em; padding: 4pt 8pt;
+}
+.ik-table-key { font-weight: 600; color: var(--color-navy); }
+
+.ik-note {
+  border: 1px solid #CFE3E3; /* bileşen sabiti */
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-tint); padding: 9pt 11pt 10pt;
+}
+.ik-note-tag {
+  display: inline-block; background: var(--color-accent-deep); color: #fff;
+  font: 600 7pt/1 var(--font-body); letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 4pt 7pt; margin-bottom: 6pt;
+}
+.ik-note p { margin: 0; font-size: 9pt; }
+
+/* Dikkat kutusu: .ik-note ile birlikte kullanılır, çerçeveyi sola indirger. */
+.ik-note--plain { border-width: 0 0 0 3px; padding: 10pt 12pt; margin: 10pt 0 4pt; }
+.ik-note--plain p { font-size: 10pt; }
+.ik-note--plain strong { color: var(--color-accent-deep); }
+
+/* Görsel bant: zorunlu kapsayıcı .ik-body — negatif marj gövde dolgusunu telafi eder. */
+.ik-figure-band {
+  position: relative; margin: 0 calc(-1 * var(--page-margin-x)) 16pt;
+  height: 168px; overflow: hidden;
+}
+.ik-figure-band img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 46%; display: block;
+}
+.ik-figure-band-shade {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgb(15 34 67 / .45) 0%, rgb(15 34 67 / .10) 45%, rgb(15 34 67 / .58) 100%);
+}
+.ik-figure-band-tint { position: absolute; inset: 0; background: var(--color-accent); opacity: .1; pointer-events: none; }
+.ik-figure-band-label {
+  position: absolute; left: var(--page-margin-x); bottom: 0; margin: 0;
+  background: var(--color-accent); color: #fff;
+  font: 600 7pt/1 var(--font-body); letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 5pt 8pt; text-align: left;
+}
+
+/* ==========================================================================
+   7.4 Şema ve kutular
+   ========================================================================== */
+
+.ik-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10pt; }
+.ik-card { border: 1px solid; border-top: 3px solid; padding: 9pt 10pt; }
+.ik-card--teal { border-color: #CFE3E3; /* bileşen sabiti */ border-top-color: var(--color-accent); background: #F8FCFC; /* bileşen sabiti */ }
+.ik-card--navy { border-color: #CFD8E4; /* bileşen sabiti */ border-top-color: var(--color-navy); background: #F7F9FC; /* bileşen sabiti */ }
+.ik-card-title { font: 600 9.5pt/1.2 var(--font-body); color: var(--color-navy); margin-bottom: 4pt; }
+.ik-card-body { font-size: 8.5pt; line-height: 1.45; color: #3C4C5A; /* bileşen sabiti — kart gövde metni */ }
+
+/* Adım zinciri: doğrudan çocuklar yalnız .ik-step; dönüşüm :nth-child ile (§16 karar 4). */
+.ik-steps { --ik-cols: 4; display: grid; grid-template-columns: repeat(var(--ik-cols), 1fr); gap: 8pt; }
+.ik-step { padding: 8pt 9pt 10pt; border: 1px solid; }
+.ik-step:nth-child(odd) { background: #F8FCFC; /* bileşen sabiti */ border-color: #E1EBEB; /* bileşen sabiti */ }
+.ik-step:nth-child(even) { background: #F8FAFC; /* bileşen sabiti */ border-color: #E3E9F0; /* bileşen sabiti */ }
+.ik-step-head { display: flex; align-items: center; gap: 6pt; margin-bottom: 6pt; }
+.ik-step-num {
+  width: 17pt; height: 17pt; border-radius: 50%; color: #fff;
+  font: 600 9pt/17pt var(--font-body); text-align: center;
+}
+.ik-step:nth-child(odd) .ik-step-num { background: var(--color-accent); }
+.ik-step:nth-child(even) .ik-step-num { background: var(--color-navy); }
+.ik-step-line { flex: 1; height: 2px; }
+.ik-step:nth-child(odd) .ik-step-line { background: var(--color-accent); }
+.ik-step:nth-child(even) .ik-step-line { background: var(--color-navy); }
+.ik-step-text { font-size: 8.5pt; line-height: 1.4; color: #26313C; /* bileşen sabiti — adım/matris metni */ }
+
+/* Kolon matrisi DOM'u: önce N adet .ik-matrix-head, sonra N adet .ik-matrix-col. */
+.ik-matrix { --ik-cols: 5; display: grid; grid-template-columns: repeat(var(--ik-cols), 1fr); column-gap: 6pt; row-gap: 5pt; }
+.ik-matrix-head { grid-row: 1; color: #fff; font: 600 8pt/1.25 var(--font-body); padding: 7pt 6pt; text-align: center; }
+.ik-matrix-head:nth-child(1) { background: var(--color-chart-1); }
+.ik-matrix-head:nth-child(2) { background: var(--color-chart-2); }
+.ik-matrix-head:nth-child(3) { background: var(--color-chart-3); }
+.ik-matrix-head:nth-child(4) { background: var(--color-chart-4); }
+.ik-matrix-head:nth-child(5) { background: var(--color-chart-5); }
+.ik-matrix-col {
+  grid-row: 2; display: grid; gap: 4pt; align-content: start;
+  font-size: 8pt; line-height: 1.35; color: #26313C; /* bileşen sabiti — adım/matris metni */
+}
+.ik-matrix-cell { background: #F5F8F8; /* bileşen sabiti */ padding: 5pt 6pt; }
+
+.ik-tags { --ik-cols: 2; display: grid; grid-template-columns: repeat(var(--ik-cols), 1fr); gap: 5pt; }
+.ik-tag {
+  border-left: 2px solid var(--color-accent); background: var(--color-surface);
+  padding: 6pt 8pt; font-size: 8.5pt; line-height: 1.35;
+}
+
+.ik-code { border: 1px solid #E1EBEB; /* bileşen sabiti */ background: #F8FCFC; /* bileşen sabiti */ padding: 9pt 12pt; }
+.ik-code-grid { display: grid; grid-template-columns: 0.34in 1fr; gap: 5pt 9pt; font-size: 8.5pt; line-height: 1.4; }
+.ik-code-key { font-weight: 600; color: var(--color-accent-deep); }
+/* Spec değer vermiyor; nötr kural — kaynak açıklama hücresi gövde tonunu miras alır.
+   Sınıf, check.py sınıf sözleşmesi ve yazarın anlamlı işaretlemesi için tanımlı. */
+.ik-code-val { font-weight: 400; color: var(--color-text); }
+
+/* Şekil açıklaması ortalı (§16 karar 7). */
+.ik-figcap { font: 400 8pt/1.4 var(--font-body); color: var(--color-muted); margin-top: 5pt; text-align: center; }
+
+/* ==========================================================================
+   7.5 Kapak ve arka kapak
+   Katman sırası: 0 zemin/yay/fotoğraf · 1 kama/gradyan · 2 dalga/örtü · 3 içerik
+   ========================================================================== */
+
+/* --- Kama kapak (kanonik) ------------------------------------------------ */
+
+.ik-cover { background: var(--color-cover-ground); }
+
+.ik-cover-arcs { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+/* SVG sunumu yalnız CSS'te; çocuklar style özniteliği taşımaz. */
+.ik-cover-arcs circle { fill: none; stroke: var(--color-navy); stroke-width: 3; }
+
+.ik-cover-masthead { position: relative; z-index: 3; padding: 1.35in 0.85in 0 0.8in; }
+.ik-cover-title { margin: 26pt 0 0; line-height: 1; font-weight: 600; }
+.ik-cover-logo { display: block; width: 249.1px; height: auto; margin-left: -5.4px; }
+/* Kaynak Spectral 900 ister; yüklü en ağır yüz 700 (§16 karar 9) — görünüm PDF'lerle aynı. */
+.ik-cover-word {
+  display: block; font: 700 71.1pt/1 var(--font-heading); color: var(--color-navy);
+  letter-spacing: -0.04em; margin: 10pt 0 0 -1px;
+}
+.ik-cover-bar { width: 96pt; height: 3px; background: var(--color-accent); margin: 12pt 0; }
+.ik-cover-date {
+  font: 600 21px/1.15 var(--font-body); letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--color-accent); padding-top: 2px;
+}
+.ik-cover-lede {
+  font: 400 13pt/1.45 var(--font-heading); color: var(--color-cover-lede);
+  max-width: 3.4in; padding-top: 36px;
+}
+
+/* Kama geometrisi Ağustos kaynağından (§16 karar 5); içine yalnız beyaz metin girer. */
+.ik-cover-wedge {
+  --ik-wedge: polygon(0 100%, 100% 100%, 100% 80%, 52.6% 63.9%, 0 63.9%);
+  position: absolute; inset: 0; z-index: 1;
+  background: var(--color-accent); clip-path: var(--ik-wedge);
+}
+
+.ik-cover-waves { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.ik-cover-waves g { fill: none; stroke: var(--color-bg); opacity: .5; }
+.ik-cover-waves path:nth-child(1) { stroke-width: 1.6; }
+.ik-cover-waves path:nth-child(2) { stroke-width: .9; opacity: .75; }
+
+.ik-cover-toc { position: absolute; z-index: 3; left: 0.8in; top: 66.6%; width: 3.62in; color: var(--color-bg); }
+.ik-cover-toc-head { font: 600 9pt/1 var(--font-body); letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 9pt; }
+.ik-cover-toc-list { border-top: 1px solid rgb(255 255 255 / .3); }
+.ik-cover-toc-row {
+  display: grid; grid-template-columns: 0.38in 1fr 0.28in; gap: 0 8pt; align-items: baseline;
+  padding: 6pt 0; border-bottom: 1px solid rgb(255 255 255 / .3);
+}
+.ik-cover-toc-num { font: 600 16pt/1 var(--font-heading); }
+.ik-cover-toc-title { font: 500 10.5pt/1.3 var(--font-body); }
+.ik-cover-toc-title .ik-title-suffix { font-size: 9pt; color: rgb(255 255 255 / .62); margin-left: 5pt; white-space: nowrap; }
+.ik-cover-toc-page { font: 600 10pt/1 var(--font-body); text-align: right; color: rgb(255 255 255 / .8); }
+
+/* Kaynak Ağustos kapağında tırnaklı slogan üç katmanlıdır: konumlanmış kutu,
+   `height:35px; padding-bottom:14px` taşıyan ara sarmalayıcı ve akan iç blok.
+   Sistem ara sarmalayıcıyı ayrı sınıf yapmaz; o kutu ölçüsü konumlanmış kutuda
+   yaşar. Kaynak content-box olduğundan `box-sizing` açıkça yazılır ve iç blok
+   `align-items: flex-start` ile kendi yüksekliğiyle akar — aksi halde slogan
+   ~9px aşağı kayar, kapanış tırnağı 5px yukarı çıkar (ölçüt 18 ölçümü).
+   SIRA BAĞIMLI: `box-sizing: content-box` ile `.ik-document *` sıfırlaması eşit
+   özgüllükte (0,1,0); bu kural dosyada o sıfırlamadan SONRA gelmek zorunda. */
+.ik-cover-quote {
+  position: absolute; z-index: 3; left: 0.8in; right: 0.85in; bottom: 1.1in;
+  display: flex; align-items: flex-start; justify-content: flex-end;
+  box-sizing: content-box; height: 35px; padding-bottom: 14px;
+}
+.ik-cover-quote-inner { display: flex; align-items: flex-start; gap: 7pt; }
+.ik-cover-quote-mark { font: 700 24pt/0.8 var(--font-cover-quote); color: rgb(255 255 255 / .5); }
+/* DOM sözleşmesi: kapanış işareti .ik-cover-quote-inner'ın son çocuğu olmalı
+   (açılış işareti üstte, kapanış altta hizalanır). */
+.ik-cover-quote-mark:last-child { align-self: flex-end; }
+.ik-cover-quote-text {
+  font: 500 10pt/1.5 var(--font-body); letter-spacing: 0.05em;
+  color: var(--color-bg); text-align: right;
+}
+
+/* --- Kama arka kapak ----------------------------------------------------- */
+
+.ik-backcover { background: var(--color-cover-ground); }
+
+.ik-cover-arcs--bottom { clip-path: polygon(0 38%, 100% 38%, 100% 100%, 0 100%); }
+.ik-cover-arcs--bottom circle { stroke: #C3D9DA; /* bileşen sabiti — arka kapak yay rengi */ stroke-width: 1; }
+
+/* Arka kapak kendi kesimini taşır; kapağın aynası değildir (§16 karar 5). */
+.ik-backcover .ik-cover-wedge { --ik-wedge: polygon(0 100%, 100% 100%, 100% 28%, 0 62%); }
+
+.ik-backcover-masthead { position: relative; z-index: 3; padding: 1.15in 0.85in 0; }
+.ik-backcover-logo { height: 60.2pt; width: auto; display: block; margin: -3.3pt 0 23.1pt -3.3pt; }
+.ik-backcover-lede { font: 400 17pt/1.42 var(--font-heading); color: var(--color-navy); max-width: 4.3in; }
+.ik-backcover .ik-cover-bar { margin: 26pt 0 22pt; }
+
+.ik-backcover-contact { position: absolute; z-index: 3; left: 0.85in; right: 0.85in; bottom: 1.45in; color: var(--color-bg); }
+.ik-contact-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24pt; }
+/* İletişim sarmalayıcıları: her iki kapak varyantında da aynı; --px sürümü gerekmez. */
+.ik-contact-main { flex: 1; position: relative; }
+.ik-contact-side { flex: none; display: flex; flex-direction: column; align-items: flex-end; position: relative; }
+/* Ana sayfa QR'ı (qr.investikarus.com/, karar #99): "Bizi takip edin" etiketinin 18px
+   üstünde, sağ kenarı ikonlarla hizalı. Mutlak konumlu: akışta olsaydı yan sütun
+   uzar, satır yükselir ve logo + giriş metni yukarı kayardı. 140px = 37mm ayak izi,
+   sembol 30.8mm — v6 / logo %32 kodun asgari baskı ölçüsü (karar #81); küçültmeyin. */
+.ik-contact-qr { position: absolute; right: 0; bottom: calc(100% + 18px); width: 140px; height: 140px; display: block; }
+.ik-contact-label {
+  font: 600 7.5pt/1.2 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgb(255 255 255 / .7); margin-bottom: 9pt;
+}
+.ik-contact-links { display: grid; gap: 5pt; font: 400 10pt/1.4 var(--font-body); }
+.ik-contact-addr { display: grid; gap: 5pt; margin-top: 9pt; font: 400 9.5pt/1.4 var(--font-body); }
+.ik-contact-addr span { color: rgb(255 255 255 / .7); }
+.ik-contact-social { display: flex; gap: 7pt; justify-content: flex-end; }
+.ik-contact-social img { width: 21pt; height: 21pt; display: block; }
+.ik-contact-rule { height: 1px; background: rgb(255 255 255 / .35); margin: 16pt 0 14pt; }
+.ik-contact-grid { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10pt 24pt; font: 400 10pt/1.35 var(--font-body); }
+/* Kaynakta "Bülten · ay" hücresi sağa yaslı (Ağustos ve Eylül arka kapak aynı). */
+.ik-contact-grid > div:last-child { text-align: right; }
+.ik-contact-grid .ik-contact-label { margin-bottom: 4pt; }
+.ik-contact-note {
+  font-size: 8.5pt; line-height: 1.5; color: rgb(255 255 255 / .78);
+  text-align: left; max-width: 4.3in; margin: 14pt 0 0;
+}
+
+/* --- Fotoğraflı kapak ---------------------------------------------------- */
+
+.ik-cover--photo { background: var(--color-navy); }
+.ik-cover-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 46%; z-index: 0; }
+.ik-cover-shade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgb(15 34 67 / .62) 0%, rgb(15 34 67 / .12) 26%, rgb(15 34 67 / .06) 46%, rgb(15 34 67 / .72) 74%, rgb(15 34 67 / .92) 100%);
+}
+.ik-cover-tint { position: absolute; inset: 0; z-index: 2; background: var(--color-accent); opacity: .1; }
+
+.ik-cover-top {
+  position: absolute; z-index: 3; left: 52px; right: 52px; top: 44px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ik-cover-top-logo { height: 26px; width: auto; display: block; filter: brightness(0) invert(1); }
+.ik-cover-top-date {
+  font: 700 10px/1 var(--font-body); letter-spacing: .3em; text-transform: uppercase; color: var(--color-bg);
+}
+
+.ik-cover-mast { position: absolute; z-index: 3; left: 52px; right: 52px; top: 92px; }
+/* Kaynak Spectral 800 ister; yüklü en ağır yüz 700 (§16 karar 9) — görünüm PDF'lerle aynı.
+   margin:0 — kaynakta bu kelime bağımsız, marjsız bir div; .ik-cover-word'ün
+   kama kapak için verdiği `10pt 0 0 -1px` mast bloğunu ~12px kaydırıyordu. */
+.ik-cover-word--light { font: 700 162px/0.84 var(--font-heading); color: var(--color-bg); letter-spacing: -0.022em; margin: 0; }
+.ik-cover-mast-rule { height: 2px; background: rgb(255 255 255 / .55); margin-top: 18px; }
+.ik-cover-tagline {
+  font: 600 14.5px/1 var(--font-body); letter-spacing: .26em; text-transform: uppercase;
+  color: var(--color-bg); margin-top: 12px;
+}
+
+.ik-cover-feature { position: absolute; z-index: 3; left: 52px; right: 52px; bottom: 238px; }
+/* Kaynak Archivo 800 ister; yüklü en ağır yüz 700 (§16 karar 9) — görünüm PDF'lerle aynı. */
+.ik-cover-badge {
+  display: inline-block; background: var(--color-accent); color: var(--color-bg);
+  font: 700 10px/1 var(--font-body); letter-spacing: .22em; text-transform: uppercase;
+  padding: 7px 11px; margin-bottom: 16px;
+}
+/* Kaynak Spectral 800 ister; yüklü en ağır yüz 700 (§16 karar 9) — görünüm PDF'lerle aynı. */
+.ik-cover-headline {
+  font: 700 46pt/1.02 var(--font-heading); color: var(--color-bg);
+  letter-spacing: -0.012em; max-width: 600px;
+}
+
+.ik-cover-list { position: absolute; z-index: 3; left: 52px; right: 52px; bottom: 64px; display: grid; gap: 0; }
+.ik-cover-list-rule { height: 1px; background: rgb(255 255 255 / .34); }
+.ik-cover-list-row {
+  display: grid; grid-template-columns: 10px 1fr; gap: 0 14px; align-items: center;
+  padding: 13px 0; border-bottom: 1px solid rgb(255 255 255 / .34);
+}
+.ik-cover-list-row:last-child { border-bottom: 0; }
+.ik-cover-list-mark { width: 10px; height: 10px; background: var(--color-accent); }
+.ik-cover-list-text { font: 500 15pt/1.2 var(--font-body); color: var(--color-bg); }
+
+/* --- Fotoğraflı arka kapak ----------------------------------------------- */
+
+.ik-backcover--photo { background: var(--color-navy); }
+.ik-cover-photo--flip { object-position: 50% 100%; transform: scaleX(-1) scale(1.55); transform-origin: 50% 100%; }
+.ik-cover-shade--back {
+  background: linear-gradient(180deg, rgb(15 34 67 / .86) 0%, rgb(15 34 67 / .62) 30%, rgb(15 34 67 / .78) 58%, rgb(15 34 67 / .95) 100%);
+}
+.ik-cover-top-date--soft { color: rgb(255 255 255 / .9); }
+
+/* color: kaynak Eylül arka kapağı üç bloğa (bağlantılar, adres, hücre ızgarası)
+   ayrı ayrı #FFFFFF verir; sarmalayıcıya taşındı, aksi halde gövde metni
+   body'den #1B2733 miras alır ve lacivert fotoğraf üzerinde okunmaz. */
+.ik-backcover-body {
+  position: absolute; z-index: 3; left: 52px; right: 52px; bottom: 64px;
+  display: grid; gap: 0; color: var(--color-bg);
+}
+.ik-backcover-logo--light { height: 56px; width: auto; display: block; margin-left: -4px; filter: brightness(0) invert(1); }
+/* İkinci seçici özgüllük sertleştirmesi: .ik-backcover .ik-cover-bar (0,2,0)
+   temel kuralı, yanlışlıkla iki sınıf birlikte yazılırsa --px'i ezmesin.
+   Tek başına kullanım (R9) ilk seçiciyle korunur. */
+.ik-cover-bar--px,
+.ik-backcover .ik-cover-bar--px { width: 96px; height: 3px; background: var(--color-accent); margin: 24px 0 20px; }
+.ik-backcover-lede--light { font: 400 18pt/1.42 var(--font-heading); color: var(--color-bg); max-width: 470px; }
+
+.ik-contact-row--px { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-top: 32px; }
+/* İkinci seçici özgüllük sertleştirmesi: .ik-contact-grid .ik-contact-label (0,2,0)
+   temel kuralı --px'i ezmesin; tek başına kullanım (R9) ilk seçiciyle korunur. */
+.ik-contact-label--px,
+.ik-contact-grid .ik-contact-label--px {
+  font: 700 10px/1 var(--font-body); letter-spacing: .22em; text-transform: uppercase;
+  color: rgb(255 255 255 / .72); margin-bottom: 12px;
+}
+.ik-contact-links--px { display: grid; gap: 7px; font: 500 13px/1.4 var(--font-body); }
+.ik-contact-addr--px { display: grid; gap: 6px; margin-top: 12px; font: 400 12px/1.45 var(--font-body); }
+.ik-contact-addr--px span { color: rgb(255 255 255 / .72); }
+/* Konum rotası (karar #111; 26.10.2026 sunum kapanışlarında seçilen "Rota"): üç şehir tek hatta,
+   Ankara dolu durak, adres yalnız Ankara'nın altında. Kasım 2026'dan beri .ik-contact-addr--px
+   yerine kullanılır. #BFD8D5 bileşen sabitidir (B · Bülten Fotoğraflı sunum dilinin açık turkuazı).
+   Durak + boşluk = 24px; adres bu kadar içeriden başlar ve "Ankara" ile hizalanır. */
+.ik-contact-route--px { display: flex; align-items: center; gap: 10px; margin-top: 20px; }
+.ik-contact-route-stop--px {
+  flex: none; width: 8px; height: 8px; box-sizing: border-box;
+  border: 1.5px solid #BFD8D5; border-radius: 50%; /* bileşen sabiti — rota açık turkuazı */
+}
+.ik-contact-route-stop--main {
+  width: 14px; height: 14px; border: 0; background: rgb(24 155 147 / .35);
+  display: flex; align-items: center; justify-content: center;
+}
+.ik-contact-route-stop--main::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); }
+.ik-contact-route-city--px {
+  flex: none; font: 600 11px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase;
+  color: #BFD8D5; /* bileşen sabiti — rota açık turkuazı */
+}
+.ik-contact-route-city--main { font-weight: 700; color: var(--color-bg); }
+.ik-contact-route-line--px { flex: 1; min-width: 24px; height: 1px; background: rgb(255 255 255 / .4); }
+.ik-contact-route-addr--px { margin-top: 8px; padding-left: 24px; font: 400 12px/1.45 var(--font-body); }
+.ik-contact-route-addr--px span { font-weight: 700; color: #BFD8D5; /* bileşen sabiti — rota açık turkuazı */ }
+.ik-contact-social--px { display: flex; gap: 9px; }
+.ik-contact-social--px img { width: 26px; height: 26px; display: block; }
+.ik-contact-rule--px { height: 1px; background: rgb(255 255 255 / .32); margin: 20px 0 16px; }
+.ik-contact-grid--px { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px 32px; font: 500 13px/1.35 var(--font-body); }
+/* Kaynakta "Bülten · ay" hücresi sağa yaslı. */
+.ik-contact-grid--px > div:last-child { text-align: right; }
+.ik-contact-grid--px .ik-contact-label--px { line-height: 1.3; margin-bottom: 6px; }
+/* text-align/margin açıkça yazılır: bu blok kaynakta div; yazar ileride <p>
+   kullanırsa kapsamlı p kuralının justify + 8pt alt marjı devralmasın. */
+.ik-contact-note--px {
+  font: 400 10.5px/1.5 var(--font-body); color: rgb(255 255 255 / .78);
+  text-align: left; max-width: 470px; margin: 16px 0 0;
+}
+
+/* ==========================================================================
+   Sosyal medya: gönderi (1080×1350) ve hikâye (1080×1920)
+   Kasım 2026'dan beri. Bültenin kapak, iç sayfa ve arka kapak dilini telefon ekranına taşır.
+   Ölçüler px'tir ve 1080 px genişliğe yazılır: render DPR 1, dosya pikseli = CSS pikseli.
+   Okunurluk tabanı 22 px (telefonda ≈ 8 pt). Profil ızgarası (3:4) gönderiyi yanlardan ~34 px
+   kırpar, yan boşluk bu yüzden 72 px. Hikâyede üst 250 px ve alt 340 px Instagram arayüzünün
+   altında kalır; .ik-social-frame metni bu bantların dışında tutar.
+   Fotoğraf katmanları kapaktan gelir (.ik-cover-photo, --flip, .ik-cover-shade, --back,
+   .ik-cover-tint); bant gölgesi .ik-figure-band-shade / -tint. Beyaz yarı saydam tonlar
+   kapaktaki bileşen sabitleriyle aynıdır.
+   ========================================================================== */
+
+.ik-social { position: relative; overflow: hidden; background: var(--color-bg); color: var(--color-text); }
+.ik-social--post { width: 1080px; height: 1350px; }
+.ik-social--story { width: 1080px; height: 1920px; }
+.ik-social--dark { background: var(--color-navy); color: var(--color-bg); }
+
+/* Güvenli alan: içerik sütunu. .ik-social-push sonraki blokları alta iter. */
+.ik-social-frame {
+  position: absolute; z-index: 3; inset: 72px 72px 64px;
+  display: flex; flex-direction: column;
+}
+.ik-social--story .ik-social-frame { inset: 270px 72px 350px; }
+.ik-social-push { margin-top: auto; }
+
+/* Kapak gradyanının sosyal hâli: kısa kadrajda başlık bloğu fotoğrafın en kalabalık
+   bölgesine (cam duvardaki taslaklar) denk geldiği için üst koyuluk daha uzun sürer. */
+.ik-social-shade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgb(15 34 67 / .84) 0%, rgb(15 34 67 / .74) 22%, rgb(15 34 67 / .50) 33%, rgb(15 34 67 / .12) 44%, rgb(15 34 67 / .08) 52%, rgb(15 34 67 / .64) 68%, rgb(15 34 67 / .92) 86%, rgb(15 34 67 / .95) 100%);
+}
+.ik-social--story .ik-social-shade {
+  background: linear-gradient(180deg, rgb(15 34 67 / .70) 0%, rgb(15 34 67 / .80) 16%, rgb(15 34 67 / .70) 28%, rgb(15 34 67 / .16) 40%, rgb(15 34 67 / .08) 50%, rgb(15 34 67 / .62) 64%, rgb(15 34 67 / .92) 80%, rgb(15 34 67 / .96) 100%);
+}
+
+.ik-social-top { flex: none; display: flex; align-items: center; justify-content: space-between; }
+.ik-social-top-logo { height: 40px; width: auto; display: block; }
+.ik-social-top-logo--light { filter: brightness(0) invert(1); }
+.ik-social-top-date { font: 700 22px/1 var(--font-body); letter-spacing: .3em; text-transform: uppercase; }
+
+/* Kapak başlığı: 162 px'lik basılı "BÜLTEN"in 1080 px'e oranı. */
+.ik-social-mast { flex: none; margin-top: 58px; }
+.ik-social-word { font: 700 220px/0.84 var(--font-heading); letter-spacing: -0.022em; color: var(--color-bg); margin: 0; }
+.ik-social-mast-rule { height: 3px; background: rgb(255 255 255 / .55); margin-top: 26px; }
+.ik-social-tagline { font: 600 24px/1 var(--font-body); letter-spacing: .26em; text-transform: uppercase; margin-top: 20px; }
+
+.ik-social-badge {
+  align-self: flex-start; background: var(--color-accent); color: var(--color-bg);
+  font: 700 22px/1 var(--font-body); letter-spacing: .2em; text-transform: uppercase; padding: 13px 18px;
+}
+.ik-social-headline {
+  font: 700 96px/1.02 var(--font-heading); letter-spacing: -0.014em; color: var(--color-bg);
+  margin: 26px 0 0; text-wrap: balance;
+}
+
+/* Alt şerit: fotoğraflı karelerde çizgi + kısa yönlendirme. */
+.ik-social-strip {
+  flex: none; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  margin-top: 44px; padding-top: 26px; border-top: 1px solid rgb(255 255 255 / .34);
+  font: 600 22px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: rgb(255 255 255 / .86);
+}
+.ik-social-strip strong { font-weight: 700; color: var(--color-bg); }
+
+/* Konu kartı: görsel bant + gövde + alt bilgi (iç sayfa dili). */
+.ik-social-band { position: relative; flex: none; height: 450px; margin: 0; overflow: hidden; }
+.ik-social-band img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 50%; display: block;
+}
+.ik-social-band-label {
+  position: absolute; left: 72px; bottom: 0; margin: 0; text-align: left;
+  background: var(--color-accent); color: var(--color-bg);
+  font: 600 22px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; padding: 14px 20px;
+}
+.ik-social-body { flex: 1; min-height: 0; padding: 50px 72px 0; display: flex; flex-direction: column; }
+.ik-social-section { display: grid; grid-template-columns: auto 1fr; gap: 0 24px; align-items: baseline; }
+.ik-social-num { font: 600 80px/1 var(--font-heading); color: var(--color-accent); }
+.ik-social-title {
+  font: 700 60px/1.08 var(--font-heading); letter-spacing: -0.005em; color: var(--color-navy);
+  margin: 0; text-wrap: balance;
+}
+.ik-social-tag {
+  display: inline-block; vertical-align: 10px; margin-left: 14px; padding: 9px 12px;
+  background: var(--color-accent-deep); color: var(--color-bg);
+  font: 600 22px/1 var(--font-body); letter-spacing: .16em; text-transform: uppercase;
+}
+.ik-social-rule { flex: none; height: 3px; background: var(--color-accent); margin: 28px 0 30px; }
+.ik-social-lede { font: 400 31px/1.42 var(--font-body); color: var(--color-text); }
+.ik-social-lede strong { font-weight: 700; color: var(--color-navy); }
+
+/* Metrik: basılı .ik-metric'in tersine değer önde, etiket altta (telefonda önce sayı okunur). */
+.ik-social-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 34px; }
+.ik-social-metric { border-top: 5px solid var(--color-accent); background: var(--color-surface); padding: 22px 24px 24px; }
+.ik-social-metric--wide { grid-column: 1 / -1; }
+.ik-social-metric-value { font: 700 60px/1 var(--font-heading); color: var(--color-navy); }
+.ik-social-metric-label { font: 500 26px/1.3 var(--font-body); color: var(--color-muted); margin-top: 12px; }
+
+/* Dikkat kutusu: son tarih ve yürürlük uyarısı. */
+.ik-social-alert { margin-top: 34px; border-left: 6px solid var(--color-accent); background: var(--color-tint); padding: 26px 30px 28px; }
+.ik-social-alert-tag { font: 700 22px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--color-accent-deep); }
+.ik-social-alert-value { font: 700 64px/1.05 var(--font-heading); color: var(--color-navy); margin-top: 14px; }
+.ik-social-alert-text { font: 400 28px/1.4 var(--font-body); color: var(--color-text); margin-top: 12px; }
+
+/* Numaralı adımlar; daire, sistemin tek köşe istisnası olan .ik-step-num'un karşılığıdır. */
+.ik-social-steps { margin-top: 30px; border-top: 1px solid var(--color-rule); }
+.ik-social-step {
+  display: grid; grid-template-columns: 56px 1fr; gap: 0 24px; align-items: start;
+  padding: 20px 0; border-bottom: 1px solid var(--color-rule);
+}
+.ik-social-step-num {
+  width: 56px; height: 56px; border-radius: 50%; background: var(--color-accent); color: var(--color-bg);
+  font: 600 30px/56px var(--font-heading); text-align: center;
+}
+.ik-social-step-text { font: 400 29px/1.36 var(--font-body); color: var(--color-text); padding-top: 6px; }
+.ik-social-step-text strong { font-weight: 700; color: var(--color-navy); }
+.ik-social-foot-note { font: 500 26px/1.38 var(--font-body); color: var(--color-accent-deep); margin-top: 24px; }
+
+.ik-social-footer {
+  flex: none; display: flex; align-items: center; gap: 22px; margin: 0 72px; padding: 24px 0 50px;
+  border-top: 1px solid var(--color-rule);
+  font: 600 22px/1 var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--color-muted);
+}
+.ik-social-footer-logo { height: 30px; width: auto; display: block; }
+.ik-social-footer-num { margin-left: auto; letter-spacing: .08em; color: var(--color-accent-deep); }
+
+/* İçindekiler (hikâye): küçük görsel + numara + başlık + tek cümle. */
+.ik-social-heading {
+  font: 700 120px/0.95 var(--font-heading); letter-spacing: -0.015em; color: var(--color-navy); margin: 64px 0 0;
+}
+.ik-social-toc { margin-top: 40px; border-top: 3px solid var(--color-accent); }
+.ik-social-toc-row {
+  display: grid; grid-template-columns: 184px 1fr; gap: 0 32px; align-items: center;
+  padding: 26px 0; border-bottom: 1px solid var(--color-rule);
+}
+.ik-social-toc-thumb { width: 184px; height: 184px; object-fit: cover; display: block; }
+.ik-social-toc-num { font: 600 40px/1 var(--font-heading); color: var(--color-accent); }
+.ik-social-toc-title { font: 700 42px/1.1 var(--font-heading); color: var(--color-navy); margin-top: 8px; }
+.ik-social-toc-desc { font: 400 26px/1.35 var(--font-body); color: var(--color-muted); margin-top: 10px; }
+
+/* Kapanış (arka kapak dili). */
+/* align-self: sütun esnetmesi SVG kutusunu 936 px'e açıp logoyu ortalıyordu. */
+.ik-social-sign { display: block; align-self: flex-start; height: 92px; width: auto; margin-left: -6px; filter: brightness(0) invert(1); }
+.ik-social-bar { flex: none; width: 120px; height: 4px; background: var(--color-accent); margin: 34px 0 30px; }
+.ik-social-lede--light { font: 400 46px/1.32 var(--font-heading); color: var(--color-bg); text-wrap: pretty; }
+.ik-social-cta {
+  display: flex; align-items: center; gap: 18px; margin-top: 44px;
+  font: 600 32px/1.2 var(--font-body); color: var(--color-bg);
+}
+.ik-social-cta-mark { flex: none; width: 18px; height: 18px; background: var(--color-accent); }
+.ik-social-cta--ink { color: var(--color-navy); }
+/* Hikâyede bağlantı çıkartması (link sticker) için bırakılan boşluk. */
+.ik-social-sticker { flex: none; height: 170px; }
+.ik-social-contacts { display: grid; gap: 10px; margin-top: 34px; font: 500 28px/1.35 var(--font-body); color: var(--color-bg); }
+/* Konum rotası (karar #111) basılı bileşenle aynı DOM'u kullanır; zoom 2 ile 22 px şehir adı. */
+.ik-social-route { zoom: 2; }
+.ik-social-note { font: 400 22px/1.45 var(--font-body); color: rgb(255 255 255 / .72); margin-top: 28px; max-width: 900px; }
+
+/* Kare gönderi (Instagram, 1080×1080). Kurucu 02.11.2026'da "Instagram paylaşımları kare" dedi; 4:5 kareler
+   LinkedIn ve X'in kaynağıdır. Yerleşim kareye taşınır; 4:5 kart kenar doldurularak kareye çevrilmez. Bant,
+   başlık ve metrikler bir kademe sıkılaşır, 22 px okunurluk tabanı korunur. */
+.ik-social--square { width: 1080px; height: 1080px; }
+.ik-social--square .ik-social-frame { inset: 64px 72px 56px; }
+.ik-social--square .ik-social-mast { margin-top: 40px; }
+.ik-social--square .ik-social-word { font-size: 196px; }
+.ik-social--square .ik-social-mast-rule { margin-top: 22px; }
+.ik-social--square .ik-social-tagline { margin-top: 18px; }
+.ik-social--square .ik-social-headline { font-size: 84px; margin-top: 22px; }
+.ik-social--square .ik-social-strip { margin-top: 34px; padding-top: 22px; }
+.ik-social--square .ik-social-band { height: 340px; }
+.ik-social--square .ik-social-body { padding-top: 40px; }
+.ik-social--square .ik-social-num { font-size: 72px; }
+.ik-social--square .ik-social-title { font-size: 54px; }
+.ik-social--square .ik-social-rule { margin: 22px 0 24px; }
+.ik-social--square .ik-social-lede { font-size: 28px; line-height: 1.4; }
+.ik-social--square .ik-social-metrics { gap: 14px; margin-top: 26px; }
+.ik-social--square .ik-social-metric { padding: 18px 20px 20px; }
+.ik-social--square .ik-social-metric-value { font-size: 52px; }
+.ik-social--square .ik-social-metric-label { font-size: 24px; margin-top: 10px; }
+.ik-social--square .ik-social-alert { margin-top: 26px; padding: 22px 26px 24px; }
+.ik-social--square .ik-social-alert-value { font-size: 52px; margin-top: 12px; }
+.ik-social--square .ik-social-alert-text { font-size: 26px; margin-top: 10px; }
+.ik-social--square .ik-social-steps { margin-top: 24px; }
+.ik-social--square .ik-social-step { grid-template-columns: 48px 1fr; gap: 0 20px; padding: 14px 0; }
+.ik-social--square .ik-social-step-num { width: 48px; height: 48px; font-size: 26px; line-height: 48px; }
+.ik-social--square .ik-social-step-text { font-size: 26px; padding-top: 4px; }
+.ik-social--square .ik-social-foot-note { font-size: 24px; margin-top: 18px; }
+.ik-social--square .ik-social-footer { padding: 20px 0 40px; }
+
+/* ===================================================================
+   2. Okuyucu kabuğu (build-bulten.py ile aynı)
+   =================================================================== */
+:root{ --desk:#E7ECEF; --bar:#0F2243; --on-bar:#FFFFFF; --accent:#189B93; }
+@media (prefers-color-scheme: dark){
+  :root{ --desk:#15181A; }
+}
+*{ -webkit-tap-highlight-color:transparent }
+html{ scroll-behavior:smooth; scroll-padding-top:64px }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto } }
+body{
+  margin:0; background:var(--desk); color:#1B2733;
+  font-family:'Archivo',system-ui,sans-serif;
+  -webkit-text-size-adjust:100%;
+}
+
+/* --- üst çubuk ------------------------------------------------------ */
+.bar{
+  position:sticky; top:0; z-index:20; box-sizing:border-box;
+  display:flex; align-items:center; gap:10px;
+  padding:0 8px 0 4px; padding-top:env(safe-area-inset-top);
+  height:calc(52px + env(safe-area-inset-top));
+  background:var(--bar); color:var(--on-bar);
+}
+.bar a,.bar button{
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  min-height:40px; padding:0 11px; border:0; border-radius:8px;
+  background:transparent; color:inherit; cursor:pointer;
+  font:600 12px/1 'Archivo',sans-serif; letter-spacing:.04em;
+  text-decoration:none; flex:none;
+}
+.bar a:hover,.bar button:hover{ background:rgba(255,255,255,.10) }
+.bar a:active,.bar button:active{ background:rgba(255,255,255,.18) }
+.bar svg{ width:17px; height:17px; flex:none }
+.bar-title{
+  flex:1; min-width:0; display:flex; align-items:baseline; gap:7px;
+  font:400 12px/1 'Archivo',sans-serif; letter-spacing:.16em;
+  text-transform:uppercase; color:rgba(255,255,255,.62);
+  overflow:hidden; white-space:nowrap;
+}
+.bar-title b{ font-weight:600; color:#fff; letter-spacing:.1em }
+@media (max-width:560px){
+  .bar-lbl{ display:none }
+  .bar a,.bar button{ padding:0 9px }
+}
+
+/* --- okuma ilerlemesi ----------------------------------------------- */
+.progress{
+  position:sticky; top:calc(52px + env(safe-area-inset-top)); z-index:20;
+  height:2px; background:rgba(15,34,67,.10);
+}
+.progress i{
+  display:block; height:100%; width:0; background:var(--accent);
+  transform-origin:0 50%;
+}
+
+/* --- içindekiler paneli --------------------------------------------- */
+.toc{
+  position:fixed; inset:0; z-index:30; display:none;
+  background:rgba(15,34,67,.44); backdrop-filter:blur(3px);
+}
+.toc[open]{ display:block }
+.toc-panel{
+  position:absolute; top:0; right:0; width:min(280px,82vw); height:100%; box-sizing:border-box;
+  padding:calc(14px + env(safe-area-inset-top)) 14px 20px;
+  background:#fff; overflow-y:auto;
+  box-shadow:-8px 0 32px rgba(15,34,67,.18);
+}
+.toc-panel h2{
+  font:600 10px/1 'Archivo',sans-serif; letter-spacing:.2em;
+  text-transform:uppercase; color:#5C6B79; margin:0 0 10px; padding:0 8px;
+}
+.toc-panel a{
+  display:block; padding:11px 8px; border-radius:7px;
+  border-bottom:1px solid #EDF1F5;
+  font:500 14px/1.3 'Archivo',sans-serif; color:#1B2733; text-decoration:none;
+}
+.toc-panel a:hover{ background:#F6FAFA }
+.toc-panel a[aria-current="true"]{ color:var(--accent); font-weight:600 }
+
+/* --- sayfa kartları (masaüstü: A4 birebir) --------------------------- */
+.doc{ padding:22px 14px 60px }
+.sheet{
+  position:relative; width:100%; max-width:var(--page-w); margin:0 auto 20px;
+  height:calc(var(--page-h) * var(--k, 1));
+  overflow:hidden; background:#fff;
+  box-shadow:0 1px 2px rgba(15,34,67,.10), 0 10px 28px rgba(15,34,67,.10);
+}
+.sheet > .page{
+  width:var(--page-w); height:var(--page-h);
+  transform:scale(var(--k, 1)); transform-origin:0 0;
+}
+.toc-row{ color:inherit; text-decoration:none }
+.toc-row:hover{ background:#F6FAFA }
+
+/* ===================================================================
+   3. Akış modu — dar ekranda içerik sayfaları tek sütuna akar.
+      Tasarım sistemi ölçüleri değişkenlerle ve bileşen ızgaralarıyla ezilir.
+   =================================================================== */
+@media (max-width: 819px){
+  .doc{ padding:0 0 40px; background:#fff }
+  html{ scroll-padding-top:56px }
+
+  /* kapak ve arka kapak: tasarım bütün olarak görülmeli, ölçeklenir */
+  .sheet[data-fixed]{ margin:0 0 18px; max-width:none; box-shadow:none }
+
+  /* içerik sayfaları: kutudan çıkar, akar */
+  .sheet:not([data-fixed]){
+    height:auto; max-width:none; margin:0; overflow:visible;
+    background:transparent; box-shadow:none;
+    zoom:1.12;                       /* pt ölçülerini oransal büyütür (Ekim'le aynı) */
+  }
+  .sheet:not([data-fixed]) > .page{ width:auto; height:auto; transform:none; overflow:visible }
+  .sheet:not([data-fixed]) .ik-page{
+    --page-margin-x:20px;            /* 0.8in (77px) -> 20px; bant taşması ve bant etiketi de izler */
+    --text-section-title:20pt;       /* 28pt */
+    --ik-align:left;                 /* dar sütunda iki yana yaslama boşluk açar */
+  }
+  /* Sayfa başı/sonu her sayfada tekrar eder; akışta gürültü. */
+  .sheet:not([data-fixed]) .ik-header,
+  .sheet:not([data-fixed]) .ik-footer{ display:none }
+  .sheet:not([data-fixed]) .ik-body{ padding-top:18pt }
+  .sheet:not([data-fixed]) .ik-toc-heading{ font-size:23pt }
+  /* Bölüm başlığı A4'te tek satır (nowrap). Dar ekranda sarar; başlığa bitişik
+     yazılmış "Yeni" eki ("Piyasası<span>Yeni</span>") boşluksuz olduğu için
+     tarayıcı ikisini bölünemez sayar, ek kendi satırına alınır. */
+  .sheet:not([data-fixed]) .ik-section-title{ white-space:normal }
+  .sheet:not([data-fixed]) .ik-section-title > .ik-title-suffix{ display:block; margin:3pt 0 0 }
+  /* Izgaralar: 3-4 sütunlu etiketler sığdığı kadar; karşılaştırma ve adımlar alt alta. */
+  .sheet:not([data-fixed]) .ik-tags{ grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)) }
+  .sheet:not([data-fixed]) .ik-metric-grid{ grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)) }
+  .sheet:not([data-fixed]) .ik-compare,
+  .sheet:not([data-fixed]) .ik-steps{ grid-template-columns:1fr }
+  /* Izgara çocuklarının min-width:auto değeri 1fr izini aşabilir: metin sarsın, taşmasın. */
+  .sheet:not([data-fixed]) :is(.ik-section, .ik-toc-row, .ik-metric-grid, .ik-tags, .ik-compare, .ik-steps) > *{ min-width:0 }
+  .sheet:not([data-fixed]) table{ font-size:9pt }
+  .sheet:not([data-fixed]) td,
+  .sheet:not([data-fixed]) thead th{ padding:5pt 6pt }
+  .sheet:not([data-fixed]) .tbl-wrap{
+    overflow-x:auto; overscroll-behavior-x:contain; margin-bottom:5pt;
+    scrollbar-width:thin; scrollbar-color:rgba(15,34,67,.30) transparent;
+  }
+}
+
+/* --- yazdırma: A4, kabuk gizli -------------------------------------- */
+@page{ size:A4; margin:0 }
+@media print{
+  .bar,.progress,.toc{ display:none !important }
+  body{ background:#fff }
+  .doc{ padding:0 }
+  .sheet{ margin:0; max-width:none; height:var(--page-h); box-shadow:none;
+          break-after:page; page-break-after:always }
+  .sheet > .page{ transform:none }
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a href="/" aria-label="Geri">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+    <span class="bar-lbl">Geri</span>
+  </a>
+  <div class="bar-title">Bülten <b>Kasım 2026</b></div>
+  <button type="button" id="tocBtn" aria-haspopup="dialog" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    <span class="bar-lbl">İçindekiler</span>
+  </button>
+  <!-- PDF dugmesi bilerek yok (Ekim 2026'daki karar): PDF public depoya konmaz,
+       git gecmisine kalici yazilirdi. Dagitim PDF'i LinkedIn'de paylasiliyor. -->
+</header>
+<div class="progress"><i id="progressBar"></i></div>
+
+<div class="toc" id="tocPanel" role="dialog" aria-modal="true" aria-label="İçindekiler">
+  <nav class="toc-panel">
+    <h2>Sayfalar</h2>
+      <a href="#kapak" data-nav="kapak"><span>Kapak</span></a>
+      <a href="#icindekiler" data-nav="icindekiler"><span>İçindekiler</span></a>
+      <a href="#s01" data-nav="s01"><span>01</span></a>
+      <a href="#s02" data-nav="s02"><span>02</span></a>
+      <a href="#s03" data-nav="s03"><span>03</span></a>
+      <a href="#s04" data-nav="s04"><span>04</span></a>
+      <a href="#s05" data-nav="s05"><span>05</span></a>
+      <a href="#s06" data-nav="s06"><span>06</span></a>
+      <a href="#s07" data-nav="s07"><span>07</span></a>
+      <a href="#s08" data-nav="s08"><span>08</span></a>
+      <a href="#s09" data-nav="s09"><span>09</span></a>
+      <a href="#arka-kapak" data-nav="arka-kapak"><span>Arka kapak</span></a>
+  </nav>
+</div>
+
+<main class="doc">
+  <div class="sheet" data-fixed>
+<section class="page ik-page ik-cover ik-cover--photo ik-document" id="kapak" data-pg="1" data-fixed data-screen-label="Kapak">
+  <img class="ik-cover-photo" src="bulten/2026-11/assets/kasim-kapak-v5-gercekci-b.webp" alt="" data-decor="">
+  <div class="ik-cover-shade" data-decor=""></div>
+  <div class="ik-cover-tint" data-decor=""></div>
+  <div class="ik-cover-top">
+    <img class="ik-cover-top-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+    <div class="ik-cover-top-date">Kasım 2026</div>
+  </div>
+  <div class="ik-cover-mast">
+    <div class="ik-cover-word ik-cover-word--light">BÜLTEN</div>
+    <div class="ik-cover-mast-rule"></div>
+    <div class="ik-cover-tagline">Teşvik · Destek · Mevzuat — yatırımcılar ve KOBİ'ler için</div>
+  </div>
+  <div class="ik-cover-feature">
+    <div class="ik-cover-badge">Hizmet İhracatı Destekleri</div>
+    <h1 class="ik-cover-headline" style="margin: 0">Yazılım tanıtımına %70'e varan destek</h1>
+  </div>
+  <div class="ik-cover-list">
+    <div class="ik-cover-list-rule"></div>
+    <div class="ik-cover-list-row">
+      <div class="ik-cover-list-mark"></div>
+      <div class="ik-cover-list-text">Teşvik belgeli arsalarda emlak vergisi muafiyeti: yıl sonu uyarısı</div>
+    </div>
+    <div class="ik-cover-list-row">
+      <div class="ik-cover-list-mark"></div>
+      <div class="ik-cover-list-text">Dağıtım lisanslı EB'lere elektrikte acil durum yükümlülüğü</div>
+    </div>
+    <div class="ik-cover-list-row">
+      <div class="ik-cover-list-mark"></div>
+      <div class="ik-cover-list-text">Teşvik belgesinin harç, damga ve emlak vergisi avantajları</div>
+    </div>
+  </div>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="icindekiler" data-pg="2" data-screen-label="İçindekiler">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body ik-body--toc">
+    <h2 class="ik-toc-heading">İçindekiler</h2>
+    <div class="ik-section-rule ik-section-rule--toc"></div>
+    <p class="ik-toc-intro">Kasım sayısında yazılım şirketlerinin yurt dışı tanıtım destekleri, teşvik belgeli arsalarda yıl sonu bildirimi ve endüstri bölgelerinin yeni elektrik yükümlülükleri öne çıkıyor.</p>
+    <div class="ik-toc">
+      <a href="#s01" class="ik-toc-row toc-row">
+        <div class="ik-toc-num">01</div>
+        <div>
+          <div class="ik-toc-title">Yazılım İhracatı Destekleri</div>
+          <div class="ik-toc-desc">Yazılım, oyun ve uygulamalara hedef ülkelerde %70'e varan tanıtım desteği ve 2026 limitleri</div>
+        </div>
+        <div class="ik-toc-page">1</div>
+      </a>
+      <a href="#s05" class="ik-toc-row toc-row">
+        <div class="ik-toc-num">02</div>
+        <div>
+          <div class="ik-toc-title">Geçici Emlak Vergisi Muafiyeti</div>
+          <div class="ik-toc-desc">Teşvik belgeli arsa ve arazilerde muafiyet, belediyeye süresinde yapılan bildirime bağlı</div>
+        </div>
+        <div class="ik-toc-page">5</div>
+      </a>
+      <a href="#s07" class="ik-toc-row toc-row">
+        <div class="ik-toc-num">03</div>
+        <div>
+          <div class="ik-toc-title">EB'lerde Elektrik Piyasası<span class="ik-title-suffix">Yeni</span></div>
+          <div class="ik-toc-desc">Dağıtım lisanslı endüstri bölgelerine acil durum yük atma ve veri bildirimi yükümlülüğü</div>
+        </div>
+        <div class="ik-toc-page">7</div>
+      </a>
+      <a href="#s08" class="ik-toc-row toc-row">
+        <div class="ik-toc-num">04</div>
+        <div>
+          <div class="ik-toc-title">YTB — İlave Teşvik ve İstisnalar</div>
+          <div class="ik-toc-desc">Harç, damga vergisi ve emlak vergisi avantajları ile inşaat işlerinde KDV istisnası</div>
+        </div>
+        <div class="ik-toc-page">8</div>
+      </a>
+    </div>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s01" data-pg="3" data-screen-label="01">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <figure class="ik-figure-band">
+      <img loading="lazy" decoding="async" src="bulten/2026-11/assets/kasim-bant-01-hizmet-ihracati.webp" alt="" style="object-position: 50% 38%">
+      <div class="ik-figure-band-shade" data-decor=""></div>
+      <div class="ik-figure-band-tint" data-decor=""></div>
+      <figcaption class="ik-figure-band-label">Hizmet ihracatı</figcaption>
+    </figure>
+    <div class="ik-section">
+      <div class="ik-section-num">01</div>
+      <h2 class="ik-section-title">Yazılım İhracatı Destekleri</h2>
+    </div>
+    <div class="ik-section-rule"></div>
+    <p>Ticaret Bakanlığı, 10962 sayılı Hizmet İhracatının Tanımlanması, Sınıflandırılması ve Hizmet Sektörlerinin Desteklenmesi Hakkında Karar kapsamında bilişim sektöründeki şirketlerin yurt dışı tanıtım, pazarlama ve altyapı giderlerini desteklemektedir. Dijital oyun, mobil uygulama, ticari yazılım, yapay zekâ, siber güvenlik, büyük veri, blok zincir, akıllı şehir çözümleri, gömülü yazılım, iletişim hizmetleri ve genel bilişim hizmetleri bu kapsamdadır.</p>
+    <div class="ik-metric-grid">
+      <div class="ik-metric">
+        <div class="ik-metric-label">Temel destek oranı</div>
+        <div class="ik-metric-value">%50</div>
+      </div>
+      <div class="ik-metric">
+        <div class="ik-metric-label">Hedef ülkelerde</div>
+        <div class="ik-metric-value">%70'e kadar</div>
+      </div>
+      <div class="ik-metric">
+        <div class="ik-metric-label">Tanıtım toplam limiti</div>
+        <div class="ik-metric-value">50 milyon TL / yıl</div>
+      </div>
+    </div>
+    <h4 class="ik-subhead">1. Destekten Yararlanma Koşulları</h4>
+    <p>Şirketin ayrıca aşağıdaki koşulları sağlaması gerekmektedir:</p>
+    <ul>
+      <li>Türkiye'de <strong>anonim şirket (A.Ş.)</strong> veya <strong>limited şirket (Ltd. Şti.)</strong> olarak kurulmuş olması,</li>
+      <li>Tüm operasyonel harcamaların şahsi hesaplardan değil, doğrudan <strong>şirkete ait banka hesaplarından</strong> veya şirket kredi kartından yapılması,</li>
+      <li>App Store, Google Play, Steam ve konsol mağazaları gibi platformlardaki yayıncı ya da geliştirici hesaplarının <strong>şirket adına kayıtlı</strong> olması,</li>
+      <li><strong>Hizmet İhracatçıları Birliğine</strong> üye olunması.</li>
+    </ul>
+    <h4 class="ik-subhead">2. Dijital Ürün Tanıtım Desteği</h4>
+    <p>Yazılım, dijital oyun ve mobil uygulamaların yurt dışı lansman ve tanıtım harcamaları <strong>%50 oranında</strong> desteklenmektedir. Üst limit dijital ürün başına <strong>yıllık 15.000.000 TL</strong>, toplamda ise <strong>yıllık 50.000.000 TL</strong>'dir.</p>
+    <h4 class="ik-subhead">3. Hedef Ülke İlave Desteği</h4>
+    <p>Dijital ürün tanıtımının Ticaret Bakanlığınca belirlenen hedef ülkelere yönelik olması hâlinde destek oranına <strong>20 puan</strong> eklenir; yurt dışı dijital reklam ve ürün lansmanı giderlerinin <strong>%70'i</strong> karşılanabilir.</p>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">1</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s02" data-pg="4" data-screen-label="02">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <div class="ik-kicker">Hedef ülkeler · ilave 20 puan</div>
+    <div class="ik-tags" style="--ik-cols: 4">
+      <div class="ik-tag">ABD</div>
+      <div class="ik-tag">Almanya</div>
+      <div class="ik-tag">Azerbaycan</div>
+      <div class="ik-tag">Birleşik Arap Emirlikleri</div>
+      <div class="ik-tag">Birleşik Krallık</div>
+      <div class="ik-tag">Güney Afrika Cumhuriyeti</div>
+      <div class="ik-tag">Güney Kore</div>
+      <div class="ik-tag">Hindistan</div>
+      <div class="ik-tag">İspanya</div>
+      <div class="ik-tag">Japonya</div>
+      <div class="ik-tag">Kanada</div>
+      <div class="ik-tag">Katar</div>
+      <div class="ik-tag">Kazakistan</div>
+      <div class="ik-tag">Malezya</div>
+      <div class="ik-tag">Özbekistan</div>
+      <div class="ik-tag">Pakistan</div>
+      <div class="ik-tag">Rusya Federasyonu</div>
+      <div class="ik-tag">Singapur</div>
+      <div class="ik-tag">Suriye</div>
+      <div class="ik-tag">Suudi Arabistan</div>
+    </div>
+    <div class="ik-figcap">Şekil 1. Ticaret Bakanlığınca belirlenen 20 hedef ülke.</div>
+    <h4 class="ik-subhead">4. Platform Komisyon Desteği</h4>
+    <p>Uygulama mağazalarına (App Store, Google Play, Steam, konsol mağazaları ve benzeri platformlar) yurt dışı satışlar karşılığında ödenen komisyon giderleri <strong>%50 oranında</strong>, dijital ürün başına <strong>4.000.000 TL</strong> ve <strong>yıllık 20.000.000 TL</strong>'ye kadar desteklenmektedir.</p>
+    <h4 class="ik-subhead">5. Barındırma (Hosting) Desteği</h4>
+    <p>Yazılım, oyun ve uygulamaların yurt dışındaki kullanıcılara sunulması için yapılan bulut ve sunucu (barındırma) giderleri %50 oranında ve <strong>yıllık 5.000.000 TL</strong>'ye kadar desteklenmektedir.</p>
+    <h4 class="ik-subhead">6. Yazılım Lisans Desteği</h4>
+    <p>Yurt dışı pazarlama faaliyetlerinde kullanılan yazılım lisanslarının satın alma ve kiralama giderleri <strong>%50 oranında</strong> ve <strong>yıllık 2.500.000 TL</strong>'ye kadar karşılanmaktadır. Desteklenen lisans kategorileri şunlardır:</p>
+    <div class="ik-tags">
+      <div class="ik-tag">Müşteri Veri Yazılımları</div>
+      <div class="ik-tag">Müşteri Takip ve Yönetim Yazılımları</div>
+      <div class="ik-tag">Satış Otomasyon Yazılımları</div>
+      <div class="ik-tag">Satış İstihbarat Yazılımları</div>
+      <div class="ik-tag">Uygulama Analitik Araç Yazılımları</div>
+      <div class="ik-tag">Müşteri İlişkileri Yönetim Yazılımları</div>
+      <div class="ik-tag">Pazarlama Otomasyon Yazılımları</div>
+      <div class="ik-tag">Dönüşüm Analiz Araç Yazılımları</div>
+    </div>
+    <div class="ik-figcap">Şekil 2. Destek kapsamındaki sekiz yazılım lisansı kategorisi.</div>
+    <h4 class="ik-subhead">7. Uluslararası Kuruluşlara Üyelik Desteği</h4>
+    <p>Sektörle ilgili uluslararası kuruluşlara üyelik giderleri <strong>%50 oranında</strong> ve <strong>yıllık 2.500.000 TL</strong> limit dâhilinde desteklenmektedir.</p>
+    <h4 class="ik-subhead">8. Belgelendirme Desteği</h4>
+    <p>Yazılım testleri, kalite belgeleri ve uluslararası akreditasyonlara ilişkin giderler <strong>%50 oranında</strong> ve <strong>yıllık 4.000.000 TL</strong>'ye kadar desteklenmektedir.</p>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">2</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s03" data-pg="5" data-screen-label="03">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <h4 class="ik-subhead" style="margin-top: 0">9. Rapor ve Veri Tabanı Üyeliği Desteği</h4>
+    <p>Hedef pazarlara yönelik strateji oluşturulmasında kullanılan sektörel rapor ve veri tabanı üyelik giderleri <strong>%50 oranında</strong> ve <strong>yıllık 2.500.000 TL</strong>'ye kadar desteklenmektedir. Desteklenen veri tabanları şunlardır:</p>
+    <div class="ik-tags" style="--ik-cols: 3">
+      <div class="ik-tag">Adapty</div>
+      <div class="ik-tag">Adjust</div>
+      <div class="ik-tag">Airbridge</div>
+      <div class="ik-tag">Amplitude</div>
+      <div class="ik-tag">AppMagic</div>
+      <div class="ik-tag">AppMetrica</div>
+      <div class="ik-tag">AppNava</div>
+      <div class="ik-tag">AppTweak</div>
+      <div class="ik-tag">Countly</div>
+      <div class="ik-tag">data.ai</div>
+      <div class="ik-tag">Defence Insight</div>
+      <div class="ik-tag">Forrester</div>
+      <div class="ik-tag">GameRefinery</div>
+      <div class="ik-tag">Gartner</div>
+      <div class="ik-tag">IDC</div>
+      <div class="ik-tag">Mixpanel</div>
+      <div class="ik-tag">Mobile Action</div>
+      <div class="ik-tag">RevenueCat</div>
+      <div class="ik-tag">Sensor Tower</div>
+      <div class="ik-tag">SocialPeta</div>
+      <div class="ik-tag">Tenjin</div>
+    </div>
+    <div class="ik-figcap">Şekil 3. Destek kapsamındaki 21 rapor ve veri tabanı (IDC: International Data Corporation).</div>
+    <h4 class="ik-subhead">10. Fuar ve Etkinlik Katılım Destekleri</h4>
+    <div class="ik-compare">
+      <div class="ik-card ik-card--teal">
+        <div class="ik-card-title">Yurt dışı etkinlikler</div>
+        <div class="ik-card-body">Bireysel ya da millî katılım organizasyonlarıyla yurt dışındaki teknoloji fuarı ve kongrelerine katılımda yer kirası, stant kurulumu, nakliye ve temsilcilerin ulaşım giderleri etkinlik başına <strong>%50 oranında</strong> ve <strong>1.500.000 TL</strong>'ye kadar desteklenir. Bakanlığın “Prestijli Etkinlik” listesindeki etkinliklerde limit <strong>3.000.000 TL</strong>'ye çıkar; hedef ülkelerdeki etkinliklerde destek oranı <strong>%70</strong>'tir.</div>
+      </div>
+      <div class="ik-card ik-card--navy">
+        <div class="ik-card-title">Yurt içi etkinlikler</div>
+        <div class="ik-card-body">Türkiye'de düzenlenen uluslararası nitelikli teknoloji etkinliklerine katılım giderleri etkinlik başına <strong>%50 oranında</strong> ve <strong>600.000 TL</strong>'ye kadar desteklenir. Etkinliğin prestijli olması hâlinde limit <strong>1.200.000 TL</strong>'dir.</div>
+      </div>
+    </div>
+    <div class="ik-figcap">Şekil 4. Etkinlik katılım desteklerinde yurt dışı ve yurt içi limitler.</div>
+    <h4 class="ik-subhead">11. Örnek Senaryo: Bir Yazılım Şirketi Ne Kadar Destek Alabilir?</h4>
+    <p>Tek ürün için yıllık 40.000.000 TL yurt dışı reklam bütçesi bulunan bir yazılım şirketi, diğer kalemlerde de uygun harcama yaparsa şu destek üst limitlerinden yararlanabilir:</p>
+    <div class="tbl-wrap"><table>
+      <thead>
+        <tr><th style="width: 2.1in">Destek kalemi</th><th style="width: 1.75in">Üst limit</th><th>Dönem ve kapsam</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="ik-table-key">Dijital ürün tanıtımı</td><td>15.000.000 TL</td><td>Yıllık, ürün başına</td></tr>
+        <tr><td class="ik-table-key">Platform komisyonu</td><td>4.000.000 TL</td><td>Ürün başına</td></tr>
+        <tr><td class="ik-table-key">Barındırma (hosting)</td><td>5.000.000 TL</td><td>Yıllık</td></tr>
+        <tr><td class="ik-table-key">Yurt içi istihdam</td><td>90.000 TL</td><td>Aylık, personel başına; en fazla 5 kişi</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ik-figcap">Tablo 1. Tek ürünlü bir yazılım şirketi için örnek destek üst limitleri.</div>
+    <p>Örnek, limit planlamasıyla toplam destek potansiyelinin yükselebileceğini gösterir.</p>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">3</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s04" data-pg="6" data-screen-label="04">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <h4 class="ik-subhead" style="margin-top: 0">12. 2026 Bilişim Teşvikleri: Güncel Limitler</h4>
+    <p>Destek kalemleri ve 2026 yılı üst limitleri aşağıda toplu olarak yer almaktadır. Temel oran %50'dir; hedef ülkelerde dijital ürün tanıtımı ve yurt dışı etkinlik katılımı %70 oranında desteklenir.</p>
+    <div class="tbl-wrap"><table>
+      <thead>
+        <tr><th style="width: 2.5in">Destek kalemi</th><th style="width: 0.55in">Oran</th><th>2026 üst limit</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ik-table-group"><td colspan="3">PAZARLAMA, TANITIM VE SATIŞ</td></tr>
+        <tr><td class="ik-table-key">Yurt dışı reklam ve pazarlama</td><td>%50</td><td>25.000.000 TL / yıl</td></tr>
+        <tr><td class="ik-table-key">Dijital ürün tanıtımı (bilişim)</td><td>%50</td><td>50.000.000 TL / yıl (ürün başına 15.000.000 TL)</td></tr>
+        <tr><td class="ik-table-key">Platform komisyonu (bilişim)</td><td>%50</td><td>20.000.000 TL / yıl (ürün başına 4.000.000 TL)</td></tr>
+        <tr><td class="ik-table-key">Acente komisyonu</td><td>%50</td><td>6.000.000 TL / yıl</td></tr>
+        <tr class="ik-table-group"><td colspan="3">ALTYAPI, LİSANS VE ÜYELİK</td></tr>
+        <tr><td class="ik-table-key">Barındırma (hosting)</td><td>%50</td><td>5.000.000 TL / yıl</td></tr>
+        <tr><td class="ik-table-key">Yazılım lisansı</td><td>%50</td><td>2.500.000 TL / yıl</td></tr>
+        <tr><td class="ik-table-key">Rapor ve veri tabanı üyeliği</td><td>%50</td><td>2.500.000 TL / yıl</td></tr>
+        <tr><td class="ik-table-key">Uluslararası kuruluşlara üyelik</td><td>%50</td><td>2.500.000 TL / yıl</td></tr>
+        <tr class="ik-table-group"><td colspan="3">İSTİHDAM VE YURT DIŞI BİRİM</td></tr>
+        <tr><td class="ik-table-key">Yurt içi istihdam (tanıtım/pazarlama)</td><td>%50</td><td>Aylık 90.000 TL / personel (aynı anda en fazla 5 kişi)</td></tr>
+        <tr><td class="ik-table-key">Yurt dışı istihdam (tanıtım/pazarlama)</td><td>%50</td><td>Aylık 250.000 TL / personel (aynı anda en fazla 5 kişi)</td></tr>
+        <tr><td class="ik-table-key">Yurt dışı birim kirası (ofis / paylaşımlı ofis)</td><td>%50</td><td>6.000.000 TL / birim / yıl</td></tr>
+        <tr class="ik-table-group"><td colspan="3">ETKİNLİK, BELGELENDİRME VE TESCİL</td></tr>
+        <tr><td class="ik-table-key">Yurt dışı etkinlik katılımı</td><td>%50</td><td>1.500.000 TL / etkinlik · prestijli etkinlikte 3.000.000 TL</td></tr>
+        <tr><td class="ik-table-key">Yurt içi etkinlik katılımı</td><td>%50</td><td>600.000 TL / etkinlik · prestijli etkinlikte 1.200.000 TL</td></tr>
+        <tr><td class="ik-table-key">Belgelendirme</td><td>%50</td><td>4.000.000 TL / yıl</td></tr>
+        <tr><td class="ik-table-key">Tescil koruma</td><td>%50</td><td>2.500.000 TL / yıl</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ik-figcap">Tablo 2. Bilişim şirketlerine yönelik hizmet ihracatı destekleri ve 2026 üst limitleri.</div>
+    <div class="ik-note" style="margin-top: 10pt">
+      <div class="ik-note-tag">Not</div>
+      <p>Tablodaki tutarlar üst limitlerdir. Uygulanabilir destek tutarı; şirketin sektör sınıflandırmasına, ürün sayısına, harcama türlerine ve harcamaların belgelendirilmesine göre değişir.</p>
+    </div>
+    <p>Şirketinizin hangi destek kalemlerinden yararlanabileceğinin belirlenmesi, yıllık limit planlamasının yapılması ve başvuru dosyalarının hazırlanması konusunda destek sağlayabiliriz.</p>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">4</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s05" data-pg="7" data-screen-label="05">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <figure class="ik-figure-band">
+      <img loading="lazy" decoding="async" src="bulten/2026-11/assets/kasim-bant-02-emlak-vergisi.webp" alt="" style="object-position: 50% 56%">
+      <div class="ik-figure-band-shade" data-decor=""></div>
+      <div class="ik-figure-band-tint" data-decor=""></div>
+      <figcaption class="ik-figure-band-label">Emlak vergisi</figcaption>
+    </figure>
+    <div class="ik-section">
+      <div class="ik-section-num">02</div>
+      <h2 class="ik-section-title">Geçici Emlak Vergisi Muafiyeti</h2>
+    </div>
+    <div class="ik-section-rule"></div>
+    <p>Yatırım teşvik belgesi (YTB) kapsamındaki yatırımlar için edinilen ya da tahsis edilen arsa ve araziler, izleyen bütçe yılından tamamlama vizesinin yapıldığı yılın sonuna kadar emlak vergisinden geçici olarak muaftır. Muafiyet kendiliğinden uygulanmaz; belediyeye süresinde yapılan bildirime bağlıdır.</p>
+    <div class="ik-metric-grid">
+      <div class="ik-metric">
+        <div class="ik-metric-label">Arsa ve arazide bitiş</div>
+        <div class="ik-metric-value">Vize yılı sonu</div>
+      </div>
+      <div class="ik-metric">
+        <div class="ik-metric-label">YTB ile inşa edilen bina</div>
+        <div class="ik-metric-value">5 yıl</div>
+      </div>
+      <div class="ik-metric">
+        <div class="ik-metric-label">Bildirim</div>
+        <div class="ik-metric-value">Bütçe yılı içinde</div>
+      </div>
+    </div>
+    <h4 class="ik-subhead">1. Yasal Dayanak</h4>
+    <p>1319 sayılı Emlak Vergisi Kanunu'nun 15'inci maddesinin ilgili hükümleri şöyledir:</p>
+    <div class="ik-note">
+      <div class="ik-note-tag">Kanun metni</div>
+      <p><em>“Yatırım Teşvik Belgesi kapsamında yapılan yatırımlar için iktisap olunan veya tahsis edilen araziler Yatırım Teşvik Belgesi süresince.</em></p>
+      <p style="margin-top: 5pt"><em>Geçici olarak muaflıktan istifade için arazinin bu maddede yazılı cihetlere tahsis edilmiş olduğunun ilgili vergi dairesine bütçe yılı içinde bildirilmesi şarttır. Muafiyetler, arazinin tayin olunan cihetlere tahsis edildiği yılı takibeden bütçe yılından başlar. Bütçe yılı içinde bildirim yapılmazsa muafiyet, bildirimin yapıldığı yılı takibeden bütçe yılından muteber olur. Bu takdirde bildirimin yapıldığı bütçe yılının sonuna kadar geçen yıllara ait muafiyet hakkı düşer.”</em></p>
+    </div>
+    <h4 class="ik-subhead">2. Genel Tebliğ Açıklamaları</h4>
+    <p>69 Seri No.lu Emlak Vergisi Kanunu Genel Tebliği'nin (RG: 29.09.2016/29842) 4'üncü maddesine göre:</p>
+    <ul>
+      <li>YTB kapsamındaki yatırımlar için edinilen veya tahsis edilen araziler, <strong>YTB'nin tamamlama vizesi yapılıncaya kadar</strong> geçici muafiyetten yararlanabilir.</li>
+      <li>Kanun'un 12'nci maddesi gereği buradaki <strong>arazi tabiri arsaları da kapsar</strong>.</li>
+      <li>Muafiyet, arazinin edinildiği veya tahsis edildiği yılı <strong>takip eden bütçe yılından</strong> başlar ve tamamlama vizesinin yapıldığı yılın sonuna kadar sürer.</li>
+      <li><strong>01.01.2017</strong>'de yürürlüğe giren düzenleme, bu tarihten sonra alınan YTB'lere uygulanır.</li>
+    </ul>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">5</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s06" data-pg="8" data-screen-label="06">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <h4 class="ik-subhead" style="margin-top: 0">3. Özelge ile Teyit</h4>
+    <p>Ankara Vergi Dairesi Başkanlığının 30.05.2017 tarihli ve 90792880-175.01[2016/131]-171873 sayılı özelgesi de uygulamayı teyit etmektedir: süresi içinde emlak vergisi bildirimi ile YTB'nin bir örneğinin belediyeye verilmesi şartıyla, YTB kapsamındaki <strong>binalar</strong> Kanun'un 5'inci maddesinin (g) bendine göre <strong>5 yıl</strong>, <strong>arsa ve araziler</strong> ise 15'inci maddesinin (e) bendine göre <strong>tamamlama vizesi yapılıncaya kadar</strong> geçici muafiyetten yararlanabilmektedir.</p>
+    <h4 class="ik-subhead">4. Muafiyetten Yararlanma Şartları</h4>
+    <p>Genel Tebliğ'in 4'üncü maddesinin üçüncü fıkrasına göre aşağıdaki iki şartın birlikte sağlanması gerekir:</p>
+    <div class="ik-steps" style="--ik-cols: 2">
+      <div class="ik-step">
+        <div class="ik-step-head"><span class="ik-step-num">1</span><span class="ik-step-line"></span></div>
+        <div class="ik-step-text">Arazinin, YTB'nin <strong>tamamlama vizesinin yapılacağı tarihten önce</strong> edinilmesi veya tahsis edilmesi</div>
+      </div>
+      <div class="ik-step">
+        <div class="ik-step-head"><span class="ik-step-num">2</span><span class="ik-step-line"></span></div>
+        <div class="ik-step-text">Arazinin YTB kapsamında edinildiğinin veya tahsis edildiğinin, <strong>YTB'nin bir örneğiyle</strong> birlikte ilgili belediyeye <strong>bütçe yılı içinde</strong> bildirilmesi</div>
+      </div>
+    </div>
+    <div class="ik-figcap">Şekil 5. Geçici emlak vergisi muafiyetinin iki şartı.</div>
+    <h4 class="ik-subhead">5. Bildirim Süresi: Kritik Husus</h4>
+    <p>Bildirim, arazinin edinildiği veya tahsis edildiği bütçe yılı içinde yapılmazsa muafiyet ancak bildirimin yapıldığı yılı izleyen yıldan itibaren geçerli olur; bildirim yılının sonuna kadar geçen yıllara ait muafiyet hakkı kaybedilir.</p>
+    <div class="ik-compare">
+      <div class="ik-card ik-card--teal">
+        <div class="ik-card-title">Bildirim aynı yıl içinde yapılırsa</div>
+        <div class="ik-card-body">Arsa 2026'da edinildi, bildirim 2026 içinde yapıldı. Muafiyet <strong>2027 bütçe yılından</strong> başlar ve vize yılının sonuna kadar sürer.</div>
+      </div>
+      <div class="ik-card ik-card--navy">
+        <div class="ik-card-title">Bildirim bir yıl gecikirse</div>
+        <div class="ik-card-body">Arsa 2026'da edinildi, bildirim 2027'de yapıldı. <strong>2027 yılına ait muafiyet hakkı düşer</strong>; vize 2028 veya sonrasındaysa muafiyet ancak <strong>2028'den</strong> başlar.</div>
+      </div>
+    </div>
+    <div class="ik-figcap">Şekil 6. Bildirim zamanının muafiyetin başlangıcına etkisi (örnek).</div>
+    <div class="ik-note ik-note--plain"><p><strong>Dikkat:</strong> YTB kapsamında 2026'da edinilen veya tahsis edilen arsa ve arazilerde 2027 muafiyetinin kaybedilmemesi için bildirimin <strong>31 Aralık 2026</strong>'ya kadar yapılması gerekir.</p></div>
+    <h4 class="ik-subhead">6. Belediyeye Başvuru</h4>
+    <p>Emlak Vergisi Kanunu'nun 37'nci maddesine göre Kanun'da geçen "vergi dairesi" tabiri belediyeleri ifade eder; bildirim, arazinin bulunduğu belediyenin emlak vergisi birimine yapılır. Örnek müracaat yazısında başvuruya şu belgeler eklenmektedir:</p>
+    <div class="ik-tags" style="--ik-cols: 3">
+      <div class="ik-tag">Yatırım teşvik belgesi</div>
+      <div class="ik-tag">Tapu fotokopileri</div>
+      <div class="ik-tag">Emlak vergisi bildirimi</div>
+      <div class="ik-tag">İmza sirküleri</div>
+      <div class="ik-tag">69 Seri No.lu Genel Tebliğ</div>
+      <div class="ik-tag">Ankara VDB özelgesi</div>
+    </div>
+    <div class="ik-figcap">Şekil 7. Örnek müracaat yazısına eklenen belgeler.</div>
+    <p style="margin-top: 10pt">Belediyeye sunulacak müracaat yazısının ve eklerinin hazırlanması konusunda destek sağlayabiliriz.</p>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">6</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s07" data-pg="9" data-screen-label="07">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <figure class="ik-figure-band">
+      <img loading="lazy" decoding="async" src="bulten/2026-11/assets/kasim-bant-03-eb-elektrik.webp" alt="" style="object-position: 50% 58%">
+      <div class="ik-figure-band-shade" data-decor=""></div>
+      <div class="ik-figure-band-tint" data-decor=""></div>
+      <figcaption class="ik-figure-band-label">Elektrik piyasası</figcaption>
+    </figure>
+    <div class="ik-section">
+      <div class="ik-section-num">03</div>
+      <h2 class="ik-section-title">EB'lerde Elektrik Piyasası<span class="ik-title-suffix">Yeni</span></h2>
+    </div>
+    <div class="ik-section-rule"></div>
+    <p>19 Ekim 2026 tarihli ve 33405 sayılı Resmî Gazete'de yayımlanan “Organize Sanayi Bölgelerinin ve Endüstri Bölgelerinin Elektrik Piyasası Faaliyetlerine İlişkin Yönetmelikte Değişiklik Yapılmasına Dair Yönetmelik” ile Ana Yönetmeliğin 7'nci ve 11'inci maddelerine yeni fıkralar eklenmiştir. Bu bölüm, değişikliğin dağıtım lisanslı endüstri bölgelerine (EB) etkilerini ele almaktadır.</p>
+    <h4 class="ik-subhead">1. Düzenlemenin Getirdikleri</h4>
+    <div class="ik-steps" style="--ik-cols: 3">
+      <div class="ik-step">
+        <div class="ik-step-head"><span class="ik-step-num">1</span><span class="ik-step-line"></span></div>
+        <div class="ik-step-text"><strong>Uygulama:</strong> Görevli tedarik şirketinden gelen lisanssız üretim yük atma talimatlarını uygulamak</div>
+      </div>
+      <div class="ik-step">
+        <div class="ik-step-head"><span class="ik-step-num">2</span><span class="ik-step-line"></span></div>
+        <div class="ik-step-text"><strong>Bilgi paylaşımı:</strong> Dağıtım sistemine bağlı lisanssız tesisler ve talimatların yerine getirilmesine ilişkin bilgileri görevli tedarik şirketiyle paylaşmak</div>
+      </div>
+      <div class="ik-step">
+        <div class="ik-step-head"><span class="ik-step-num">3</span><span class="ik-step-line"></span></div>
+        <div class="ik-step-text"><strong>Bildirim:</strong> Acil durum önlemleri için talep edilen verileri süresinde ve eksiksiz olarak TEİAŞ'a bildirmek</div>
+      </div>
+    </div>
+    <div class="ik-figcap">Şekil 8. Dağıtım lisansı sahibi EB'lerin yeni yükümlülükleri.</div>
+    <p style="margin-top: 8pt">Talimatların yerine getirilmemesi ya da görevli tedarik şirketi ve TEİAŞ'ın talep ettiği bilgi ve verilerin paylaşılmaması hâlinde, bu bölgeler hakkında Elektrik Piyasası Kanunu kapsamında <strong>yaptırım</strong> uygulanabilecektir.</p>
+    <h4 class="ik-subhead">2. EB'lerin Yeni Konumu</h4>
+    <p>Dağıtım lisansı sahibi EB'ler artık yalnızca elektrik dağıtım altyapısı sunan kuruluşlar değil, <strong>doğrudan sorumlu sistem aktörleridir</strong>: görevli tedarik şirketi ile TEİAŞ arasında acil durum iletişimini kurmak, talimatları zamanında uygulamak, kayıt altına almak ve istenen verileri eksiksiz iletmekle yükümlüdür.</p>
+    <h4 class="ik-subhead">3. Lisanssız Üretim Tesisi Bulunmayan EB'ler</h4>
+    <p>Lisanssız üretim tesisi bulunmayan bir EB için lisanssız üreticiye özgü fiilî bir operasyon yükü doğmaz. Ancak EB, dağıtım lisansı sahibi olarak görevli tedarik şirketiyle koordinasyonu sağlamak, acil durum talimatlarını uygulamak ve istenen verileri süresinde ve eksiksiz iletmekle yükümlüdür.</p>
+    <p><strong>Sonuç olarak</strong> düzenleme, dağıtım lisansı sahibi EB'leri arz güvenliği zincirinin bir parçası hâline getirmektedir. Dağıtım lisanslı EB'ler, lisanssız üretim tesisi olmasa da talimat, veri paylaşımı, TEİAŞ bildirimi ve yaptırım riski bakımından hazırlıklı olmalıdır.</p>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">7</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s08" data-pg="10" data-screen-label="08">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <figure class="ik-figure-band">
+      <img loading="lazy" decoding="async" src="bulten/2026-11/assets/kasim-bant-04-ytb-ilave.webp" alt="" style="object-position: 50% 45%">
+      <div class="ik-figure-band-shade" data-decor=""></div>
+      <div class="ik-figure-band-tint" data-decor=""></div>
+      <figcaption class="ik-figure-band-label">Yatırım teşvik belgesi</figcaption>
+    </figure>
+    <div class="ik-section">
+      <div class="ik-section-num">04</div>
+      <h2 class="ik-section-title">YTB — İlave Teşvik ve İstisnalar</h2>
+    </div>
+    <div class="ik-section-rule"></div>
+    <p>Yatırım teşvik belgesinin (YTB) sağladığı temel destekler “Yatırımlarda Devlet Yardımları Hakkında Karar” ile düzenlenmektedir. Belge ve kapsamındaki yatırımlar, bunun yanında farklı kanunlardaki vergi, harç ve mülkiyet hükümleri sayesinde ek avantajlardan da yararlanmaktadır. Belge sahibi yatırımcıların yararlanabileceği ilave teşvik ve istisnalar aşağıda özetlenmiştir.</p>
+    <div class="ik-metric-grid">
+      <div class="ik-metric">
+        <div class="ik-metric-label">Bina vergisinde süre</div>
+        <div class="ik-metric-value">5 yıl</div>
+      </div>
+      <div class="ik-metric">
+        <div class="ik-metric-label">Arazi vergisinde bitiş</div>
+        <div class="ik-metric-value">Vize yılı sonu</div>
+      </div>
+      <div class="ik-metric">
+        <div class="ik-metric-label">Belediye harçları</div>
+        <div class="ik-metric-value">6 harçta istisna</div>
+      </div>
+    </div>
+    <div class="tbl-wrap"><table style="margin-top: 12pt">
+      <thead>
+        <tr><th style="width: 1.75in">Destek unsuru</th><th style="width: 2.05in">Yasal dayanak</th><th>Kapsam ve süre</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="ik-table-key">İnşaat işlerinde KDV istisnası (imalat sanayii ve turizm)</td><td>3065 s. KDV Kanunu geç. m. 37<br>9770 s. Cumhurbaşkanı Kararı</td><td>Belge kapsamındaki inşaat işlerine ilişkin mal teslimleri ve hizmetler; 31.12.2028'e kadar</td></tr>
+        <tr><td class="ik-table-key">İmar ile ilgili harç istisnaları</td><td>2464 s. Belediye Gelirleri Kanunu m. 80</td><td>YTB kapsamında inşa edilen yapı ve tesisler için altı belediye harcı</td></tr>
+        <tr><td class="ik-table-key">Harç istisnası</td><td>492 s. Harçlar Kanunu</td><td>YTB'ye ilişkin belirtilen kâğıtlara dair işlemler (bkz. s. 9)</td></tr>
+        <tr><td class="ik-table-key">Damga vergisi istisnası</td><td>60 Seri No.lu Damga Vergisi Kanunu Genel Tebliği m. 9/11-(a)</td><td>YTB'ye ilişkin belirtilen kâğıtlar (bkz. s. 9)</td></tr>
+        <tr><td class="ik-table-key">Bina (emlak) vergisi muafiyeti</td><td>69 Seri No.lu Emlak Vergisi Kanunu Genel Tebliği m. 3</td><td>İnşaatın sona erdiği yılı izleyen bütçe yılından itibaren 5 yıl</td></tr>
+        <tr><td class="ik-table-key">Arazi (emlak) vergisi muafiyeti</td><td>69 Seri No.lu Emlak Vergisi Kanunu Genel Tebliği m. 4</td><td>Arsa ve arazide vize yılının sonuna kadar (bkz. Bölüm 02)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="ik-figcap">Tablo 3. YTB sahibi yatırımcıların yararlanabileceği ilave teşvik ve istisnalar.</div>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">8</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet">
+<section class="page ik-page ik-document" id="s09" data-pg="11" data-screen-label="09">
+  <header class="ik-header">
+    <div class="ik-header-row">
+      <img loading="lazy" decoding="async" class="ik-header-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+      <span class="ik-header-title">Bülten</span>
+      <span class="ik-header-date">Kasım 2026</span>
+    </div>
+    <div class="ik-header-rule"></div>
+  </header>
+  <div class="ik-body">
+    <h4 class="ik-subhead" style="margin-top: 0">1. İmar ile İlgili Harç İstisnaları</h4>
+    <p>2464 sayılı Belediye Gelirleri Kanunu'nun 80'inci maddesi uyarınca YTB kapsamında inşa edilen yapı ve tesisler aşağıdaki harçlardan müstesnadır:</p>
+    <div class="ik-tags">
+      <div class="ik-tag">Bina inşaat harcı</div>
+      <div class="ik-tag">Yapı kullanma izni harcı</div>
+      <div class="ik-tag">Parselasyon harcı (ilk veya istek üzerine müteakip parselasyon)</div>
+      <div class="ik-tag">İfraz ve tevhit harcı</div>
+      <div class="ik-tag">Plan ve proje tasdik harcı</div>
+      <div class="ik-tag">Zemin açma izni ve toprak hafriyatı harcı</div>
+    </div>
+    <div class="ik-figcap">Şekil 9. YTB kapsamındaki yapı ve tesisler için istisna tutulan belediye harçları.</div>
+    <h4 class="ik-subhead">2. Harç ve Damga Vergisi İstisnası</h4>
+    <p>YTB kapsamındaki yatırım mallarına ilişkin aşağıdaki kâğıtlara dair işlemler 492 sayılı Harçlar Kanunu uyarınca harçtan; kâğıtların kendisi ise 60 Seri No.lu Damga Vergisi Kanunu Genel Tebliği'nin 9/11-(a) maddesi uyarınca damga vergisinden müstesnadır:</p>
+    <ul>
+      <li>YTB sahibi yatırımcılar ile yatırım mallarının üreticileri ve tedarikçileri arasında düzenlenen kâğıtlar,</li>
+      <li>Münhasıran yatırım döneminde belge kapsamındaki yatırıma yönelik gayri maddi hakların kiralanması ve satın alınmasına ilişkin kâğıtlar,</li>
+      <li>Belge kapsamındaki sabit kıymetlerin imal ve inşasına ilişkin sözleşme, taahhütname, teminat ve benzeri kâğıtlar,</li>
+      <li>Bu yatırımlara yönelik danışmanlık ve teknik müşavirlik hizmetlerine ilişkin kâğıtlar.</li>
+    </ul>
+    <p>Harç istisnası, yukarıda belirtilen kâğıtlara ilişkin işlemler için uygulanmaktadır.</p>
+    <h4 class="ik-subhead">3. Emlak Vergisi Muafiyetleri</h4>
+    <div class="ik-compare">
+      <div class="ik-card ik-card--teal">
+        <div class="ik-card-title">Bina vergisi</div>
+        <div class="ik-card-body">YTB kapsamında inşa edilen binalar, belge örneğiyle birlikte bina bildirimi verilmesi şartıyla, inşaatın sona erdiği yılı izleyen bütçe yılından itibaren <strong>5 yıl</strong> süreyle bina vergisinden muaftır (69 Seri No.lu Genel Tebliğ, m. 3).</div>
+      </div>
+      <div class="ik-card ik-card--navy">
+        <div class="ik-card-title">Arazi vergisi</div>
+        <div class="ik-card-body">YTB kapsamında edinilen veya tahsis edilen arsa ve araziler, bildirim şartıyla izleyen bütçe yılından <strong>vize yılının sonuna kadar</strong> arazi vergisinden muaftır (m. 4; bkz. Bölüm 02).</div>
+      </div>
+    </div>
+    <div class="ik-figcap">Şekil 10. YTB kapsamındaki bina ve arazilerde emlak vergisi muafiyetleri.</div>
+    <h4 class="ik-subhead">4. İnşaat İşlerinde KDV İstisnası</h4>
+    <p>3065 sayılı KDV Kanunu'nun geçici 37'nci maddesi uyarınca <strong>imalat sanayii ve turizme</strong> yönelik YTB sahiplerine, belge kapsamındaki inşaat işlerine ilişkin mal teslimleri ve hizmetler KDV'den müstesnadır. 7394 sayılı Kanun'la 1 Mayıs 2022'den itibaren eski iade sisteminin yerini alan istisnanın süresi, 9770 sayılı Cumhurbaşkanı Kararı ile <strong>31.12.2028</strong>'e uzatılmıştır. İstisna için bağlı olunan vergi dairesinden istisna belgesi alınır.</p>
+    <p>Teşvik belgeli yatırımlarınızda bu istisna ve muafiyetlerin eksiksiz uygulanması ve ilgili idarelere yapılacak bildirimlerin takibi konusunda destek sağlayabiliriz.</p>
+  </div>
+  <footer class="ik-footer">
+    <div class="ik-footer-rule"></div>
+    <span class="ik-footer-num">9</span>
+  </footer>
+</section>
+  </div>
+  <div class="sheet" data-fixed>
+<section class="page ik-page ik-backcover ik-backcover--photo ik-document" id="arka-kapak" data-pg="12" data-fixed data-screen-label="Arka kapak">
+  <img loading="lazy" decoding="async" class="ik-cover-photo ik-cover-photo--flip" src="bulten/2026-11/assets/kasim-kapak-v5-gercekci-b.webp" alt="" data-decor="">
+  <div class="ik-cover-shade ik-cover-shade--back" data-decor=""></div>
+  <div class="ik-cover-tint" data-decor=""></div>
+  <div class="ik-cover-top">
+    <img loading="lazy" decoding="async" class="ik-cover-top-logo" src="bulten/2026-11/assets/ikarus-yazi.svg" alt="ikarus">
+    <div class="ik-cover-top-date ik-cover-top-date--soft">Kasım 2026</div>
+  </div>
+  <div class="ik-backcover-body">
+    <img loading="lazy" decoding="async" class="ik-backcover-logo--light" src="bulten/2026-11/assets/ikarus-yazi-slogan.svg" alt="ikarus — Management · Investment · Training">
+    <div class="ik-cover-bar--px"></div>
+    <div class="ik-backcover-lede--light">Bültendeki başlıklarla ilgili başvuru ve teşvik dosyası hazırlığında yanınızdayız.</div>
+    <div class="ik-contact-row--px">
+      <div class="ik-contact-main">
+        <div class="ik-contact-label--px">İletişim</div>
+        <div class="ik-contact-links--px">
+          <a href="mailto:info@investikarus.com">info@investikarus.com</a>
+          <a href="https://www.investikarus.com">www.investikarus.com</a>
+        </div>
+      </div>
+      <div class="ik-contact-side">
+        <img loading="lazy" decoding="async" class="ik-contact-qr" src="bulten/2026-11/assets/qr-2026-11.webp" alt="QR kod: qr.investikarus.com">
+        <div class="ik-contact-label--px">Bizi takip edin</div>
+        <div class="ik-contact-social--px">
+          <a href="https://www.linkedin.com/company/i%CC%87karus-danismanlik/posts/" target="_blank" rel="noopener" style="display:block; padding:4px; margin:-4px"><img loading="lazy" decoding="async" src="bulten/2026-11/assets/social-linkedin.webp" alt="LinkedIn"></a>
+          <a href="https://x.com/ikarus_dnsmnlk" target="_blank" rel="noopener" style="display:block; padding:4px; margin:-4px"><img loading="lazy" decoding="async" src="bulten/2026-11/assets/social-x.webp" alt="X"></a>
+          <a href="https://www.instagram.com/ikarusdanismanlik/" target="_blank" rel="noopener" style="display:block; padding:4px; margin:-4px"><img loading="lazy" decoding="async" src="bulten/2026-11/assets/social-instagram.webp" alt="Instagram"></a>
+        </div>
+      </div>
+    </div>
+    <div class="ik-contact-route--px">
+      <div class="ik-contact-route-stop--px ik-contact-route-stop--main"></div>
+      <div class="ik-contact-route-city--px ik-contact-route-city--main">Ankara</div>
+      <div class="ik-contact-route-line--px"></div>
+      <div class="ik-contact-route-stop--px"></div>
+      <div class="ik-contact-route-city--px">İstanbul</div>
+      <div class="ik-contact-route-line--px"></div>
+      <div class="ik-contact-route-stop--px"></div>
+      <div class="ik-contact-route-city--px">Londra</div>
+    </div>
+    <div class="ik-contact-route-addr--px"><span>Merkez</span> Alacaatlı Mah. 3306/1 Sokak No: 9, Çankaya / Ankara</div>
+    <div class="ik-contact-rule--px"></div>
+    <div class="ik-contact-grid--px">
+      <div>
+        <div class="ik-contact-label--px">İkarus Ankara Teşvik<br>Departmanı</div>
+        +90 505 024 55 21
+      </div>
+      <div>&nbsp;</div>
+      <div>
+        <div class="ik-contact-label--px">Bülten</div>
+        Kasım 2026
+      </div>
+    </div>
+    <div class="ik-contact-note--px">Bu bülten bilgilendirme amaçlıdır. Destek, istisna ve muafiyetler, ilgili mevzuat ve başvuru şartları çerçevesinde uygulanmaktadır.</div>
+  </div>
+</section>
+  </div>
+</main>
+
+<script>
+(function(){
+  'use strict';
+
+  // --- A4 kutusunu kapsayicisina sigdir -----------------------------------
+  // CSS px, tanimi geregi 1/96 inc. 210mm bu yuzden tarayicidan bagimsiz sabit.
+  var PAGE_W = 210 * 96 / 25.4;   // 793.70px
+  var sheets = Array.prototype.slice.call(document.querySelectorAll('.sheet'));
+
+  function fit(){
+    for (var i = 0; i < sheets.length; i++){
+      var s = sheets[i];
+      // Akis modundaki icerik sayfalari olceklenmez; --k onlar icin kullanilmaz.
+      var k = Math.min(1, s.clientWidth / PAGE_W);
+      s.style.setProperty('--k', k.toFixed(5));
+    }
+  }
+  fit();
+  if (window.ResizeObserver){
+    var ro = new ResizeObserver(fit);
+    ro.observe(document.querySelector('.doc'));
+  } else {
+    window.addEventListener('resize', fit);
+  }
+
+  // --- okuma ilerlemesi ---------------------------------------------------
+  var bar = document.getElementById('progressBar');
+  var ticking = false;
+  function progress(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? Math.min(1, Math.max(0, window.scrollY / h)) : 0;
+    bar.style.width = (p * 100).toFixed(2) + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ ticking = true; requestAnimationFrame(progress); }
+  }, {passive:true});
+  progress();
+
+  // --- icindekiler paneli -------------------------------------------------
+  var panel = document.getElementById('tocPanel');
+  var btn   = document.getElementById('tocBtn');
+  function setOpen(on){
+    panel.toggleAttribute('open', on);
+    btn.setAttribute('aria-expanded', String(on));
+    document.body.style.overflow = on ? 'hidden' : '';
+  }
+  btn.addEventListener('click', function(){ setOpen(!panel.hasAttribute('open')); });
+  panel.addEventListener('click', function(e){
+    if (e.target === panel || e.target.closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && panel.hasAttribute('open')) setOpen(false);
+  });
+
+  // --- panelde okunan sayfayi isaretle ------------------------------------
+  var navLinks = {};
+  Array.prototype.forEach.call(panel.querySelectorAll('[data-nav]'), function(a){
+    navLinks[a.getAttribute('data-nav')] = a;
+  });
+  if (window.IntersectionObserver){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var a = navLinks[en.target.id];
+        if (a) a.setAttribute('aria-current', en.isIntersecting ? 'true' : 'false');
+      });
+    }, {rootMargin:'-45% 0px -45% 0px'});
+    Array.prototype.forEach.call(document.querySelectorAll('.page[id]'), function(p){
+      io.observe(p);
+    });
+  }
+})();
+</script>
+</body>
+</html>
